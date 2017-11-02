@@ -20,7 +20,7 @@ function inicializa()
 		} 
 	}
 	
-	
+	//vai carregar todas as classe do meu diretório 'classes'
 	require_once(BASEPATH.CLASSPATH.'autoload.php');
 	 
 	

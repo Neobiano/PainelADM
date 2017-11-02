@@ -7,6 +7,9 @@
 					<div id="footer">
 				  		<p>Painel de Administração | Desenvolvido por CERATFO</p>
 					</div><!--footer-->					
-			</div><!--wrapper-->			
+			</div><!--wrapper-->	
+			<script>
+				$('.editorhtml').jqte();
+			</script>	   	
 	</body>
 </html>

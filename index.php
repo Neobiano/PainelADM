@@ -1,21 +1,31 @@
 <?php require_once("funcoes.php"); ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt_BR" lang="pt_BR">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <title>Painel Administrativo</title>
-        <link rel="shortcut icon" href="images/favicon.ico" />
+        <meta charset="UTF-8">    
+        <title>Painel Administrativo</title>   
+        <!-- Google Font -->
+  		<link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">     
         <?php 
         loadCSS('reset');
         loadCSS('style');
+		//AdminLTE
+		loadCSS('AdminLTE.min');
+		loadCSS('bootstrap.min');
+		loadCSS('font-awesome.min');
+		loadCSS('ionicons.min');
+		loadCSS('ionicons.min');
+		loadCSS('skin-blue.min');
+		
+		
         loadJS('jquery');
         loadJS('geral');
+		loadJS('adminlte.min');
+		loadJS('bootstrap.min');
         ?>
     </head>
-    <body>
+    <body class="hold-transition skin-blue sidebar-mini">
         <?php loadmodulo('usuarios','login'); ?>
     </body>
 </html>

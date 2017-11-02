@@ -17,8 +17,8 @@ protegeArquivo(basename(__FILE__));
             </ul>
         </li>
         <?php 
-        $sessao = new sessao();
-        $meuid=$sessao->getVar('iduser');
+        	$sessao = new sessao();
+       		$meuid=$sessao->getVar('iduser');
         ?>
         <li><a href="?m=usuarios&t=senha&id=<?php echo $meuid; ?>">Mudar Senha</a></li>
         <li><a href="?logoff=true">Sair</a></li>

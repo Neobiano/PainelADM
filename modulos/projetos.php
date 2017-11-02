@@ -21,8 +21,7 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
-                        // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins         
-                            
+                        // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $projeto = new projeto(array(
                             'nome'=>$_POST['nome'],
                             'descricao'=>$_POST['descricao']
@@ -53,8 +52,8 @@
                                 printMSG('Dados alterados com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>');
                                 unset($_POST);
                             }
-                            
-                            printMSG('Nenhum dado foi alterado. <a href="?m=projetos&t=listar">Exibir cadastros</a>','alerta');
+							else                         
+                            	printMSG('Nenhum dado foi alterado. <a href="?m=projetos&t=listar">Exibir cadastros</a>','alerta');
                         }
                                     
                     }
@@ -62,8 +61,8 @@
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
                     $projetobd = new projeto();
                     $projetobd->extras_select = "WHERE id=$id";
-                    $projetobd->selecionaTudo($userbd);
-                    $resbd = $userbd->retornaDados();
+                    $projetobd->selecionaTudo($projetobd);
+                    $resbd = $projetobd->retornaDados();
                 }
                 else
                     printMSG('Projeto não definido, <a href="?m=projetos&t=listar">escolha um projeto para alterar</a>','erro');
@@ -89,7 +88,8 @@
                                 
                             }
                         );
-                    </script>   
+                    </script>
+                    
                     <form class="userform" method="post" action="">
                         <fieldset>
                             <legend>Informe os dados para alteração</legend>
@@ -104,7 +104,7 @@
                                 </li>
                                 <li>
                                     <label for="descricao">Descrição:</label>
-                                    <input type="textarea" name="descricao" value="<?php if($resbd) echo $resbd->descricao; ?>"/>
+                                    <textarea  name="descricao" ><?php if($resbd) echo $resbd->descricao;?></textarea>                                    
                                 </li>                                
                                 <li class="center">
                                     <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
@@ -178,7 +178,7 @@
                         </li>
                         <li>
                             <label for="descricao">Descrição:</label>
-                            <textarea><?php echo $_POST['descricao']?></textarea>
+                            <textarea  name="descricao" ><?php echo $_POST['descricao']?></textarea>
                         </li>                        
                         <li class="center">
                             <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
@@ -191,9 +191,10 @@
             break;
         
         case 'listar':
-            echo '<h2>Projetos cadastrados</h2>';
-            loadCSS('data-table',NULL,TRUE);
-            loadJS('jquery-datatable');        
+            echo '<h2>Projetos</h2>';
+            loadCSS('data-table',NULL,TUE);			
+            loadJS('jquery-datatable');
+			       
             ?>
             <script type="text/javascript">
                 $(document).ready(function(){
@@ -223,10 +224,10 @@
                     $projeto->selecionaTudo($projeto);                       					                                              
                     while ($res = $projeto->retornaDados()):
                         echo '<tr>';
-                        printf('<td>%s</td>',$res->id);
-                        printf('<td>%s</td>',$res->nome);
-                        printf('<td>%s</td>',$res->nome);                        
-                        printf('<td class="center"><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->ID,$res->ID);
+                        printf('<td class="center">%s</td>',$res->id);
+                        printf('<td class="center">%s</td>',$res->nome);
+                        printf('<td class="center">%s</td>',$res->descricao);                        
+                        printf('<td class="center"><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                         echo '</tr>';
                     endwhile;               
                     ?>
@@ -273,7 +274,8 @@
                     printMSG('Projeto não definido, <a href="?projetos&t=listar">escolha um projeto para excluir</a>','erro');
                 
                 //formulário de edição de projeto   
-                ?>                       
+                ?>   
+                	                    
                     <form class="userform" method="post" action="">
                         <fieldset>
                             <legend>Confira os dados para exclusão</legend>
@@ -288,7 +290,7 @@
                                 </li>
                                 <li>
                                     <label for="descricao">Descricao:</label>
-                                    <input type="text" size="50" name="descricao" disabled="disabled"  value="<?php if($resbd) echo $resbd->descricao; ?>"/>
+                                    <textarea  name="descricao" disabled="disabled" ><?phpif($resbd) echo $resbd->descricao;?></textarea>                                    
                                 </li>                                
                                 <li class="center">
                                     <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
