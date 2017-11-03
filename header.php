@@ -8,8 +8,15 @@
 <html lang="pt">
 	<head>
 		<!-- Google Font -->
-  		<link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+		<!-- Ionicons -->
+		<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">		  
+		<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+		<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<meta charset="utf-8">
 
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
@@ -18,20 +25,11 @@
 
 		<title>Painel Administrativo</title>
 		<?php
-			loadCSS('reset');
-	        loadCSS('style');
-			//AdminLTE
-			loadCSS('AdminLTE.min');
-			loadCSS('bootstrap.min');
-			loadCSS('font-awesome.min');
-			loadCSS('ionicons.min');	
-			loadCSS('skin-blue.min');
-			
-			
-	        loadJS('jquery');
+			loadCSS('style');
+			loadJS('jquery');
 	        loadJS('geral');
-			loadJS('adminlte.min');
-			loadJS('bootstrap.min');
+			//AdminLTE
+
 			 
 		?>
 	</head> 
@@ -72,7 +70,7 @@
 			                    <a href="#">
 			                      <div class="pull-left">
 			                        <!-- User Image -->
-			                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+			                        <img src="images/Fabiano.png" class="img-circle" alt="User Image">
 			                      </div>
 			                      <!-- Message title and timestamp -->
 			                      <h4>
@@ -157,42 +155,29 @@
 			            <!-- Menu Toggle Button -->
 			            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 			              <!-- The user image in the navbar-->
-			              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+			              <img src="images/Fabiano.png" class="user-image" alt="User Image">
 			              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-			              <span class="hidden-xs">Alexander Pierce</span>
+			              <span class="hidden-xs"><?php echo $sessao->getVar('nomeuser'); ?></span>
 			            </a>
 			            <ul class="dropdown-menu">
 			              <!-- The user image in the menu -->
 			              <li class="user-header">
-			                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+			                <img src="images/Fabiano.png" class="img-circle" alt="User Image">
 			
 			                <p>
-			                  Alexander Pierce - Web Developer
+			                  <?php echo $sessao->getVar('nomeuser'); ?>			                  
 			                  <small>Member since Nov. 2012</small>
 			                </p>
 			              </li>
-			              <!-- Menu Body -->
-			              <li class="user-body">
-			                <div class="row">
-			                  <div class="col-xs-4 text-center">
-			                    <a href="#">Followers</a>
-			                  </div>
-			                  <div class="col-xs-4 text-center">
-			                    <a href="#">Sales</a>
-			                  </div>
-			                  <div class="col-xs-4 text-center">
-			                    <a href="#">Friends</a>
-			                  </div>
-			                </div>
-			                <!-- /.row -->
+			          
 			              </li>
 			              <!-- Menu Footer-->
 			              <li class="user-footer">
 			                <div class="pull-left">
-			                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+			                  <a href="#" class="btn btn-default btn-flat">Dados Pessoais</a>
 			                </div>
 			                <div class="pull-right">
-			                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+			                  <a href="#" class="btn btn-default btn-flat">Sair</a>
 			                </div>
 			              </li>
 			            </ul>
@@ -205,6 +190,68 @@
 			      </div>
 			    </nav>
 			</header><!-- header -->	
-			<div id="wrap-content">
-					
+			
+			<aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="images/Fabiano.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p><?php echo $sessao->getVar('nomeuser');?></p>
+          <!-- Status -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MENU</li>       
+        <li class="treeview">
+          <a href="#"><i class="fa fa-user"></i> <span>Usuários</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="#">Listar</a></li>
+            <li><a href="#">Cadastrar</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-product-hunt"></i> <span>Projetos</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="#">Listar</a></li>
+            <li><a href="#">Cadastrar</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+	<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Page Header
+        <small>Optional description</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
 			

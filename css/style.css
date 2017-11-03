@@ -39,11 +39,11 @@ a:hover{
     border-bottom: 1px solid #999;
     margin-bottom: 10px;
 }
-#sidebar{
+#sidebar-retirado{
     float: left;
     width: 150px;
 }
-#sidebar ul li{
+#sidebar-retirado ul li{
     padding: 2% 5%;
     width: 90%;
     background: #F8F8F8;
