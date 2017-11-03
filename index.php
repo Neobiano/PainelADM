@@ -23,6 +23,7 @@
         loadJS('geral');
 		loadJS('adminlte.min');
 		loadJS('bootstrap.min');
+		
         ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">

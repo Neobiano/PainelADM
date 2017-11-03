@@ -166,7 +166,11 @@
 			
 			                <p>
 			                  <?php echo $sessao->getVar('nomeuser'); ?>			                  
-			                  <small>Member since Nov. 2012</small>
+			                  <small>Membro desde <?php
+			                  						 setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
+	    			                  				 echo strftime('%B').' de '.strftime('%Y');
+			                  					 ?>
+			                  </small>
 			                </p>
 			              </li>
 			          
@@ -182,7 +186,7 @@
 			              </li>
 			            </ul>
 			          </li>
-			          <!-- Control Sidebar Toggle Button -->
+			          <!-- Control Sidebar Toggle Button, vou usar apenas como 'decorativo' para o perfil -->
 			          <li>
 			            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
 			          </li>
@@ -210,30 +214,43 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU</li>       
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user"></i> <span>Usuários</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">          
-            <li><a href="#">Listar</a></li>
-            <li><a href="#">Cadastrar</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-product-hunt"></i> <span>Projetos</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">          
-            <li><a href="#">Listar</a></li>
-            <li><a href="#">Cadastrar</a></li>
-          </ul>
-        </li>
+        <li class="header">MENU</li>  
         
+        <li class="active"><a href="#"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>
+        
+             
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-tasks""></i> <span>Cadastros</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="invoice.html"><i class="fa fa-edit"></i>Tipos</a></li>
+            <li class="active"><a href="invoice.html"><i class="fa fa-ticket"></i>Status</a></li>
+            <li class="active"><a href="invoice.html"><i class="fa fa-calendar-check-o"></i>Prioridade</a></li>    
+            <li class="active"><a href="invoice.html"><i class="fa fa-tag"></i>Prioridade</a></li>           
+          </ul>
+        </li>
+
+       <li class="active"><a href="#"><i class="fa fa-product-hunt"></i> <span>Projetos</span></a></li>
+       <li class="active"><a href="#"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
+           
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-line-chart"></i> <span>Relatórios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="invoice.html"><i class="fa fa-circle-o text-withe"></i>Demandas por Colaborador</a></li>
+            <li class="active"><a href="invoice.html"><i class="fa fa-circle-o text-withe"></i>Demandas por Período</a></li>
+            <li class="active"><a href="invoice.html"><i class="fa fa-circle-o text-withe"></i>Demandas Por Projeto</a></li>            
+            <li class="active"><a href="invoice.html"><i class="fa fa-circle-o text-withe"></i>Pendência de Resposta</a></li>
+          </ul>
+        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
