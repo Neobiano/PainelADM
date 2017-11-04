@@ -7,8 +7,7 @@
 <!DOCTYPE html>
 <html lang="pt">
 	<head>
-		<!-- Google Font -->
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 		<!-- Ionicons -->
@@ -17,20 +16,38 @@
 		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">		  
 		<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
 		<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<!-- Bootstrap 3.3.7 -->
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	    <!-- DataTables -->
+		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">		 
+		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+           
 		<meta charset="utf-8">
 
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	 	<!-- jQuery 3 -->
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- Bootstrap 3.3.7 -->
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- DataTables -->
+		<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<!-- SlimScroll -->
+		<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<!-- FastClick -->
+		<script src="bower_components/fastclick/lib/fastclick.js"></script>
+		<!-- AdminLTE App -->
+		<script src="dist/js/adminlte.min.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="dist/js/demo.js"></script>
 
 		<title>Painel Administrativo</title>
 		<?php
-			loadCSS('style');
-			loadJS('jquery');
+			loadCSS('style');			
 	        loadJS('geral');
-			//AdminLTE
-
-			 
+	
+		 
 		?>
 	</head> 
 
@@ -214,14 +231,11 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU</li>  
-        
-        <li class="active"><a href="#"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>
-        
-             
-        <li class="treeview active">
+        <li class="header">MENU</li>          
+       	<li class="active"><a href="#"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>                           
+        <li class="treeview">
           <a href="#">
-            <i class="fa fa-tasks""></i> <span>Cadastros</span>
+            <i class="fa fa-file-text""></i> <span>Cadastros</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -230,14 +244,14 @@
             <li class="active"><a href="invoice.html"><i class="fa fa-edit"></i>Tipos</a></li>
             <li class="active"><a href="invoice.html"><i class="fa fa-ticket"></i>Status</a></li>
             <li class="active"><a href="invoice.html"><i class="fa fa-calendar-check-o"></i>Prioridade</a></li>    
-            <li class="active"><a href="invoice.html"><i class="fa fa-tag"></i>Prioridade</a></li>           
+            <li class="active"><a href="invoice.html"><i class="fa fa-tag"></i>Categoria</a></li>           
           </ul>
         </li>
 
        <li class="active"><a href="#"><i class="fa fa-product-hunt"></i> <span>Projetos</span></a></li>
        <li class="active"><a href="#"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
            
-        <li class="treeview active">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-line-chart"></i> <span>Relatórios</span>
             <span class="pull-right-container">

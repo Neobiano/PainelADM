@@ -3,6 +3,7 @@
     protegeArquivo(basename(__FILE__));
     loadJS('jqueryvalidate');
     loadJS('jqueryvalidate-messages');
+	
     switch ($tela) 
     {
                     
@@ -191,32 +192,34 @@
             break;
         
         case 'listar':
-            echo '<h2>Projetos</h2>';
-            loadCSS('data-table',NULL,TUE);			
-            loadJS('jquery-datatable');
-			       
+                			       
             ?>
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		 
             <script type="text/javascript">
-                $(document).ready(function(){
-                   $("#listausers").dataTable({
-                    "oLanguage": {
-                        "sZeroRecords": "Nenhum dado econtrado para exibição",
-                        "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ de registros",
-                        "sInfoEmpty": "Nenhum registro para ser exibido",
-                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-                        "sSearch": "Pesquisar",
-                    },
-                    "sScrollY": "400px",
-                    "bPaginate": false,
-                    "aaSorting": [[0, "asc"]] 
-                   }); 
-                });
+                $(function () {				    
+				    $('#example1').DataTable({
+				      'paging'      : true,
+				      'lengthChange': true,
+				      'searching'   : true,
+				      'ordering'    : true,
+				      'info'        : true,
+				      'autoWidth'   : true
+				    })
+				  })
             </script>
-            <table cellspacing="0" cellpadding="0" border="0" class="display" id="listausers">
+            <div class="box">
+           
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
-                        <th>Codigo</th><th>Nome</th><th>Descricao</th><th>Ações</th>
-                    </tr>
+                <tr>
+                  <th>Código</th>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>                  
+                </tr>
                 </thead>
                 <tbody>
                     <?php 
@@ -224,15 +227,26 @@
                     $projeto->selecionaTudo($projeto);                       					                                              
                     while ($res = $projeto->retornaDados()):
                         echo '<tr>';
-                        printf('<td class="center">%s</td>',$res->id);
-                        printf('<td class="center">%s</td>',$res->nome);
-                        printf('<td class="center">%s</td>',$res->descricao);                        
-                        printf('<td class="center"><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
+                        printf('<td>%s</td>',$res->id);
+                        printf('<td>%s</td>',$res->nome);
+                        printf('<td>%s</td>',$res->descricao);                        
+                        printf('<td><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                         echo '</tr>';
                     endwhile;               
                     ?>
-                </tbody>
-            </table>
+                 </tbody>
+                <tfoot>
+                <tr>
+                  <th> </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>         
+                </tr>
+                </tfoot>
+              </table>
+			 </div>
+            <!-- /.box-body -->
+        </div>
             
             <?php
             break;  
