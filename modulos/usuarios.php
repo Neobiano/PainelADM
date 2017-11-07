@@ -336,8 +336,7 @@
 		
 		case 'listar':
 			echo '<h2>Usuários cadastrados</h2>';
-	        loadCSS('data-table',NULL,TRUE);
-	        loadJS('jquery-datatable');        
+	        loadCSS('data-table',NULL,TRUE);          
 	        ?>
 	        <script type="text/javascript">
 	            $(document).ready(function(){

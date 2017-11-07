@@ -43,15 +43,28 @@
 	<!-- page script -->
 	<script>
 	  $(function () {
-	    $('#example1').DataTable()
-	    $('#example2').DataTable({
-	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
-	      'ordering'    : true,
-	      'info'        : true,
-	      'autoWidth'   : false
-	    })
+	  	
+	    $('#gridprojetos').DataTable({
+	    	"oLanguage": {
+	                    "sZeroRecords": "Nenhum dado econtrado para exibição",
+	                    "sInfo": "Exibindo _START_ à _END_ de _TOTAL_ de registros",
+	                    "sInfoEmpty": "Nenhum registro para ser exibido",
+	                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+	                    "slengthMenu":     "Show _MENU_ entries",
+	                    "sSearch": "Pesquisar",
+	                    "sLengthMenu" : "Exibir _MENU_ registros por Página",
+	                    "oPaginate": {
+      							  "sFirst":      "Primeiro",
+        						  "sLast":       "Último",
+        						  "sNext":       "Próximo",
+        						  "sPrevious":   "Anterior"
+    					},
+	                },
+	               
+	                "bPaginate": true,
+	                 
+	                "aaSorting": [[0, "asc"]] 
+	    })	  
 	  })
 	</script>
 </body>

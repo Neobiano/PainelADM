@@ -4,7 +4,7 @@ $(document).ready(function(){
 	$("fieldset").addClass('radius5');
 	$("sidebar li").addClass('radius5');
 	//accordion
-	$('#accordion a.item').click(function() {
+	$('#accordion a.itesm').click(function() {
 		$('#accordion li').children('ul').slideUp('fast');
 		$('#accordion li').each(function(){
 			$(this).removeClass('active');

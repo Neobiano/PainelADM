@@ -13,7 +13,7 @@ protegeArquivo(basename(__FILE__));
         <li><a class="item" href="#">Projetos</a>
             <ul>
                 <li><a href="?m=projetos&t=incluir">Cadastrar</a></li>
-                <li><a href="?m=projetos&t=listar">Exibir</a></li>
+                <li><a href="?m=projeto&t=listar">Exibir</a></li>
             </ul>
         </li>
         <?php 

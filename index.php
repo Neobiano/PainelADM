@@ -17,8 +17,7 @@
 		loadCSS('ionicons.min');
 		loadCSS('ionicons.min');
 		loadCSS('skin-blue.min');
-		
-		
+				
         loadJS('jquery');
         loadJS('geral');
 		loadJS('adminlte.min');

@@ -5,8 +5,7 @@
     loadJS('jqueryvalidate-messages');
 	
     switch ($tela) 
-    {
-                    
+    {                 
         case 'editar':
             echo '<h2>Edição de Projetos</h2>';           
             $sessao = new sessao();
@@ -194,25 +193,27 @@
         case 'listar':
                 			       
             ?>
-            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		 
-            <script type="text/javascript">
-                $(function () {				    
-				    $('#example1').DataTable({
-				      'paging'      : true,
-				      'lengthChange': true,
-				      'searching'   : true,
-				      'ordering'    : true,
-				      'info'        : true,
-				      'autoWidth'   : true
-				    })
-				  })
-            </script>
+            <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		      <h1>
+		        Projetos
+		        <small>Listagem</small>
+		      </h1>
+		      <ol class="breadcrumb">
+		        <li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+		        <li class="active">Listagem</li>
+		      </ol>
+		    </section>
+		    
+		     <!-- Main content -->
+    		<section class="content container-fluid">
+            
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
             <div class="box">
            
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="gridprojetos" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Código</th>

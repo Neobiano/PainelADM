@@ -7,9 +7,14 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
     if ($modulo && $tela):
         loadmodulo($modulo,$tela);
     else:
-        echo '<p>Escolha uma opção de menu ao lado.</p>';
+        echo '<section class="content-header">
+		      <h1>
+		       
+		      </h1>
+		      
+		    </section>';
     endif;
     ?>
 </div><!--content -->
-<?php include('sidebar.php'); ?>
+<?php //include('sidebar.php'); ?>
 <?php include('footer.php'); ?>
