@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html lang="pt">
 	<head>
-	
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 		<!-- Ionicons -->
@@ -21,6 +20,7 @@
 	    <!-- DataTables -->
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">		 
 		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="plugins/iCheck/square/blue.css">
            
 		<meta charset="utf-8">
 
@@ -32,7 +32,7 @@
 		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- DataTables -->
 		<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-		<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+	
 		<!-- SlimScroll -->
 		<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
@@ -44,10 +44,9 @@
 
 		<title>Painel Administrativo</title>
 		<?php
-			loadCSS('style');			
+		//	loadCSS('style');			
 	        loadJS('geral');
-	
-		 
+			 
 		?>
 	</head> 
 
@@ -212,7 +211,7 @@
 			    </nav>
 			</header><!-- header -->	
 			
-			<aside class="main-sidebar">
+	<aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -270,9 +269,7 @@
     </section>
     <!-- /.sidebar -->
   </aside>
-	<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    
+	
 
    
 			

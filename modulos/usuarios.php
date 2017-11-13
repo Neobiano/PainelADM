@@ -348,7 +348,7 @@
 	                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
 	                    "sSearch": "Pesquisar",
 	                },
-	                "sScrollY": "400px",
+	                	
 	                "bPaginate": false,
 	                "aaSorting": [[0, "asc"]] 
 	               }); 
@@ -436,6 +436,14 @@ case 'senha':
 							}
 						);
 					</script>	
+					<body class="hold-transition login-page">
+						<div class="login-box">
+						  <div class="login-logo">
+						    <a href="../../index2.html"><b>Admin</b>LTE</a>
+						  </div>
+						  <!-- /.login-logo -->
+						  <div class="login-box-body">
+						    <p class="login-box-msg">Sign in to start your session</p>
 					<form class="userform" method="post" action="">
 						<fieldset>
 							<legend>Informe os dados para alteração</legend>
@@ -467,7 +475,39 @@ case 'senha':
 							</ul>
 						</fieldset>
 					</form>
-					
+					<div class="social-auth-links text-center">
+				      <p>- OR -</p>
+				      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+				        Facebook</a>
+				      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+				        Google+</a>
+				    </div>
+				    <!-- /.social-auth-links -->
+				
+				    <a href="#">I forgot my password</a><br>
+				    <a href="register.html" class="text-center">Register a new membership</a>
+				
+				  </div>
+				  <!-- /.login-box-body -->
+				</div>
+				<!-- /.login-box -->
+				
+				<!-- jQuery 3 -->
+				<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+				<!-- Bootstrap 3.3.7 -->
+				<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+				<!-- iCheck -->
+				<script src="../../plugins/iCheck/icheck.min.js"></script>
+				<script>
+				  $(function () {
+				    $('input').iCheck({
+				      checkboxClass: 'icheckbox_square-blue',
+				      radioClass: 'iradio_square-blue',
+				      increaseArea: '20%' // optional
+				    });
+				  });
+				</script>
+				</body>
 				<?php	
 			}//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
 			else

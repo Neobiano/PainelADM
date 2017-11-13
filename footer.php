@@ -3,10 +3,7 @@
 	protegeArquivo(basename(__FILE__));
 ?>
 
- 		</section>
-  	    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+ 	
 
   <!-- Main Footer -->
   <footer class="main-footer">
@@ -20,9 +17,7 @@
     <!-- Default to the left -->
     <strong>Desenvolvido por CERAT-FO &copy; 2017 <a href="#"></a>.</strong> 
   </footer>
-
   
- 
 </div>
 <!-- ./wrapper -->
 	<!-- jQuery 3 -->

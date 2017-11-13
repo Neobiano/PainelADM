@@ -120,10 +120,10 @@
                 printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
         break;      
             
-        case 'incluir':
-            echo '<h2>Cadastro de Projetos</h2>';
+        case 'incluir':             
             if (isset($_POST['cadastrar']))
-            {                   
+            {    
+              
                 $projeto = new projeto(
                                         array(
                                         'nome'=>$_POST['nome'],
@@ -142,14 +142,17 @@
                 if ($duplicado!=true) 
                 {
                     $projeto->inserir($projeto);
+                   
                     if ($projeto->linhasafetadas==1)
                     {
-                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=projetos&t=listar">Exibir Cadastros</a>');
+                       // printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=projetos&t=listar">Exibir Cadastros</a>');                        
+                       
                         unset($_POST);
+                        
                     }   
                 }                               
             }
-    ?>          
+        ?>          
             <script type="text/javascript">
                     $(document).ready
                     (
@@ -167,88 +170,120 @@
                             
                         }
                     );
-                </script>   
-            <form class="userform" method="post" action="">
-                <fieldset>
-                    <legend>Informe os dados para cadastro</legend>
-                    <ul>                    	
-                        <li>
-                            <label for="nome">Nome:</label>
-                            <input type="text" size="50" name="nome" value="<?php echo $_POST['nome']?>"/>
-                        </li>
-                        <li>
-                            <label for="descricao">Descrição:</label>
-                            <textarea  name="descricao" ><?php echo $_POST['descricao']?></textarea>
-                        </li>                        
-                        <li class="center">
-                            <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
-                            <input type="submit" name="cadastrar" value="Salvar dados"/>
-                        </li>
-                    </ul>
-                </fieldset>
-            </form>
+			</script>
+			<div class="content-wrapper">
+                <!-- Content Header (Page header) --> 
+        
+                <section class="content-header">
+                	<h1>
+                		Projetos
+                		<small>Incluir</small>
+                  	</h1>
+                  	<ol class="breadcrumb">
+                		<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+                		<li class="active">Incluir</li>
+                  	</ol>
+                </section> 
+    
+                <!-- Main content -->
+    			<section class="content">
+      				<div class="row">
+    	            <!-- left column -->
+    					<div class="col-md-6">
+                        <!-- general form elements -->
+    						<div class="box box-primary">
+    							<div class="box-header with-border">
+    								<h3 class="box-title">Informe os dados para cadastro</h3>
+    							</div>   	
+    							
+    							<!-- form start -->	
+    							<form class="userform" role="form" method="post" action="">
+    								<div class="box-body">
+    									<div class="form-group">
+              								<label>Nome</label>
+              								<input  name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
+    									</div>
+                                        
+    									<div class="form-group">
+      										<label>Descrição</label>
+      										<textarea name="descricao" class="form-control" rows="3" placeholder="Descrição do projeto"><?php echo $_POST['descricao']?></textarea>
+        								</div>
+    								</div>                                
+                                  
+    								<div class="box-footer">  
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=projetos&t=listar'" >Cancelar</button>
+    									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
+    									 
+    								</div>                              
+    							</form>
+    		 				</div><!-- Final box-primary -->
+    					</div><!-- Final col-md-6 -->
+    				</div>
+    			</section>
+                <!-- /.content -->
+			</div> <!-- /.content-wrapper -->
+  
+      		
             <?php
             break;
         
         case 'listar':
                 			       
             ?>
-            <!-- Content Header (Page header) -->
-		    <section class="content-header">
-		      <h1>
-		        Projetos
-		        <small>Listagem</small>
-		      </h1>
-		      <ol class="breadcrumb">
-		        <li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
-		        <li class="active">Listagem</li>
-		      </ol>
-		    </section>
-		    
-		     <!-- Main content -->
-    		<section class="content container-fluid">
-            
-            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
-            <div class="box">
-           
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="gridprojetos" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Código</th>
-                  <th>Nome</th>
-                  <th>Descrição</th>
-                  <th>Ações</th>                  
-                </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    $projeto = new projeto();
-                    $projeto->selecionaTudo($projeto);                       					                                              
-                    while ($res = $projeto->retornaDados()):
-                        echo '<tr>';
-                        printf('<td>%s</td>',$res->id);
-                        printf('<td>%s</td>',$res->nome);
-                        printf('<td>%s</td>',$res->descricao);                        
-                        printf('<td><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
-                        echo '</tr>';
-                    endwhile;               
-                    ?>
-                 </tbody>
-                <tfoot>
-                <tr>
-                  <th> </th>
-                  <th></th>
-                  <th></th>
-                  <th></th>         
-                </tr>
-                </tfoot>
-              </table>
-			 </div>
-            <!-- /.box-body -->
-        </div>
-            
+            <div class="content-wrapper">             
+                <!-- Content Header (Page header) -->
+    		    <section class="content-header">
+    		      <h1>
+    		        Projetos
+    		        <small>Listagem</small>
+    		      </h1>
+    		      <ol class="breadcrumb">
+    		        <li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+    		        <li class="active">Listagem</li>
+    		      </ol>
+    		    </section>
+    		    
+    		     <!-- Main content -->
+        		<section class="content container-fluid">                
+                	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
+                	<div class="box">                              
+                    	<div class="box-body">
+                        	<table id="gridprojetos" class="table table-bordered table-striped">
+                           		<thead>
+                            		<tr>
+                              			<th>Código</th>
+                              			<th>Nome</th>
+                              			<th>Descrição</th>
+                              			<th>Ações</th>                  
+                            		</tr>
+                            	</thead>
+                            	<tbody>
+                                    <?php 
+                                    $projeto = new projeto();
+                                    $projeto->selecionaTudo($projeto);                       					                                              
+                                    while ($res = $projeto->retornaDados()):
+                                        echo '<tr>';
+                                        printf('<td>%s</td>',$res->id);
+                                        printf('<td>%s</td>',$res->nome);
+                                        printf('<td>%s</td>',$res->descricao);                        
+                                        printf('<td><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
+                                        echo '</tr>';
+                                    endwhile;               
+                                    ?>
+                             	</tbody>
+                            	<tfoot>
+                            		<tr>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>         
+                            			</tr>
+                            	</tfoot>
+                        	</table>
+            			</div><!-- /.box -->                    
+            		</div><!-- /.box-body -->
+            	</section> <!-- /.Main content -->           
+			</div> <!-- /.content-wrapper -->
             <?php
             break;  
             
@@ -273,8 +308,8 @@
                         $projeto->deletar($projeto);
                         if ($projeto->linhasafetadas==1)
                         {
-                            printMSG('Registro excluído com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>');
-                            unset($_POST);
+                           // printMSG('Registro excluído com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>');                                                     
+                            unset($_POST);                           
                         }
                         else 
                             printMSG('Nenhum dado foi excluído. <a href="?m=projetos&t=listar">Exibir cadastros</a>','alerta');
@@ -290,30 +325,62 @@
                 
                 //formulário de edição de projeto   
                 ?>   
-                	                    
-                    <form class="userform" method="post" action="">
-                        <fieldset>
-                            <legend>Confira os dados para exclusão</legend>
-                            <ul>
-                                <li>
-                                    <label for="nome">Código:</label>
-                                    <input type="text" size="50" name="nome" disabled="disabled"  value="<?php if($resbd) echo $resbd->id; ?>"/>
-                                </li>
-                                <li>
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" size="50" name="nome" disabled="disabled"  value="<?php if($resbd) echo $resbd->nome; ?>"/>
-                                </li>
-                                <li>
-                                    <label for="descricao">Descricao:</label>
-                                    <textarea  name="descricao" disabled="disabled" ><?phpif($resbd) echo $resbd->descricao;?></textarea>                                    
-                                </li>                                
-                                <li class="center">
-                                    <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
-                                    <input type="submit" name="excluir" value="Confirmar exclusão"/>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </form>
+                	<div class="content-wrapper">
+                    <!-- Content Header (Page header) --> 
+            
+                    <section class="content-header">
+                    	<h1>
+                    		Projetos
+                    		<small>Excluir</small>
+                      	</h1>
+                      	<ol class="breadcrumb">
+                    		<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+                    		<li class="active">Excluir</li>
+                      	</ol>
+                    </section> 
+        
+                    <!-- Main content -->
+        			<section class="content">
+          				<div class="row">
+        	            <!-- left column -->
+        					<div class="col-md-6">
+                            <!-- general form elements -->
+        						<div class="box box-primary">
+        							<div class="box-header with-border">
+        								<h3 class="box-title">Informe os dados para cadastro</h3>
+        							</div>   	
+        							
+        							<!-- form start -->	
+        							<form class="userform" role="form" method="post" action="">
+        								<div class="box-body">
+        									<div class="form-group">
+                  								<label>Código</label>
+                  								<input  name="id" type="text" class="form-control"  disabled value="<?php if($resbd) echo $resbd->id;?>">
+        									</div>
+                                            
+                                            <div class="form-group">
+                  								<label>Nome</label>
+                  								<input  name="nome" type="text" class="form-control" disabled value="<?php if($resbd) echo $resbd->nome;?>">
+        									</div>
+        									
+        									<div class="form-group">
+          										<label>Descrição</label>
+          										<textarea name="descricao" class="form-control" rows="3" disabled><?php if($resbd) echo $resbd->descricao;?></textarea>
+            								</div>
+        								</div>                                
+                                      
+        								<div class="box-footer">  
+        									 <button type="button" class="btn btn-default" onclick="location.href='?m=projetos&t=listar'" >Cancelar</button>
+        									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
+        									 
+        								</div>                              
+        							</form>
+        		 				</div><!-- Final box-primary -->
+        					</div><!-- Final col-md-6 -->
+        				</div>
+        			</section>
+                    <!-- /.content -->
+    			</div> <!-- /.content-wrapper         			                                  
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
