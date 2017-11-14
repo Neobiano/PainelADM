@@ -1,8 +1,8 @@
-body.painel{
+/* body.painel{
     font:14px Georgia, "Times New Roman", Times, serif;
     color:#333;
     background: #F8F8F8;
-}
+} 
 a:link, a:active, a:visited{
     text-decoration: none;
     color:#09f;
@@ -140,15 +140,15 @@ form textarea{
     -ms-border-radius: 5px;
 }
 .erro, .sucesso, .alerta, .pergunta{
-    width:96%;
+    width:25%;
     padding:2%;
-    margin:10px 0;
+    margin:150px 0;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     -o-border-radius: 5px;
     -ms-border-radius: 5px;
-}
+}*/
 .sucesso{
     background: #eff4d4;
     border: 1px solid #8fad3d;

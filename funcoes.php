@@ -107,25 +107,38 @@ function printMSG($msg=null,$tipo=null)
 		switch ($tipo) 
 		{
 			case 'erro':
-				echo '<div class="erro">'.$msg.'</div>';				
+				$tipoclasse = 'box-warning';				
 				break;
 				
 			case 'alerta':
-				echo '<div class="alerta">'.$msg.'</div>';				
+			    $tipoclasse = 'box-default';	
 				break;
 				
 			case 'pergunta':
-				echo '<div class="pergunta">'.$msg.'</div>';				
+			    $tipoclasse = 'box-default';	
 				break;
 				
 			case 'sucesso':
-				echo '<div class="sucesso">'.$msg.'</div>';				
-				break;
+			    $tipoclasse = 'box-success';	
+			    break;
 			default:
-				echo '<div class="sucesso">'.$msg.'</div>';				
-				break;
-				
+			    $tipoclasse = 'box-default';
+			    
+				break;		
 		}
+		echo '<div class="main-footer">
+                        <div class="box '.$tipoclasse.' box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"></h3>                                
+		    
+                            </div>
+                       		 <!-- /.box-header -->
+                        	<div class="box-body">
+                            	'.$msg.'
+                        	</div>
+                            <!-- /.box-body -->
+                    	</div>
+      				</div>';	
 	}
 }
 

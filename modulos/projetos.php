@@ -145,13 +145,12 @@
                    
                     if ($projeto->linhasafetadas==1)
                     {
-                       // printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=projetos&t=listar">Exibir Cadastros</a>');                        
-                       
-                        unset($_POST);
-                        
+                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=projetos&t=listar">Exibir Cadastros</a>','sucesso');   
+                        unset($_POST);                                                                                                                                           
                     }   
                 }                               
             }
+           
         ?>          
             <script type="text/javascript">
                     $(document).ready
@@ -289,8 +288,7 @@
             
 
                     
-        case 'excluir':
-            echo '<h2>Exclusão de Projetos</h2>';
+        case 'excluir':        
             $sessao = new sessao();
             if (isAdmin()==true)
             {
@@ -308,7 +306,7 @@
                         $projeto->deletar($projeto);
                         if ($projeto->linhasafetadas==1)
                         {
-                           // printMSG('Registro excluído com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>');                                                     
+                            printMSG('Registro excluído com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>','sucesso');                                                     
                             unset($_POST);                           
                         }
                         else 
