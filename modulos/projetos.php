@@ -4,6 +4,15 @@
     loadJS('jqueryvalidate');
     loadJS('jqueryvalidate-messages');
 	
+    //verificando se há registros no BD, caso contrario abrirá a inserção.
+    if ($tela =='listar')
+    {
+        $qprojeto = new projeto();
+        $qprojeto->selecionaTudo($qprojeto);
+        if ($qprojeto->linhasafetadas <= 0)
+            $tela = 'incluir';        
+    }
+    
     switch ($tela) 
     {                 
         case 'editar':
@@ -49,7 +58,7 @@
                             $projeto->atualizar($projeto);
                             if ($projeto->linhasafetadas==1)
                             {
-                                printMSG('Dados alterados com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>');
+                                printMSG('Dados alterados com sucesso. <a href="?m=projetos&t=listar">Exibir cadastros</a>','sucesso');
                                 unset($_POST);
                             }
 							else                         
@@ -90,29 +99,64 @@
                         );
                     </script>
                     
-                    <form class="userform" method="post" action="">
-                        <fieldset>
-                            <legend>Informe os dados para alteração</legend>
-                            <ul>
-                            	<li>
-		                            <label for="codigo">Código:</label>
-		                            <input type="text" size="50" name="codigo" disabled="disabled" value="<?php if($resbd) echo $resbd->id;?>"/>
-		                        </li>
-                                <li>
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" size="50" name="nome" value="<?php if($resbd) echo $resbd->nome; ?>"/>
-                                </li>
-                                <li>
-                                    <label for="descricao">Descrição:</label>
-                                    <textarea  name="descricao" ><?php if($resbd) echo $resbd->descricao;?></textarea>                                    
-                                </li>                                
-                                <li class="center">
-                                    <input type="button" onclick="location.href='?m=projetos&t=listar'" value="Cancelar"/>
-                                    <input type="submit" name="editar" value="Salvar Alterações"/>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </form>
+                <div class="content-wrapper">
+                <!-- Content Header (Page header) --> 
+        
+                <section class="content-header">
+                	<h1>
+                		Projetos
+                		<small>Incluir</small>
+                  	</h1>
+                  	<ol class="breadcrumb">
+                		<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+                		<li class="active">Incluir</li>
+                  	</ol>
+                </section> 
+    
+                <!-- Main content -->
+    			<section class="content">
+      				<div class="row">
+    	            <!-- left column -->
+    					<div class="col-md-6">
+                        <!-- general form elements -->
+    						<div class="box box-primary">
+    							<div class="box-header with-border">
+    								<h3 class="box-title">Informe os dados para cadastro</h3>
+    							</div>   	
+    							
+    							<!-- form start -->	
+    							<form class="userform" role="form" method="post" action="">
+    								<div class="box-body">
+    									<div class="form-group">
+              								<label>Código</label>
+              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->id;?>">
+    									</div>
+    									
+    									<div class="form-group">
+              								<label>Nome</label>
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->nome;?>">
+    									</div>
+                                        
+    									<div class="form-group">
+      										<label>Descrição</label>
+      										<textarea name="descricao" class="form-control" rows="3" placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
+        								</div>
+    								</div>                                
+                                  
+    								<div class="box-footer">  
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=projetos&t=listar'" >Cancelar</button>
+    									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
+    									 
+    								</div>                              
+    							</form>
+    		 				</div><!-- Final box-primary -->
+    					</div><!-- Final col-md-6 -->
+    				</div>
+    			</section>
+                <!-- /.content -->
+			</div> <!-- /.content-wrapper -->
+			 
+                   
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
@@ -200,7 +244,7 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Nome</label>
-              								<input  name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
     									</div>
                                         
     									<div class="form-group">

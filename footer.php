@@ -2,17 +2,15 @@
 	require_once("funcoes.php");
 	protegeArquivo(basename(__FILE__));
 ?>
-
  	
 
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      <?php
-      	
-      	//echo strftime("%A"); 
-      	echo strftime("%A").', '.strftime("%#d").' de '.strftime('%B').' de '.strftime('%Y'); ?>
+      <?php      	        
+        echo(iconv('ISO-8859-1', 'UTF-8', strftime('%A'))).', '.strftime("%#d").' de '.strftime('%B').' de '.strftime('%Y'); 
+      	?>
     </div>
     <!-- Default to the left -->
     <strong>Desenvolvido por CERAT-FO &copy; 2017 <a href="#"></a>.</strong> 

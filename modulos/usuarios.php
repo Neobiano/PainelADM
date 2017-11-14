@@ -178,6 +178,95 @@
 							}
 						);
 					</script>	
+					
+                    <div class="content-wrapper">
+                    	<!-- Content Header (Page header) --> 
+                    
+                    	<section class="content-header">
+                    		<h1>
+                    			Projetos
+                    			<small>Incluir</small>
+                    		</h1>
+                    		<ol class="breadcrumb">
+                    			<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+                    			<li class="active">Incluir</li>
+                    		</ol>
+                    	</section> 
+                    
+                    	<!-- Main content -->
+                    	<section class="content">
+                    		<div class="row">
+                    		<!-- left column -->
+                    			<div class="col-md-6">
+                    			<!-- general form elements -->
+                    				<div class="box box-primary">
+                    					<div class="box-header with-border">
+                    						<h3 class="box-title">Informe os dados para cadastro</h3>
+                    					</div>   	
+                    					
+                    					<!-- form start -->	
+                    					<form class="userform" role="form" method="post" action="">
+                    						<div class="box-body">
+                    							<div class="form-group">
+                    								<label>Código</label>
+                    								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                    								<label>Nome</label>
+                    								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                    							</div>
+                    							
+                    							
+                    							<div class="form-group">
+                    								<label>Email</label>
+                    								<input name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                    								<label>Email</label>
+                    								<input disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                    							</div>
+                    							
+                                                <div class="form-group">
+                                                	<label for="ativo">Ativo:</label>
+                                                	<label>
+                                                 		 <input type="checkbox" name="ativo" class="minimal" <?php
+																			if (!isAdmin())
+																				echo ' disabled';
+																			
+																			if ($resbd->ativo=='s')
+																				echo ' checked';
+																		?> />Habilitar ou desabilitar o usuário     		 
+                                               		 </label>                                                
+                    							</div>    
+                    							
+                    							<div class="form-group">
+                                                	<label for="adm">Administrador:</label>
+                                                	<label>
+                                                 		 <input type="checkbox" name="adm" class="minimal" <?php
+                                                                 		 if (!isAdmin())
+                                                                 		     echo ' disabled';
+                                                             		     
+                                                             		     if ($resbd->administrador == 's')
+                                                             		         echo ' checked';
+																		?> />dar controle total ao usuário     		 
+                                               		 </label>                                                
+                    							</div>                             
+                    					  
+                    						<div class="box-footer">  
+                    							 <button type="button" class="btn btn-default" onclick="location.href='?m=projetos&t=listar'" >Cancelar</button>
+                    							 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
+                    							 
+                    						</div>                              
+                    					</form>
+                    				</div><!-- Final box-primary -->
+                    			</div><!-- Final col-md-6 -->
+                    		</div>
+                    	</section>
+                    	<!-- /.content -->
+                    </div> <!-- /.content-wrapper -->
+                    
 					<form class="userform" method="post" action="">
 						<fieldset>
 							<legend>Informe os dados para alteração</legend>

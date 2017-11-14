@@ -7,21 +7,22 @@
 <!DOCTYPE html>
 <html lang="pt">
 	<head>
+		<meta charset="UTF-8" >
 		<!-- Font Awesome -->
-		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" >
 		<!-- Ionicons -->
-		<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+		<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css" >
 		<!-- Theme style -->
-		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">		  
+		<link rel="stylesheet" href="dist/css/AdminLTE.min.css" >		  
 		<link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-		<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<!--<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		<!-- Bootstrap 3.3.7 -->
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" >
 	    <!-- DataTables -->
-		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">		 
-		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-		<link rel="stylesheet" href="plugins/iCheck/square/blue.css">
-        <meta charset="utf-8">
+		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" >		 
+		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css" >
+		<link rel="stylesheet" href="plugins/iCheck/square/blue.css" >
+      
 		<title>Painel Administrativo</title>
 		<?php
 			loadCSS('style');			
@@ -177,7 +178,7 @@
 			                  <a href="#" class="btn btn-default btn-flat">Dados Pessoais</a>
 			                </div>
 			                <div class="pull-right">
-			                  <a href="#" class="btn btn-default btn-flat">Sair</a>
+			                  <a href="?logoff=true" class="btn btn-default btn-flat">Sair</a>
 			                </div>
 			              </li>
 			            </ul>
