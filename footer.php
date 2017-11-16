@@ -37,7 +37,7 @@
 	<script>
 	  $(function () {
 	  	
-	    $('#gridprojetos').DataTable({
+	    $('#gridfull').DataTable({
 	    	"oLanguage": {
 	                    "sZeroRecords": "Nenhum dado econtrado para exibição",
 	                    "sInfo": "Exibindo _START_ à _END_ de _TOTAL_ de registros",

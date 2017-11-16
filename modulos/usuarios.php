@@ -84,8 +84,7 @@
 			<?php				
 			break;
 			
-		case 'editar':
-			echo '<h2>Edição de Usuários</h2>';           
+		case 'editar':			           
 			$sessao = new sessao();
             
             //verificando se o usuário logado é admin, ou é o dono do cadastro            
@@ -122,7 +121,7 @@
                         $res = $user->retornaDados();
                         
                         //se o email foi alterado do inicilamente carregado para o registro
-                        if ($res->EMAIL != $_POST['email'])
+                        if ($res->email != $_POST['email'])
                         {
                             //verificando se já existe um email no BD como o 'novo' email cadastrado
                             if ($user->existeRegistro('email',$_POST['email']))
@@ -138,11 +137,11 @@
                             $user->atualizar($user);
                             if ($user->linhasafetadas==1)
                             {
-                                printMSG('Dados alterados com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>');
+                                printMSG('Dados alterados com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>','sucesso');
                                 unset($_POST);
                             }
-                            
-                            printMSG('Nenhum dado foi alterado. <a href="?m=usuarios&t=listar">Exibir cadastros</a>','alerta');
+                            else
+                              printMSG('Nenhum dado foi alterado. <a href="?m=usuarios&t=listar">Exibir cadastros</a>','alerta');
                         }
                                     
                     }
@@ -184,12 +183,12 @@
                     
                     	<section class="content-header">
                     		<h1>
-                    			Projetos
-                    			<small>Incluir</small>
+                    			Usuários
+                    			<small>Editar</small>
                     		</h1>
                     		<ol class="breadcrumb">
-                    			<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
-                    			<li class="active">Incluir</li>
+                    			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+                    			<li class="active">Editar</li>
                     		</ol>
                     	</section> 
                     
@@ -201,11 +200,11 @@
                     			<!-- general form elements -->
                     				<div class="box box-primary">
                     					<div class="box-header with-border">
-                    						<h3 class="box-title">Informe os dados para cadastro</h3>
+                    						<h3 class="box-title">Informe os dados para alteração</h3>
                     					</div>   	
                     					
                     					<!-- form start -->	
-                    					<form class="userform" role="form" method="post" action="">
+                    					<form name="userform" role="form" method="post" action="">
                     						<div class="box-body">
                     							<div class="form-group">
                     								<label>Código</label>
@@ -231,11 +230,11 @@
                                                 <div class="form-group">
                                                 	<label for="ativo">Ativo:</label>
                                                 	<label>
-                                                 		 <input type="checkbox" name="ativo" class="minimal" <?php
+                                                 		 <input type="checkbox" name="ativo"  <?php
 																			if (!isAdmin())
 																				echo ' disabled';
 																			
-																			if ($resbd->ativo=='s')
+																			if (strtoupper($resbd->ativo)=='S')
 																				echo ' checked';
 																		?> />Habilitar ou desabilitar o usuário     		 
                                                		 </label>                                                
@@ -244,18 +243,18 @@
                     							<div class="form-group">
                                                 	<label for="adm">Administrador:</label>
                                                 	<label>
-                                                 		 <input type="checkbox" name="adm" class="minimal" <?php
+                                                 		 <input type="checkbox"  name="adm"  <?php
                                                                  		 if (!isAdmin())
                                                                  		     echo ' disabled';
                                                              		     
-                                                             		     if ($resbd->administrador == 's')
+                                                             		     if (strtoupper($resbd->administrador) == 'S')
                                                              		         echo ' checked';
 																		?> />dar controle total ao usuário     		 
                                                		 </label>                                                
                     							</div>                             
                     					  
                     						<div class="box-footer">  
-                    							 <button type="button" class="btn btn-default" onclick="location.href='?m=projetos&t=listar'" >Cancelar</button>
+                    							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
                     							 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
                     							 
                     						</div>                              
@@ -266,50 +265,7 @@
                     	</section>
                     	<!-- /.content -->
                     </div> <!-- /.content-wrapper -->
-                    
-					<form class="userform" method="post" action="">
-						<fieldset>
-							<legend>Informe os dados para alteração</legend>
-							<ul>
-								<li>
-									<label for="nome">Nome:</label>
-									<input type="text" size="50" name="nome" value="<?php if($resbd) echo $resbd->nome; ?>"/>
-								</li>
-								<li>
-									<label for="email">Email:</label>
-									<input type="text" size="50" name="email" value="<?php if($resbd) echo $resbd->email; ?>"/>
-								</li>
-								<li>
-									<label for="login" >Login:</label>
-									<input type="text" size="35" name="login" disabled="disabled" value="<?php if($resbd) echo $resbd->login; ?>"/>
-								</li>								
-								<li>
-									<label for="ativo">Ativo:</label>
-									<input type="checkbox" name="ativo" <?php
-																			if (!isAdmin())
-																				echo 'disabled="disabled"';
-																			
-																			if ($resbd->ativo=='s')
-																				echo 'checked="checked"';
-																		?> />Habilitar ou desabilitar o usuário
-								</li>								
-								<li>
-									<label for="adm">Administrador:</label>
-									<input type="checkbox" name="adm" <?php
-																			if (!isAdmin())
-																				echo 'disabled="disabled"';
-																			
-																			if ($resbd->administrador == 's')
-																				echo 'checked="checked"';
-																		?> />dar controle total ao usuário
-								</li>
-								<li class="center">
-									<input type="button" onclick="location.href='?m=usuarios&t=listar'" value="Cancelar"/>
-									<input type="submit" name="editar" value="Salvar Alterações"/>
-								</li>
-							</ul>
-						</fieldset>
-					</form>
+                    			
 					
 				<?php	
 			}//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
@@ -317,8 +273,7 @@
 				printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
 		break;		
 			
-		case 'incluir':
-			echo '<h2>Cadastro de Usuários</h2>';
+		case 'incluir':			
             if (isset($_POST['cadastrar']))
 			{				    
 				$user = new usuario(
@@ -378,95 +333,154 @@
 							
 						}
 					);
-				</script>	
-			<form class="userform" method="post" action="">
-				<fieldset>
-					<legend>Informe os dados para cadastro</legend>
-					<ul>
-						<li>
-							<label for="nome">Nome:</label>
-							<input type="text" size="50" name="nome" value="<?php echo $_POST['nome']?>"/>
-						</li>
-						<li>
-							<label for="email">Email:</label>
-							<input type="text" size="50" name="email" value="<?php echo $_POST['email']?>"/>
-						</li>
-						<li>
-							<label for="login">Login:</label>
-							<input type="text" size="35" name="login" value="<?php echo $_POST['login']?>"/>
-						</li>
-						<li>
-							<label for="senha">Senha:</label>
-							<input type="password" size="25" name="senha" id="senha" value="<?php echo $_POST['senha']?>"/>
-						</li>
-						<li>
-							<label for="senhaconf">Repita a senha:</label>
-							<input type="password" size="25" name="senhaconf" value="<?php echo $_POST['senhaconf']?>"/>
-						</li>
-						<li>
-							<label for="adm">Administrador:</label>
-							<input type="checkbox" name="adm" <?php
-																	if (!isAdmin())
-																		echo 'disabled="disabled"';
-																	
-																	if ($_POST['adm'])
-																	 	echo 'checked="checked"';
-																?> />dar controle total ao usuário
-						</li>
-						<li class="center">
-							<input type="button" onclick="location.href='?m=usuarios&t=listar'" value="Cancelar"/>
-							<input type="submit" name="cadastrar" value="Salvar dados"/>
-						</li>
-					</ul>
-				</fieldset>
-			</form>
+				</script>
+				
+				<div class="content-wrapper">
+                    	<!-- Content Header (Page header) --> 
+                    
+                    	<section class="content-header">
+                    		<h1>
+                    			Usuários
+                    			<small>Editar</small>
+                    		</h1>
+                    		<ol class="breadcrumb">
+                    			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+                    			<li class="active">Editar</li>
+                    		</ol>
+                    	</section> 
+                    
+                    	<!-- Main content -->
+                    	<section class="content">
+                    		<div class="row">
+                    		<!-- left column -->
+                    			<div class="col-md-6">
+                    			<!-- general form elements -->
+                    				<div class="box box-primary">
+                    					<div class="box-header with-border">
+                    						<h3 class="box-title">Informe os dados para cadastro</h3>
+                    					</div>   	
+                    					
+                    					<!-- form start -->	
+                    					<form name="userform" role="form" method="post" action="">
+                    						<div class="box-body">                    							                    							
+                    							<div class="form-group">
+                    								<label>Nome</label>
+                    								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do usuário" value="<?php echo $_POST['nome'];?>">
+                    							</div>                    							
+                    							
+                    							<div class="form-group">
+                    								<label>Email</label>
+                    								<input name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php echo $_POST['email'];?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                    								<label>Login</label>
+                    								<input name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                                                  	<label for="senha">Senha</label>
+                                                  	<input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                  	<label for="senhaconf">Repita a senha</label>
+                                                  	<input name="senhaconf" id="senhaconf" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                                </div>                    							                                                
+                    							
+                    							<div class="form-group">
+                                                	<label for="adm">Administrador:</label>
+                                                	<label>
+                                                 		 <input type="checkbox"  name="adm"  <?php
+                                                                 		 if (!isAdmin())
+                                                                 		     echo ' disabled';
+                                                             		     
+                                                                 		 if ($_POST['adm'])
+                                                             		         echo ' checked';
+																		?> />dar controle total ao usuário     		 
+                                               		 </label>                                                
+                    							</div>                             
+                    					  
+                    						<div class="box-footer">  
+                    							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
+                    							 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar Dados</button>  									
+                    							 
+                    						</div>                              
+                    					</form>
+                    				</div><!-- Final box-primary -->
+                    			</div><!-- Final col-md-6 -->
+                    		</div>
+                    	</section>
+                    	<!-- /.content -->
+                    </div> <!-- /.content-wrapper -->                    			
 			<?php
 			break;
 		
-		case 'listar':
-			echo '<h2>Usuários cadastrados</h2>';
-	        loadCSS('data-table',NULL,TRUE);          
+		case 'listar':				               
 	        ?>
-	        <script type="text/javascript">
-	            $(document).ready(function(){
-	               $("#listausers").dataTable({
-	                "oLanguage": {
-	                    "sZeroRecords": "Nenhum dado econtrado para exibição",
-	                    "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ de registros",
-	                    "sInfoEmpty": "Nenhum registro para ser exibido",
-	                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-	                    "sSearch": "Pesquisar",
-	                },
-	                	
-	                "bPaginate": false,
-	                "aaSorting": [[0, "asc"]] 
-	               }); 
-	            });
-	        </script>
-	        <table cellspacing="0" cellpadding="0" border="0" class="display" id="listausers">
-	            <thead>
-	                <tr>
-	                    <th>Nome</th><th>Email</th><th>Login</th><th>Ativo/Adm</th><th>Cadastro</th><th>Ações</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <?php 
-	                $user = new usuario();
-	                $user->selecionaTudo($user);                	                                
-	                while ($res = $user->retornaDados()):
-	                    echo '<tr>';
-	                    printf('<td>%s</td>',$res->nome);
-	                    printf('<td>%s</td>',$res->email);
-	                    printf('<td>%s</td>',$res->login);
-	                    printf('<td class="center">%s/%s</td>',strtoupper($res->ativo),strtoupper($res->administrador));
-	                    printf('<td class="center">%s</td>',date("d/m/Y",strtotime($res->datacad)));
-	                    printf('<td class="center"><a href="?m=usuarios&t=incluir" title="Novo cadastro"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=usuarios&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a> <a href="?m=usuarios&t=senha&id=%s" title="Mudar senha"><img src="images/pass.png" alt="Mudar senha" /></a> <a href="?m=usuarios&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id,$res->id);
-	                    echo '</tr>';
-	                endwhile;               
-	                ?>
-	            </tbody>
-	        </table>
-			
+	        <div class="content-wrapper">             
+                <!-- Content Header (Page header) -->
+    		    <section class="content-header">
+    		      <h1>
+    		        Usuários
+    		        <small>Listagem</small>
+    		      </h1>
+    		      <ol class="breadcrumb">
+    		        <li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+    		        <li class="active">Listagem</li>
+    		      </ol>
+    		    </section>
+    		    
+    		     <!-- Main content -->
+        		<section class="content container-fluid">                
+                	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
+                	<div class="box">                              
+                    	<div class="box-body">
+                        	<table id="gridfull" class="table table-bordered table-striped">
+                           		<thead>
+                            		<tr>
+                              			<th>Código</th>
+                              			<th>Nome</th>
+                              			<th>Email</th>
+                              			<th>Login</th>
+                              			<th>Ativo/Adm</th>
+                              			<th>Cadastro</th>
+                              			<th>Ações</th>                  
+                            		</tr>
+                            	</thead>
+                            	<tbody>
+                                    <?php 
+                                    $user = new usuario();
+                                    $user->selecionaTudo($user);
+                                    while ($res = $user->retornaDados()):
+                                    echo '<tr>';
+                                        printf('<td>%s</td>',$res->id);
+                                        printf('<td>%s</td>',$res->nome);
+                                        printf('<td>%s</td>',$res->email);
+                                        printf('<td>%s</td>',$res->login);
+                                        printf('<td class="center">%s/%s</td>',strtoupper($res->ativo),strtoupper($res->administrador));
+                                        printf('<td class="center">%s</td>',date("d/m/Y",strtotime($res->datacad)));
+                                        printf('<td class="center"><a href="?m=usuarios&t=incluir" title="Novo cadastro"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=usuarios&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a> <a href="?m=usuarios&t=senha&id=%s" title="Mudar senha"><img src="images/pass.png" alt="Mudar senha" /></a> <a href="?m=usuarios&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id,$res->id);
+                                    echo '</tr>';
+                                    endwhile;               
+                                    ?>
+                             	</tbody>
+                            	<tfoot>
+                            		<tr>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th> 
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>          
+                            		</tr>
+                            	</tfoot>
+                        	</table>
+            			</div><!-- /.box -->                    
+            		</div><!-- /.box-body -->
+            	</section> <!-- /.Main content -->           
+			</div> <!-- /.content-wrapper -->				  			
 			<?php
 			break;	
 			
@@ -603,8 +617,7 @@ case 'senha':
 				printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
 		break;
 					
-		case 'excluir':
-            echo '<h2>Exclusão de Usuário</h2>';
+		case 'excluir':            
             $sessao = new sessao();			
             if (isAdmin()==true)
             {
@@ -622,7 +635,7 @@ case 'senha':
                         $user->deletar($user);
                         if ($user->linhasafetadas==1)
                         {
-                            printMSG('Registro excluído com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>');
+                            printMSG('Registro excluído com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>','sucesso');
                             unset($_POST);
                         }
                         else 
@@ -638,48 +651,94 @@ case 'senha':
                     printMSG('Usuário não definido, <a href="?usuarios&t=listar">escolha um usuário para excluir</a>','erro');
                 
                 //formulário de edição de usuário   
-                ?>                       
-                    <form class="userform" method="post" action="">
-                        <fieldset>
-                            <legend>Confira os dados para exclusão</legend>
-                            <ul>
-                                <li>
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" size="50" name="nome" disabled="disabled"  value="<?php if($resbd) echo $resbd->nome; ?>"/>
-                                </li>
-                                <li>
-                                    <label for="email">Email:</label>
-                                    <input type="text" size="50" name="email" disabled="disabled"  value="<?php if($resbd) echo $resbd->email; ?>"/>
-                                </li>
-                                <li>
-                                    <label for="login" >Login:</label>
-                                    <input type="text" size="35" name="login" disabled="disabled" value="<?php if($resbd) echo $resbd->login; ?>"/>
-                                </li>                               
-                                <li>
-                                    <label for="ativo">Ativo:</label>
-                                    <input type="checkbox" name="ativo" disabled="disabled" 
-                                                                        <?php                                                                            
-                                                                            
-                                                                            if ($resbd->ativo=='s')
-                                                                                echo 'checked="checked"';
-                                                                        ?> />Habilitar ou desabilitar o usuário
-                                </li>                               
-                                <li>
-                                    <label for="adm">Administrador:</label>
-                                    <input type="checkbox" name="adm" disabled="disabled" 
-                                                                        <?php                                                                           
-                                                                            
-                                                                            if ($resbd->administrador == 's')
-                                                                                echo 'checked="checked"';
-                                                                        ?> />dar controle total ao usuário
-                                </li>
-                                <li class="center">
-                                    <input type="button" onclick="location.href='?m=usuarios&t=listar'" value="Cancelar"/>
-                                    <input type="submit" name="excluir" value="Confirmar exclusão"/>
-                                </li>
-                            </ul>
-                        </fieldset>
-                    </form>
+                ?>    
+                	<div class="content-wrapper">
+                    	<!-- Content Header (Page header) --> 
+                    
+                    	<section class="content-header">
+                    		<h1>
+                    			Usuários
+                    			<small>Excluir</small>
+                    		</h1>
+                    		<ol class="breadcrumb">
+                    			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+                    			<li class="active">Exlcuir</li>
+                    		</ol>
+                    	</section> 
+                    
+                    	<!-- Main content -->
+                    	<section class="content">
+                    		<div class="row">
+                    		<!-- left column -->
+                    			<div class="col-md-6">
+                    			<!-- general form elements -->
+                    				<div class="box box-primary">
+                    					<div class="box-header with-border">
+                    						<h3 class="box-title">Informe os dados para alteração</h3>
+                    					</div>   	
+                    					
+                    					<!-- form start -->	
+                    					<form name="userform" role="form" method="post" action="">
+                    						<div class="box-body">
+                    							<div class="form-group">
+                    								<label>Código</label>
+                    								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                    								<label>Nome</label>
+                    								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                    							</div>
+                    							
+                    							
+                    							<div class="form-group">
+                    								<label>Email</label>
+                    								<input disabled name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                    							</div>
+                    							
+                    							<div class="form-group">
+                    								<label>Login</label>
+                    								<input disabled disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                    							</div>
+                    							
+                                                <div class="form-group">
+                                                	<label for="ativo">Ativo:</label>
+                                                	<label>
+                                                 		 <input disabled type="checkbox" name="ativo"  <?php
+																			if (!isAdmin())
+																				echo ' disabled';
+																			
+																			if (strtoupper($resbd->ativo)=='S')
+																				echo ' checked';
+																		?> />Habilitar ou desabilitar o usuário     		 
+                                               		 </label>                                                
+                    							</div>    
+                    							
+                    							<div class="form-group">
+                                                	<label for="adm">Administrador:</label>
+                                                	<label>
+                                                 		 <input disabled type="checkbox"  name="adm"  <?php
+                                                                 		 if (!isAdmin())
+                                                                 		     echo ' disabled';
+                                                             		     
+                                                             		     if (strtoupper($resbd->administrador) == 'S')
+                                                             		         echo ' checked';
+																		?> />dar controle total ao usuário     		 
+                                               		 </label>                                                
+                    							</div>                             
+                    					  
+                    						<div class="box-footer">  
+                    							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
+                    							 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
+                    							 
+                    						</div>                              
+                    					</form>
+                    				</div><!-- Final box-primary -->
+                    			</div><!-- Final col-md-6 -->
+                    		</div>
+                    	</section>
+                    	<!-- /.content -->
+                    </div> <!-- /.content-wrapper -->                                                           
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

@@ -26,8 +26,7 @@
 		<title>Painel Administrativo</title>
 		<?php
 			loadCSS('style');			
-	        loadJS('geral');
-			 
+	        loadJS('geral');			 
 		?>
 	</head> 
 

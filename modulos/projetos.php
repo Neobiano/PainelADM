@@ -15,8 +15,7 @@
     
     switch ($tela) 
     {                 
-        case 'editar':
-            echo '<h2>Edição de Projetos</h2>';           
+        case 'editar':                     
             $sessao = new sessao();
             
             //verificando se o usuário logado é admin            
@@ -291,7 +290,7 @@
                 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
                 	<div class="box">                              
                     	<div class="box-body">
-                        	<table id="gridprojetos" class="table table-bordered table-striped">
+                        	<table id="gridfull" class="table table-bordered table-striped">
                            		<thead>
                             		<tr>
                               			<th>Código</th>
@@ -329,9 +328,7 @@
 			</div> <!-- /.content-wrapper -->
             <?php
             break;  
-            
-
-                    
+                              
         case 'excluir':        
             $sessao = new sessao();
             if (isAdmin()==true)
