@@ -306,7 +306,7 @@
 					$user->inserir($user);
 					if ($user->linhasafetadas==1)
 					{
-						printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=usuarios&t=listar">Exibir Cadastros</a>');
+						printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=usuarios&t=listar">Exibir Cadastros</a>','sucesso');
 						unset($_POST);
 					}	
 				}								
@@ -503,7 +503,7 @@ case 'senha':
 						$user->atualizar($user);
 						if ($user->linhasafetadas==1)
 						{
-							printMSG('Senha alterada com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>');
+							printMSG('Senha alterada com sucesso. <a href="?m=usuarios&t=listar">Exibir cadastros</a>','sucesso');
 							unset($_POST);
 						}
 						else 
@@ -538,80 +538,80 @@ case 'senha':
 								
 							}
 						);
-					</script>	
-					<body class="hold-transition login-page">
-						<div class="login-box">
-						  <div class="login-logo">
-						    <a href="../../index2.html"><b>Admin</b>LTE</a>
-						  </div>
-						  <!-- /.login-logo -->
-						  <div class="login-box-body">
-						    <p class="login-box-msg">Sign in to start your session</p>
-					<form class="userform" method="post" action="">
-						<fieldset>
-							<legend>Informe os dados para alteração</legend>
-							<ul>
-								<li>
-									<label for="nome">Nome:</label>
-									<input type="text" size="50" name="nome" disabled="disabled" value="<?php if($resbd) echo $resbd->nome; ?>"/>
-								</li>
-								<li>
-									<label for="email">Email:</label>
-									<input type="text" size="50" name="email" disabled="disabled" value="<?php if($resbd) echo $resbd->email; ?>"/>
-								</li>
-								<li>
-									<label for="login" >Login:</label>
-									<input type="text" size="35" name="login" disabled="disabled" value="<?php if($resbd) echo $resbd->login; ?>"/>
-								</li>								
-								<li>
-									<label for="senha">Senha:</label>
-									<input type="password" size="25" name="senha" id="senha" value="<?php echo $_POST['senha']?>"/>
-								</li>
-								<li>
-									<label for="senhaconf">Repita a senha:</label>
-									<input type="password" size="25" name="senhaconf" value="<?php echo $_POST['senhaconf']?>"/>
-								</li>
-								<li class="center">
-									<input type="button" onclick="location.href='?m=usuarios&t=listar'" value="Cancelar"/>
-									<input type="submit" name="mudasenha" value="Salvar Alterações"/>
-								</li>
-							</ul>
-						</fieldset>
-					</form>
-					<div class="social-auth-links text-center">
-				      <p>- OR -</p>
-				      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-				        Facebook</a>
-				      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-				        Google+</a>
-				    </div>
-				    <!-- /.social-auth-links -->
+					</script>
 				
-				    <a href="#">I forgot my password</a><br>
-				    <a href="register.html" class="text-center">Register a new membership</a>
+				<div class="content-wrapper">
+            	<!-- Content Header (Page header) --> 
+            
+            	<section class="content-header">
+            		<h1>
+            			Usuários
+            			<small>Alterar Senha</small>
+            		</h1>
+            		<ol class="breadcrumb">
+            			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+            			<li class="active">Alterar Senha</li>
+            		</ol>
+            	</section> 
+            
+            	<!-- Main content -->
+            	<section class="content">
+            		<div class="row">
+            		<!-- left column -->
+            			<div class="col-md-6">
+            			<!-- general form elements -->
+            				<div class="box box-primary">
+            					<div class="box-header with-border">
+            						<h3 class="box-title">Informe os dados para alteração</h3>
+            					</div>   	
+            					
+            					<!-- form start -->	
+            					<form name="userform" role="form" method="post" action="">
+            						<div class="box-body">
+            							<div class="form-group">
+            								<label>Código</label>
+            								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+            							</div>
+            							
+            							<div class="form-group">
+            								<label>Nome</label>
+            								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+            							</div>
+            							
+            							
+            							<div class="form-group">
+            								<label>Email</label>
+            								<input disabled name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+            							</div>
+            							
+            							<div class="form-group">
+            								<label>Login</label>
+            								<input disabled disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+            							</div>
+            							
+                                        <div class="form-group">
+                                          	<label for="senha">Senha</label>
+                                          	<input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                          	<label for="senhaconf">Repita a senha</label>
+                                          	<input name="senhaconf" id="senhaconf" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                        </div>                           
+            					  
+            						<div class="box-footer">  
+            							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
+            							 <button type="submit" name="mudasenha" class="btn btn-info pull-right">Salvar Alterações</button>  									            							 
+            						</div>                              
+            					</form>
+            				</div><!-- Final box-primary -->
+            			</div><!-- Final col-md-6 -->
+            		</div>
+            	</section>
+            	<!-- /.content -->
+            </div> <!-- /.content-wrapper -->										
 				
-				  </div>
-				  <!-- /.login-box-body -->
-				</div>
-				<!-- /.login-box -->
-				
-				<!-- jQuery 3 -->
-				<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-				<!-- Bootstrap 3.3.7 -->
-				<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-				<!-- iCheck -->
-				<script src="../../plugins/iCheck/icheck.min.js"></script>
-				<script>
-				  $(function () {
-				    $('input').iCheck({
-				      checkboxClass: 'icheckbox_square-blue',
-				      radioClass: 'iradio_square-blue',
-				      increaseArea: '20%' // optional
-				    });
-				  });
-				</script>
-				</body>
-				<?php	
+			<?php	
 			}//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
 			else
 				printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
