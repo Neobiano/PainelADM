@@ -426,7 +426,7 @@
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>

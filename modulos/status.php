@@ -7,9 +7,9 @@
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
     {
-        $qtipo = new tipo();
-        $qtipo->selecionaTudo($qtipo);
-        if ($qtipo->linhasafetadas <= 0)
+        $qstatus = new status();
+        $qstatus->selecionaTudo($qstatus);
+        if ($qstatus->linhasafetadas <= 0)
             $tela = 'incluir';        
     }
     
@@ -30,22 +30,23 @@
                     if (isset($_POST['editar']))
                     {
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
-                        $tipo = new tipo(array(
+                        $status = new status(array(
                             'nome'=>$_POST['nome']
+                            
                         ));
                         
-                        $tipo->valorpk = $id;
-                        $tipo->extras_select = "WHERE id=$id";
-                        $tipo->selecionaTudo($tipo);
-                        $res = $tipo->retornaDados();
+                        $status->valorpk = $id;
+                        $status->extras_select = "WHERE id=$id";
+                        $status->selecionaTudo($status);
+                        $res = $status->retornaDados();
                         
                         //se o NOME foi alterado do inicilamente carregado para o registro
                         if ($res->nome != $_POST['nome'])
                         {
                             //verificando se já existe um email no BD como o 'novo' email cadastrado
-                            if ($tipo->existeRegistro('nome',$_POST['nome']))
+                            if ($status->existeRegistro('nome',$_POST['nome']))
                             {
-                                printMSG('tipo já existe no sistema, escolha outro nome!','erro');
+                                printMSG('status já existe no sistema, escolha outro nome!','erro');
                                 $duplicado = TRUE;
                             }
                         }
@@ -53,26 +54,26 @@
                         //se não existe vai atualizar normalmente
                         if ($duplicado!=TRUE)
                         {
-                            $tipo->atualizar($tipo);
-                            if ($tipo->linhasafetadas==1)
+                            $status->atualizar($status);
+                            if ($status->linhasafetadas==1)
                             {
-                                printMSG('Dados alterados com sucesso. <a href="?m=tipos&t=listar">Exibir cadastros</a>','sucesso');
+                                printMSG('Dados alterados com sucesso. <a href="?m=status&t=listar">Exibir cadastros</a>','sucesso');
                                 unset($_POST);
                             }
 							else                         
-                            	printMSG('Nenhum dado foi alterado. <a href="?m=tipos&t=listar">Exibir cadastros</a>','alerta');
+                            	printMSG('Nenhum dado foi alterado. <a href="?m=status&t=listar">Exibir cadastros</a>','alerta');
                         }
                                     
                     }
                     
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
-                    $tipobd = new tipo();
-                    $tipobd->extras_select = "WHERE id=$id";
-                    $tipobd->selecionaTudo($tipobd);
-                    $resbd = $tipobd->retornaDados();
+                    $statusbd = new status();
+                    $statusbd->extras_select = "WHERE id=$id";
+                    $statusbd->selecionaTudo($statusbd);
+                    $resbd = $statusbd->retornaDados();
                 }
                 else
-                    printMSG('tipo não definido, <a href="?m=tipos&t=listar">escolha um tipo para alterar</a>','erro');
+                    printMSG('status não definido, <a href="?m=status&t=listar">escolha um status para alterar</a>','erro');
                 
                 
                 //formulário de edição de usuário   
@@ -102,11 +103,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tipos
+                		Status
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -127,18 +128,18 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php if($resbd) echo $resbd->id;?>">
+              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
     									</div>
     									
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php if($resbd) echo $resbd->nome;?>">
-    									</div>
-                                            									
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
+    									</div>                                        
+    							
     								</div>                                
                                   
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
     									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
     									 
     								</div>                              
@@ -148,8 +149,11 @@
     				</div>
     			</section>
                 <!-- /.content -->
-			</div> <!-- /.content-wrapper -->			                                     
-                <?php   
+			</div> <!-- /.content-wrapper -->
+			 
+                  
+                    
+            <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
             else
                 printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
@@ -159,27 +163,27 @@
             if (isset($_POST['cadastrar']))
             {    
               
-                $tipo = new tipo(
+                $status = new status(
                                         array(
-                                        'nome'=>$_POST['nome']                                       
+                                        'nome'=>$_POST['nome']                                        
                                         )
                                     ); 
              
             
                 //verificando se ja existem registros com o parametro solicitado para inserção      
-                if ($tipo->existeRegistro('nome',$_POST['nome'])) 
+                if ($status->existeRegistro('nome',$_POST['nome'])) 
                 {
-                    printMSG('tipo já existe no sistema, escolha outro nome!','erro');
+                    printMSG('status já existe no sistema, escolha outro nome!','erro');
                     $duplicado = true;
                 }
                                
                 if ($duplicado!=true) 
                 {
-                    $tipo->inserir($tipo);
+                    $status->inserir($status);
                    
-                    if ($tipo->linhasafetadas==1)
+                    if ($status->linhasafetadas==1)
                     {
-                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=tipos&t=listar">Exibir Cadastros</a>','sucesso');   
+                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=status&t=listar">Exibir Cadastros</a>','sucesso');   
                         unset($_POST);                                                                                                                                           
                     }   
                 }                               
@@ -209,11 +213,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tipos
+                		Status
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -234,13 +238,13 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php echo $_POST['nome']?>">
-    									</div>
-                                            								
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
+    									</div>                                        
+    									
     								</div>                                
                                   
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
     									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
     									 
     								</div>                              
@@ -251,7 +255,8 @@
     			</section>
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->
-        	
+  
+      		
             <?php
             break;
         
@@ -262,11 +267,11 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        Tipos
+    		        Status
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> Status</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>
@@ -280,19 +285,19 @@
                            		<thead>
                             		<tr>
                               			<th>Código</th>
-                              			<th>Nome</th>                              			                 
-                              			<th>Ações</th>
+                              			<th>Nome</th>                              			
+                              			<th>Ações</th>                  
                             		</tr>
                             	</thead>
                             	<tbody>
                                     <?php 
-                                    $tipo = new tipo();
-                                    $tipo->selecionaTudo($tipo);                       					                                              
-                                    while ($res = $tipo->retornaDados()):
+                                    $status = new status();
+                                    $status->selecionaTudo($status);                       					                                              
+                                    while ($res = $status->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td>%s</td>',$res->nome);                                                               
-                                        printf('<td><a href="?m=tipos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tipos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tipos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
+                                        printf('<td><a href="?m=status&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=status&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=status&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
                                     ?>
@@ -301,7 +306,7 @@
                             		<tr>
                               			<th></th>
                               			<th></th>
-                              			<th></th>                              			        
+                              			<th></th>                              			    
                             		</tr>
                             	</tfoot>
                         	</table>
@@ -323,40 +328,40 @@
                     //iniciando processo de salvamento se o usuário deu POST
                     if (isset($_POST['excluir']))
                     {
-                        $tipo = new tipo();
-                        $tipo->valorpk =$id;                   
+                        $status = new status();
+                        $status->valorpk =$id;                   
                                                 
                         
-                        $tipo->deletar($tipo);
-                        if ($tipo->linhasafetadas==1)
+                        $status->deletar($status);
+                        if ($status->linhasafetadas==1)
                         {
-                            printMSG('Registro excluído com sucesso. <a href="?m=tipos&t=listar">Exibir cadastros</a>','sucesso');                                                     
+                            printMSG('Registro excluído com sucesso. <a href="?m=status&t=listar">Exibir cadastros</a>','sucesso');                                                     
                             unset($_POST);                           
                         }
                         else 
-                            printMSG('Nenhum dado foi excluído. <a href="?m=tipos&t=listar">Exibir cadastros</a>','alerta');
+                            printMSG('Nenhum dado foi excluído. <a href="?m=status&t=listar">Exibir cadastros</a>','alerta');
                         
                     } //final isset $_POST['excluir']
-                    $tipobd = new tipo();
-                    $tipobd->extras_select = "where id=$id";
-                    $tipobd->selecionaTudo($tipobd);
-                    $resbd = $tipobd->retornaDados();                   
+                    $statusbd = new status();
+                    $statusbd->extras_select = "where id=$id";
+                    $statusbd->selecionaTudo($statusbd);
+                    $resbd = $statusbd->retornaDados();                   
                 }//final isset $_GET['id']
                 else
-                    printMSG('tipo não definido, <a href="?tipos&t=listar">escolha um tipo para excluir</a>','erro');
+                    printMSG('status não definido, <a href="?status&t=listar">escolha um status para excluir</a>','erro');
                 
-                //formulário de edição de tipo   
+                //formulário de edição de status   
                 ?>   
                 	<div class="content-wrapper">
                     <!-- Content Header (Page header) --> 
             
                     <section class="content-header">
                     	<h1>
-                    		Tipos
+                    		Status
                     		<small>Excluir</small>
                       	</h1>
                       	<ol class="breadcrumb">
-                    		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                    		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
                     		<li class="active">Excluir</li>
                       	</ol>
                     </section> 
@@ -383,11 +388,13 @@
                                             <div class="form-group">
                   								<label>Nome</label>
                   								<input  name="nome" type="text" class="form-control" disabled value="<?php if($resbd) echo $resbd->nome;?>">
-        									</div>        									        									
+        									</div>
+        									
+        									
         								</div>                                
                                       
         								<div class="box-footer">  
-        									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+        									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
         									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
         									 
         								</div>                              

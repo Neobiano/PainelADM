@@ -102,11 +102,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		prioridades
+                		Prioridades
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> prioridades</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -209,11 +209,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		prioridades
+                		Prioridades
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> prioridades</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -262,11 +262,11 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        prioridades
+    		        Prioridades
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> prioridades</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>
@@ -280,7 +280,8 @@
                            		<thead>
                             		<tr>
                               			<th>Código</th>
-                              			<th>Nome</th>                              			                 
+                              			<th>Nome</th>
+                              			<th>Ações</th>                               			                 
                             		</tr>
                             	</thead>
                             	<tbody>
@@ -298,6 +299,7 @@
                              	</tbody>
                             	<tfoot>
                             		<tr>
+                              			<th></th>
                               			<th></th>
                               			<th></th>                              			        
                             		</tr>
@@ -350,11 +352,11 @@
             
                     <section class="content-header">
                     	<h1>
-                    		prioridades
+                    		Prioridades
                     		<small>Excluir</small>
                       	</h1>
                       	<ol class="breadcrumb">
-                    		<li><a ><i class="fa fa-dashboard"></i> prioridades</a></li>
+                    		<li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
                     		<li class="active">Excluir</li>
                       	</ol>
                     </section> 

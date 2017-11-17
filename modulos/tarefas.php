@@ -7,9 +7,9 @@
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
     {
-        $qtipo = new tipo();
-        $qtipo->selecionaTudo($qtipo);
-        if ($qtipo->linhasafetadas <= 0)
+        $qtarefa = new tarefa();
+        $qtarefa->selecionaTudo($qtarefa);
+        if ($qtarefa->linhasafetadas <= 0)
             $tela = 'incluir';        
     }
     
@@ -29,23 +29,23 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
-                        // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
-                        $tipo = new tipo(array(
+                        // se for usuário do tarefa admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
+                        $tarefa = new tarefa(array(
                             'nome'=>$_POST['nome']
                         ));
                         
-                        $tipo->valorpk = $id;
-                        $tipo->extras_select = "WHERE id=$id";
-                        $tipo->selecionaTudo($tipo);
-                        $res = $tipo->retornaDados();
+                        $tarefa->valorpk = $id;
+                        $tarefa->extras_select = "WHERE id=$id";
+                        $tarefa->selecionaTudo($tarefa);
+                        $res = $tarefa->retornaDados();
                         
                         //se o NOME foi alterado do inicilamente carregado para o registro
                         if ($res->nome != $_POST['nome'])
                         {
                             //verificando se já existe um email no BD como o 'novo' email cadastrado
-                            if ($tipo->existeRegistro('nome',$_POST['nome']))
+                            if ($tarefa->existeRegistro('nome',$_POST['nome']))
                             {
-                                printMSG('tipo já existe no sistema, escolha outro nome!','erro');
+                                printMSG('tarefa já existe no sistema, escolha outro nome!','erro');
                                 $duplicado = TRUE;
                             }
                         }
@@ -53,26 +53,26 @@
                         //se não existe vai atualizar normalmente
                         if ($duplicado!=TRUE)
                         {
-                            $tipo->atualizar($tipo);
-                            if ($tipo->linhasafetadas==1)
+                            $tarefa->atualizar($tarefa);
+                            if ($tarefa->linhasafetadas==1)
                             {
-                                printMSG('Dados alterados com sucesso. <a href="?m=tipos&t=listar">Exibir cadastros</a>','sucesso');
+                                printMSG('Dados alterados com sucesso. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','sucesso');
                                 unset($_POST);
                             }
 							else                         
-                            	printMSG('Nenhum dado foi alterado. <a href="?m=tipos&t=listar">Exibir cadastros</a>','alerta');
+                            	printMSG('Nenhum dado foi alterado. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','alerta');
                         }
                                     
                     }
                     
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
-                    $tipobd = new tipo();
-                    $tipobd->extras_select = "WHERE id=$id";
-                    $tipobd->selecionaTudo($tipobd);
-                    $resbd = $tipobd->retornaDados();
+                    $tarefabd = new tarefa();
+                    $tarefabd->extras_select = "WHERE id=$id";
+                    $tarefabd->selecionaTudo($tarefabd);
+                    $resbd = $tarefabd->retornaDados();
                 }
                 else
-                    printMSG('tipo não definido, <a href="?m=tipos&t=listar">escolha um tipo para alterar</a>','erro');
+                    printMSG('tarefa não definido, <a href="?m=tarefas&t=listar">escolha um tarefa para alterar</a>','erro');
                 
                 
                 //formulário de edição de usuário   
@@ -102,11 +102,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tipos
+                		tarefas
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> tarefas</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -127,18 +127,18 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php if($resbd) echo $resbd->id;?>">
+              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do tarefa" value="<?php if($resbd) echo $resbd->id;?>">
     									</div>
     									
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php if($resbd) echo $resbd->nome;?>">
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tarefa" value="<?php if($resbd) echo $resbd->nome;?>">
     									</div>
                                             									
     								</div>                                
                                   
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tarefas&t=listar'" >Cancelar</button>
     									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
     									 
     								</div>                              
@@ -159,7 +159,7 @@
             if (isset($_POST['cadastrar']))
             {    
               
-                $tipo = new tipo(
+                $tarefa = new tarefa(
                                         array(
                                         'nome'=>$_POST['nome']                                       
                                         )
@@ -167,19 +167,19 @@
              
             
                 //verificando se ja existem registros com o parametro solicitado para inserção      
-                if ($tipo->existeRegistro('nome',$_POST['nome'])) 
+                if ($tarefa->existeRegistro('nome',$_POST['nome'])) 
                 {
-                    printMSG('tipo já existe no sistema, escolha outro nome!','erro');
+                    printMSG('tarefa já existe no sistema, escolha outro nome!','erro');
                     $duplicado = true;
                 }
                                
                 if ($duplicado!=true) 
                 {
-                    $tipo->inserir($tipo);
+                    $tarefa->inserir($tarefa);
                    
-                    if ($tipo->linhasafetadas==1)
+                    if ($tarefa->linhasafetadas==1)
                     {
-                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=tipos&t=listar">Exibir Cadastros</a>','sucesso');   
+                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=tarefas&t=listar">Exibir Cadastros</a>','sucesso');   
                         unset($_POST);                                                                                                                                           
                     }   
                 }                               
@@ -209,11 +209,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tipos
+                		tarefas
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> tarefas</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -234,13 +234,13 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tipo" value="<?php echo $_POST['nome']?>">
+              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do tarefa" value="<?php echo $_POST['nome']?>">
     									</div>
                                             								
     								</div>                                
                                   
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=tarefas&t=listar'" >Cancelar</button>
     									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
     									 
     								</div>                              
@@ -262,11 +262,11 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        Tipos
+    		        tarefas
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> tarefas</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>
@@ -286,13 +286,13 @@
                             	</thead>
                             	<tbody>
                                     <?php 
-                                    $tipo = new tipo();
-                                    $tipo->selecionaTudo($tipo);                       					                                              
-                                    while ($res = $tipo->retornaDados()):
+                                    $tarefa = new tarefa();
+                                    $tarefa->selecionaTudo($tarefa);                       					                                              
+                                    while ($res = $tarefa->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td>%s</td>',$res->nome);                                                               
-                                        printf('<td><a href="?m=tipos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tipos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tipos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
+                                        printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
                                     ?>
@@ -323,40 +323,40 @@
                     //iniciando processo de salvamento se o usuário deu POST
                     if (isset($_POST['excluir']))
                     {
-                        $tipo = new tipo();
-                        $tipo->valorpk =$id;                   
+                        $tarefa = new tarefa();
+                        $tarefa->valorpk =$id;                   
                                                 
                         
-                        $tipo->deletar($tipo);
-                        if ($tipo->linhasafetadas==1)
+                        $tarefa->deletar($tarefa);
+                        if ($tarefa->linhasafetadas==1)
                         {
-                            printMSG('Registro excluído com sucesso. <a href="?m=tipos&t=listar">Exibir cadastros</a>','sucesso');                                                     
+                            printMSG('Registro excluído com sucesso. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','sucesso');                                                     
                             unset($_POST);                           
                         }
                         else 
-                            printMSG('Nenhum dado foi excluído. <a href="?m=tipos&t=listar">Exibir cadastros</a>','alerta');
+                            printMSG('Nenhum dado foi excluído. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','alerta');
                         
                     } //final isset $_POST['excluir']
-                    $tipobd = new tipo();
-                    $tipobd->extras_select = "where id=$id";
-                    $tipobd->selecionaTudo($tipobd);
-                    $resbd = $tipobd->retornaDados();                   
+                    $tarefabd = new tarefa();
+                    $tarefabd->extras_select = "where id=$id";
+                    $tarefabd->selecionaTudo($tarefabd);
+                    $resbd = $tarefabd->retornaDados();                   
                 }//final isset $_GET['id']
                 else
-                    printMSG('tipo não definido, <a href="?tipos&t=listar">escolha um tipo para excluir</a>','erro');
+                    printMSG('tarefa não definido, <a href="?tarefas&t=listar">escolha um tarefa para excluir</a>','erro');
                 
-                //formulário de edição de tipo   
+                //formulário de edição de tarefa   
                 ?>   
                 	<div class="content-wrapper">
                     <!-- Content Header (Page header) --> 
             
                     <section class="content-header">
                     	<h1>
-                    		Tipos
+                    		tarefas
                     		<small>Excluir</small>
                       	</h1>
                       	<ol class="breadcrumb">
-                    		<li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
+                    		<li><a ><i class="fa fa-dashboard"></i> tarefas</a></li>
                     		<li class="active">Excluir</li>
                       	</ol>
                     </section> 
@@ -387,7 +387,7 @@
         								</div>                                
                                       
         								<div class="box-footer">  
-        									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
+        									 <button type="button" class="btn btn-default" onclick="location.href='?m=tarefas&t=listar'" >Cancelar</button>
         									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
         									 
         								</div>                              
