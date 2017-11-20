@@ -29,17 +29,18 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
+                        printMSG('Veio pelo editar <a href="?m=tarefas&t=listar">editar</a>','sucesso');
                         // se for usuário do tarefa admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $tarefa = new tarefa(array(
                             'assunto'=>$_POST['assunto'],
-                            'id_tipo'=>$_POST['id_tipo'],
-                            'id_status'=>$_POST['id_status'],
-                            'id_prioridade'=>$_POST['id_prioridade'],
-                            'id_projeto'=>$_POST['id_projeto'],
-                            'id_categoria'=>$_POST['id_categoria'],
-                            'data_inicio'=>$_POST['data_inicio'],
-                            'data_fim'=>$_POST['data_fim'],
-                            'data_cacad'=>$_POST['data_cacad']                            
+                            'id_tipo'=>$_POST['tipo'],
+                            'id_status'=>$_POST['status'],
+                            'id_prioridade'=>$_POST['prioridade'],
+                            'id_projeto'=>$_POST['projeto'],
+                            'id_categoria'=>$_POST['categoria'],
+                            'data_inicio'=>$_POST['dataini'],
+                            'data_fim'=>$_POST['datafim'],
+                            'data_cacad'=>$_POST['datafim']
                         ));
                         
                         $tarefa->valorpk = $id;
@@ -59,7 +60,7 @@
                         }
 
                         //se não existe vai atualizar normalmente
-                        if ($duplicado!=TRUE)
+                       /* if ($duplicado!=TRUE)
                         {
                             $tarefa->atualizar($tarefa);
                             if ($tarefa->linhasafetadas==1)
@@ -69,9 +70,11 @@
                             }
 							else                         
                             	printMSG('Nenhum dado foi alterado. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','alerta');
-                        }
+                        }*/
                                     
-                    }
+                    }//if (isset($_POST['editar'])) - final
+                    else
+                        printMSG('Não veio pelo editar <a href="?m=tarefas&t=listar">editar</a>','erro');
                     
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
                     $tarefabd = new tarefa();
@@ -117,16 +120,17 @@
             									</div>            									                                                         								
             									<div class="col-xs-2">
                       								<label>Tipo</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="tipo" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qtipo = new tipo();                                                	
                                                             $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
                                                             while ($res = $qtipo->retornaDados())
                                                             {                                         
                                                                 if ($resbd->id_tipo == $res->id)
-                                                                  printf('<option selected="selected">%s</option>',$res->nome);
+                                                                    printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
                                                                 else
-                                                                  printf('<option>%s</option>',$res->nome);                                                                                                                                                                     
+                                                                    printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                             } 
                                                         ?>                                              
                                                     </select>
@@ -146,48 +150,51 @@
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
                       								<label>Prioridade</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="prioridade" class="form-control select2 input-sm" style="width: 100%;">
+                                                    <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qprioridade = new prioridade();
                                                         	$qprioridade->selecionaTudo($qprioridade);
                                                         	while ($res = $qprioridade->retornaDados())
                                                         	{
                                                         	    if ($resbd->id_prioridade == $res->id)
-                                                        	        printf('<option selected="selected">%s</option>',$res->nome);
-                                                        	        else
-                                                        	            printf('<option>%s</option>',$res->nome);
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                         	} 
                                                         ?>                                              
                                                     </select>
             									</div>  
             									<div class="col-xs-4">
                       								<label>Categoria</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="categoria" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qcategoria = new categoria();
                                                         	$qcategoria->selecionaTudo($qcategoria);
                                                         	while ($res = $qcategoria->retornaDados())
                                                         	{
                                                         	    if ($resbd->id_categoria == $res->id)
-                                                        	        printf('<option selected="selected">%s</option>',$res->nome);
-                                                        	        else
-                                                        	            printf('<option>%s</option>',$res->nome);
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                         	} 
                                                         ?>                                              
                                                     </select>
             									</div> 
             									<div class="col-xs-4">
                       								<label>Status</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="status" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qstatus= new status();
                                                         	$qstatus->selecionaTudo($qstatus);
                                                         	while ($res = $qstatus->retornaDados())
                                                         	{
                                                         	    if ($resbd->id_status == $res->id)
-                                                        	        printf('<option selected="selected">%s</option>',$res->nome);
-                                                        	        else
-                                                        	            printf('<option>%s</option>',$res->nome);
+                                                        	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                         	} 
                                                         ?>                                              
                                                     </select>
@@ -199,36 +206,58 @@
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
                       								<label>Projeto</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="projeto" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                     	   $qprojeto = new projeto();
                                                     	   $qprojeto->selecionaTudo($qprojeto);
                                                     	   while ($res = $qprojeto->retornaDados())
                                                         	{
                                                         	    if ($resbd->id_projeto == $res->id)
-                                                        	        printf('<option selected="selected">%s</option>',$res->nome);
-                                                        	        else
-                                                        	            printf('<option>%s</option>',$res->nome);
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                         	} 
                                                         ?>                                              
                                                     </select>
             									</div>  
             									<div class="col-xs-4">
                       								<label>Atribuido à</label>
-                                                    <select class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="atribuido" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
                                                     	<?php 
-                                                    	$qusuario = new usuario();
-                                                    	$qusuario->selecionaTudo($qusuario);
-                                                    	while ($res = $qusuario->retornaDados())
-                                                        	{
-                                                        	    if ($resbd->id_usuario == $res->id)
-                                                        	        printf('<option selected="selected">%s</option>',$res->nome);
-                                                        	     else
-                                                        	            printf('<option>%s</option>',$res->nome);
-                                                        	} 
-                                                        ?>                                              
+                                                        	$qusuario = new usuario();
+                                                        	$qusuario->selecionaTudo($qusuario);
+                                                        	while ($res = $qusuario->retornaDados())
+                                                            	{
+                                                            	    if ($resbd->id_usuario == $res->id)
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                         ?>                                              
                                                     </select>
-            									</div>             									     									
+            									</div>                									
+            									<div class="col-xs-2">
+                      								<label>Data Início</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php if($resbd) echo $resbd->data_inicio;?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>  
+            									<div class="col-xs-2">
+                      								<label>Data Fim</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input name="datafim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_fim;?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>           									     									
             							 	</div>            							 	   	
             							</div>	   
     								</div> 	  	                               

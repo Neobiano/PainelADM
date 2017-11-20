@@ -22,7 +22,8 @@
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" >		 
 		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css" >
 		<link rel="stylesheet" href="plugins/iCheck/square/blue.css" >
-		<link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+		<link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">		
+ 		<link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
       
 		<title>Painel Administrativo</title>
 		<?php

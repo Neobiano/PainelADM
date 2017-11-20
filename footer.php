@@ -35,15 +35,34 @@
 	<script src="dist/js/demo.js"></script>
 	<!-- CK Editor -->
 	<script src="bower_components/ckeditor/ckeditor.js"></script>
-	
+	<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 	
 	<!-- page script -->
 	<script>
 	 $(function () {
-	  CKEDITOR.replace('editor1');	
+	    CKEDITOR.replace('editor1')	
+	
+	  //Date picker
+	    $('#datepicker1').datepicker({	    
+	      format:"yyyy-mm-dd",
+	      todayBtn:true,
+	      assumeNearbyYear:true,
+	      todayHighlight:true,	                
+	      autoclose: true
+	    })		  
+
+	    $('#datepicker2').datepicker({	    
+	      format:"yyyy-mm-dd",
+	      todayBtn:true,
+	      assumeNearbyYear:true,
+	      todayHighlight:true,	                
+	      autoclose: true
+	    })
+	    
 	 }); 	
-	  $(function () {
-		
+	
+	  
+	  $(function () {		
 		
 	    $('#gridfull').DataTable({
 	    	"oLanguage": {
@@ -65,7 +84,8 @@
 	                "bPaginate": true,
 	                 
 	                "aaSorting": [[0, "asc"]] 
-	    })	  
+	    })	    
+        	  
 	  })
 	</script>
 </body>
