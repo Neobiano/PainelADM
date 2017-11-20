@@ -33,10 +33,18 @@
 	<script src="dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="dist/js/demo.js"></script>
+	<!-- CK Editor -->
+	<script src="bower_components/ckeditor/ckeditor.js"></script>
+	
+	
 	<!-- page script -->
 	<script>
+	 $(function () {
+	  CKEDITOR.replace('editor1');	
+	 }); 	
 	  $(function () {
-	  	
+		
+		
 	    $('#gridfull').DataTable({
 	    	"oLanguage": {
 	                    "sZeroRecords": "Nenhum dado econtrado para exibição",

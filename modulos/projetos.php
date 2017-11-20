@@ -128,17 +128,17 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->id;?>">
+              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->id;?>">
     									</div>
     									
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->nome;?>">
+              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->nome;?>">
     									</div>
                                         
     									<div class="form-group">
       										<label>Descrição</label>
-      										<textarea name="descricao" class="form-control" rows="3" placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
+      										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
         								</div>
     								</div>                                
                                   
@@ -243,12 +243,12 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
+              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
     									</div>
                                         
     									<div class="form-group">
       										<label>Descrição</label>
-      										<textarea name="descricao" class="form-control" rows="3" placeholder="Descrição do projeto"><?php echo $_POST['descricao']?></textarea>
+      										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php echo $_POST['descricao']?></textarea>
         								</div>
     								</div>                                
                                   
@@ -394,17 +394,17 @@
         								<div class="box-body">
         									<div class="form-group">
                   								<label>Código</label>
-                  								<input  name="id" type="text" class="form-control"  disabled value="<?php if($resbd) echo $resbd->id;?>">
+                  								<input  name="id" type="text" class="form-control input-sm"  disabled value="<?php if($resbd) echo $resbd->id;?>">
         									</div>
                                             
                                             <div class="form-group">
                   								<label>Nome</label>
-                  								<input  name="nome" type="text" class="form-control" disabled value="<?php if($resbd) echo $resbd->nome;?>">
+                  								<input  name="nome" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->nome;?>">
         									</div>
         									
         									<div class="form-group">
           										<label>Descrição</label>
-          										<textarea name="descricao" class="form-control" rows="3" disabled><?php if($resbd) echo $resbd->descricao;?></textarea>
+          										<textarea name="descricao" class="form-control input-sm" rows="3" disabled><?php if($resbd) echo $resbd->descricao;?></textarea>
             								</div>
         								</div>                                
                                       

@@ -128,12 +128,12 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
+              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
     									</div>
     									
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
+              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
     									</div>                                        
     							
     								</div>                                
@@ -238,7 +238,7 @@
     								<div class="box-body">
     									<div class="form-group">
               								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
+              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
     									</div>                                        
     									
     								</div>                                
@@ -382,12 +382,12 @@
         								<div class="box-body">
         									<div class="form-group">
                   								<label>Código</label>
-                  								<input  name="id" type="text" class="form-control"  disabled value="<?php if($resbd) echo $resbd->id;?>">
+                  								<input  name="id" type="text" class="form-control input-sm"  disabled value="<?php if($resbd) echo $resbd->id;?>">
         									</div>
                                             
                                             <div class="form-group">
                   								<label>Nome</label>
-                  								<input  name="nome" type="text" class="form-control" disabled value="<?php if($resbd) echo $resbd->nome;?>">
+                  								<input  name="nome" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->nome;?>">
         									</div>
         									
         									

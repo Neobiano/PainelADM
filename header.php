@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" >		 
 		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css" >
 		<link rel="stylesheet" href="plugins/iCheck/square/blue.css" >
+		<link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
       
 		<title>Painel Administrativo</title>
 		<?php
@@ -211,7 +212,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>          
-       	<li class="active"><a href="#"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>                           
+       	<li class="active"><a href="?m=tarefas&t=listar"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>                           
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text""></i> <span>Cadastros</span>

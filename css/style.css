@@ -169,3 +169,6 @@ form textarea{
     border: 1px solid #4381cc;
     color: #5c58b9;
 }
+
+.top-buffer { margin-top:10px; }
+.botton-buffer { margin-bottom:10px; }

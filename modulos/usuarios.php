@@ -208,23 +208,23 @@
                     						<div class="box-body">
                     							<div class="form-group">
                     								<label>Código</label>
-                    								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
                     							</div>
                     							
                     							<div class="form-group">
                     								<label>Nome</label>
-                    								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                    								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
                     							</div>
                     							
                     							
                     							<div class="form-group">
                     								<label>Email</label>
-                    								<input name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                    								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
                     							</div>
                     							
                     							<div class="form-group">
                     								<label>Email</label>
-                    								<input disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                    								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
                     							</div>
                     							
                                                 <div class="form-group">
@@ -365,27 +365,27 @@
                     						<div class="box-body">                    							                    							
                     							<div class="form-group">
                     								<label>Nome</label>
-                    								<input autofocus name="nome" type="text" class="form-control" placeholder="Nome do usuário" value="<?php echo $_POST['nome'];?>">
+                    								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do usuário" value="<?php echo $_POST['nome'];?>">
                     							</div>                    							
                     							
                     							<div class="form-group">
                     								<label>Email</label>
-                    								<input name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php echo $_POST['email'];?>">
+                    								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php echo $_POST['email'];?>">
                     							</div>
                     							
                     							<div class="form-group">
                     								<label>Login</label>
-                    								<input name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
+                    								<input name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
                     							</div>
                     							
                     							<div class="form-group">
                                                   	<label for="senha">Senha</label>
-                                                  	<input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                                  	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                   	<label for="senhaconf">Repita a senha</label>
-                                                  	<input name="senhaconf" id="senhaconf" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                                  	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
                                                 </div>                    							                                                
                     							
                     							<div class="form-group">
@@ -570,33 +570,33 @@ case 'senha':
             						<div class="box-body">
             							<div class="form-group">
             								<label>Código</label>
-            								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+            								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
             							</div>
             							
             							<div class="form-group">
             								<label>Nome</label>
-            								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+            								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
             							</div>
             							
             							
             							<div class="form-group">
             								<label>Email</label>
-            								<input disabled name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+            								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
             							</div>
             							
             							<div class="form-group">
             								<label>Login</label>
-            								<input disabled disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+            								<input disabled disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
             							</div>
             							
                                         <div class="form-group">
                                           	<label for="senha">Senha</label>
-                                          	<input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                          	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
                                         </div>
                                         
                                         <div class="form-group">
                                           	<label for="senhaconf">Repita a senha</label>
-                                          	<input name="senhaconf" id="senhaconf" type="password" class="form-control" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                          	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
                                         </div>                           
             					  
             						<div class="box-footer">  
@@ -682,23 +682,23 @@ case 'senha':
                     						<div class="box-body">
                     							<div class="form-group">
                     								<label>Código</label>
-                    								<input disabled name="id" type="text" class="form-control" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
                     							</div>
                     							
                     							<div class="form-group">
                     								<label>Nome</label>
-                    								<input disabled name="nome" type="text" class="form-control" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                    								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
                     							</div>
                     							
                     							
                     							<div class="form-group">
                     								<label>Email</label>
-                    								<input disabled name="email" type="email" class="form-control" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                    								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
                     							</div>
                     							
                     							<div class="form-group">
                     								<label>Login</label>
-                    								<input disabled disabled name="login" type="text" class="form-control" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                    								<input disabled disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
                     							</div>
                     							
                                                 <div class="form-group">
