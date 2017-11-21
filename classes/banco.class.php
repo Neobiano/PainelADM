@@ -125,9 +125,12 @@ abstract class Banco{
 	
 	}//final deletar
 	
-	public function selecionaTudo($objeto)
+	public function selecionaTudo($objeto,$sel=null)
 	{
-		$sql = " select * from ".$objeto->tabela;
+	    if (is_null($sel))	    
+		   $sel = " select * from ";
+	     
+	    $sql = $sel.$objeto->tabela;
 		if ($objeto->extras_select != null) 
 		{
 			$sql .= " ".$objeto->extras_select;
@@ -161,8 +164,7 @@ abstract class Banco{
 	{
 		if (!is_null($sql))
 		{
-			
-						    		    
+								    		   
 			$query = $this->conexao->query($sql) or $this->trataerro(__FILE__,__FUNCTION__);	
 											            
             $this->linhasafetadas = $query->RowCount();            

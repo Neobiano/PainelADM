@@ -29,7 +29,16 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
-                        printMSG('Veio pelo editar <a href="?m=tarefas&t=listar">editar</a>','sucesso');
+                       /* printMSG('Veio pelo editar :'.$_POST['assunto'].'<br> Tipo: '
+                            .$_POST['tipo'].'<br> Status: '
+                            .$_POST['status'].'<br> Prioridade: '
+                            .$_POST['prioridade'].'<br> Projeto: '
+                            .$_POST['projeto'].'<br> Categoria: '
+                            .$_POST['categoria'].'<br> DataIni: '
+                            .$_POST['dataini'].'<br> DataFim:'
+                            .$_POST['datafim'].'<br> ID '
+                            .$id.'<br>'
+                            .' <a href="?m=tarefas&t=listar">editar</a>','sucesso');*/
                         // se for usuário do tarefa admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $tarefa = new tarefa(array(
                             'assunto'=>$_POST['assunto'],
@@ -38,11 +47,14 @@
                             'id_prioridade'=>$_POST['prioridade'],
                             'id_projeto'=>$_POST['projeto'],
                             'id_categoria'=>$_POST['categoria'],
+                            'id_atribuido'=>$_POST['atribuido'],
+                            'id_criador'=>$_POST['atribuido'],
                             'data_inicio'=>$_POST['dataini'],
                             'data_fim'=>$_POST['datafim'],
                             'data_cacad'=>$_POST['datafim']
                         ));
                         
+                        $duplicado=false;
                         $tarefa->valorpk = $id;
                         $tarefa->extras_select = "WHERE id=$id";
                         $tarefa->selecionaTudo($tarefa);
@@ -60,7 +72,7 @@
                         }
 
                         //se não existe vai atualizar normalmente
-                       /* if ($duplicado!=TRUE)
+                        if ($duplicado!=TRUE)
                         {
                             $tarefa->atualizar($tarefa);
                             if ($tarefa->linhasafetadas==1)
@@ -70,11 +82,10 @@
                             }
 							else                         
                             	printMSG('Nenhum dado foi alterado. <a href="?m=tarefas&t=listar">Exibir cadastros</a>','alerta');
-                        }*/
+                        }
                                     
                     }//if (isset($_POST['editar'])) - final
-                    else
-                        printMSG('Não veio pelo editar <a href="?m=tarefas&t=listar">editar</a>','erro');
+                    
                     
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
                     $tarefabd = new tarefa();
@@ -230,7 +241,7 @@
                                                         	$qusuario->selecionaTudo($qusuario);
                                                         	while ($res = $qusuario->retornaDados())
                                                             	{
-                                                            	    if ($resbd->id_usuario == $res->id)
+                                                            	    if ($resbd->id_atribuido == $res->id)
                                                             	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
                                                             	    else
                                                             	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
@@ -398,18 +409,39 @@
                            		<thead>
                             		<tr>
                               			<th>Código</th>
-                              			<th>assunto</th>                              			                 
+                              			<th>Status</th>
+                              			<th>Assunto</th>
+                              			<th>Projeto</th>                              			
+                              			<th>Categoria</th>
+                              			<th>Prioridade</th>
+                              			<th>Atribuído à</th>                              			                 
                               			<th>Ações</th>
                             		</tr>
                             	</thead>
                             	<tbody>
                                     <?php 
+                                    $select = ' SELECT tarefas.*, c.nome categoria, p.nome prioridade, pj.nome projeto,
+                                                st.nome status, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido
+                                                FROM ';
                                     $tarefa = new tarefa();
-                                    $tarefa->selecionaTudo($tarefa);                       					                                              
+                                    $tarefa->extras_select = "  left join categorias c on (c.id = tarefas.id_categoria)
+                                                                left join prioridades p on (p.id = tarefas.id_prioridade)
+                                                                left join projetos pj on (pj.id = tarefas.id_projeto)
+                                                                left join status st on (st.id = tarefas.id_status)
+                                                                left join tipos tp on (tp.id = tarefas.id_tipo)
+                                                                left join usuarios u1 on (u1.id = tarefas.id_criador)
+                                                                left join usuarios u2 on (u2.id = tarefas.id_atribuido) ";
+                                    
+                                    $tarefa->selecionaTudo($tarefa,$select);                       					                                              
                                     while ($res = $tarefa->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
-                                        printf('<td>%s</td>',$res->assunto);                                                               
+                                        printf('<td>%s</td>',$res->status);
+                                        printf('<td>%s</td>',$res->assunto);
+                                        printf('<td>%s</td>',$res->projeto);
+                                        printf('<td>%s</td>',$res->categoria);
+                                        printf('<td>%s</td>',$res->prioridade);
+                                        printf('<td>%s</td>',$res->usr_atribuido);
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -420,6 +452,11 @@
                               			<th></th>
                               			<th></th>
                               			<th></th>                              			        
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>
+                              			<th></th>
                             		</tr>
                             	</tfoot>
                         	</table>

@@ -20,6 +20,8 @@ class tarefa extends Base
                                         "data_inicio"=>null,
                                         "data_fim"=>null,
                                         "data_cacad"=>null,
+                                        "id_criador"=>null, //usuário criador da demanda
+                                        "id_atribuido"=>null //usuário responsável 'atualmente' pela demanda
                                          );
         }
         else
