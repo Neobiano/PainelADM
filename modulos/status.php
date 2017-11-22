@@ -3,6 +3,9 @@
     protegeArquivo(basename(__FILE__));
     loadJS('jqueryvalidate');
     loadJS('jqueryvalidate-messages');
+    loadCSS('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min','screen',true);
+    loadJS('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',true);
+    
 	
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
@@ -83,16 +86,16 @@
                         (
                             function()
                             {
-                                $(".userform").validate
+                            	$(document).ready
                                 (
+                                    function()
                                     {
-                                        rules:
-                                        {
-                                            nome:{required:true,minlength:5}
-                                                                                        
-                                        }
+                                    	                            
+                                        //color picker with addon
+                                        $('.my-colorpicker2').colorpicker()
+                                        
                                     }
-                                )
+                                );
                                 
                             }
                         );
@@ -104,11 +107,11 @@
                 <section class="content-header">
                 	<h1>
                 		Status
-                		<small>Incluir</small>
+                		<small>Editar</small>
                   	</h1>
                   	<ol class="breadcrumb">
                 		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
-                		<li class="active">Incluir</li>
+                		<li class="active">Editar</li>
                   	</ol>
                 </section> 
     
@@ -116,32 +119,56 @@
     			<section class="content">
       				<div class="row">
     	            <!-- left column -->
-    					<div class="col-md-6">
+    					<div class="col-md-9">
                         <!-- general form elements -->
     						<div class="box box-primary">
     							<div class="box-header with-border">
     								<h3 class="box-title">Informe os dados para cadastro</h3>
-    							</div>   	
-    							
-    							<!-- form start -->	
+    							</div>   	    							   							    						
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-    									<div class="form-group">
-              								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
-    									</div>
-    									
-    									<div class="form-group">
-              								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
-    									</div>                                        
-    							
-    								</div>                                
-                                  
+        								<div class="row">
+        									<div class="form-group">
+        										<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
+                      							</div>        									
+        									
+            									<div class="col-xs-10">
+                      								<label>Nome</label>
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
+            									</div>                                        
+            								</div>
+        								</div> 
+        								<div class="row">
+        									<div class="form-group">        										      									        									
+            									<div class="col-xs-4">
+            										<label>Cor</label>
+                                                    <div class="input-group my-colorpicker2">
+                                                      <input name= "cor" type="text" class="form-control input-sm" value="<?php if($resbd) echo $resbd->cor;?>">
+                                    
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                      </div>
+                                                    </div>                      								
+            									</div>                                        
+            								</div>
+            								
+            								<div class="col-xs-2">
+            										<br>                      								
+                      								<input type="checkbox" name="fechado"  <?php																			
+																			
+                																			if (strtoupper($resbd->fechado)=='S')
+                																				echo ' checked';
+                																		?> /><b> Fechado</b> 
+                      								 
+                      						</div>  
+        								</div>                                
+                                     </div>
+                                      
     								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
-    									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
-    									 
+    									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									        									 
     								</div>                              
     							</form>
     		 				</div><!-- Final box-primary -->
@@ -165,7 +192,9 @@
               
                 $status = new status(
                                         array(
-                                        'nome'=>$_POST['nome']                                        
+                                        'nome'=>$_POST['nome'],
+                                        'fechado'=>$_POST['fechado'],
+                                        'cor'=>$_POST['cor']
                                         )
                                     ); 
              
@@ -195,15 +224,9 @@
                     (
                         function()
                         {
-                            $(".userform").validate
-                            (
-                                {
-                                    rules:
-                                    {
-                                        nome:{required:true,minlength:5}                                        
-                                    }
-                                }
-                            )
+                        	                            
+                            //color picker with addon
+                            $('.my-colorpicker2').colorpicker()
                             
                         }
                     );
@@ -236,12 +259,43 @@
     							<!-- form start -->	
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-    									<div class="form-group">
-              								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
-    									</div>                                        
-    									
-    								</div>                                
+        								<div class="row">
+        									<div class="form-group">
+        										<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="id" type="text" class="form-control input-sm"">
+                      							</div>        									
+        									
+            									<div class="col-xs-10">
+                      								<label>Nome</label>
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
+            									</div>                                        
+            								</div>
+        								</div> 
+        								<div class="row">
+        									<div class="form-group">        										      									        									
+            									<div class="col-xs-4">
+            										<label>Cor</label>
+                                                    <div class="input-group my-colorpicker2">
+                                                      <input name="cor"  type="text" class="form-control input-sm" value="<?php echo $_POST['cor'];?>">
+                                    
+                                                      <div class="input-group-addon">
+                                                        <i></i>
+                                                      </div>
+                                                    </div>                      								
+            									</div>                                        
+            								</div>
+            								
+            								<div class="col-xs-2">
+            										<br>                      								
+                      								<input  type="checkbox" name="fechado"  <?php																			
+                                                                  								if ($_POST['fechado'])
+                                                                  								    echo ' checked';                																			
+                																		?> /><b> Fechado</b> 
+                      								 
+                      						</div>  
+        								</div>                                
+                                     </div>    								                      
                                   
     								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>

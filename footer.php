@@ -2,8 +2,8 @@
 	require_once("funcoes.php");
 	protegeArquivo(basename(__FILE__));
 ?>
- 	
-
+    
+        
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
@@ -15,11 +15,12 @@
     <!-- Default to the left -->
     <strong>Desenvolvido por CERAT-FO &copy; 2017 <a href="#"></a>.</strong> 
   </footer>
-  
-</div>
-<!-- ./wrapper -->
-	<!-- jQuery 3 -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+ 
+</div><!-- ./wrapper -->
+	
+    
+	
+	
 	<!-- Bootstrap 3.3.7 -->
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- DataTables -->
@@ -33,13 +34,12 @@
 	<script src="dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="dist/js/demo.js"></script>
-	<!-- CK Editor -->
-	<script src="bower_components/ckeditor/ckeditor.js"></script>
-	<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	
+      		   
 	
 	<!-- page script -->
-	<script>	 	
-	  
+	<script>	
+	 		  
 	  $(function () {		
 		
 	    $('#gridfull').DataTable({

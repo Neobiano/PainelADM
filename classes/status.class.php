@@ -13,7 +13,9 @@ class status extends Base
         {
             $this->campos_valores = array(
                                            "id"=>null,
-                                           "nome"=>null
+                                           "nome"=>null,
+                                           "fechado"=>null,
+                                           "cor"=>null
                                           );
         }
         else

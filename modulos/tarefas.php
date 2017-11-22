@@ -1,8 +1,8 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
+    loadJS('bower_components/ckeditor/ckeditor.js',true);
+    loadJS('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',true);
 	
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
@@ -13,8 +13,8 @@
             $tela = 'incluir';        
     }
     
-    switch ($tela) 
-    {                 
+    switch ($tela)     
+    {                      
         case 'editar':                     
             $sessao = new sessao();
             
@@ -86,37 +86,33 @@
                 }
                 else
                     printMSG('tarefa não definido, <a href="?m=tarefas&t=listar">escolha um tarefa para alterar</a>','erro');
-                
-                
-                   
+                                                   
                 ?>
+                    			            	
                 <script type="text/javascript">
-					$(document).ready
-					(
-            			function () 
-            			{
-            			    						CKEDITOR.replace('editor1')	
-            			
-                        			  				//Date picker
-                                    			    $('#datepicker1').datepicker({	    
-                                    			      format:"yyyy-mm-dd",
-                                    			      todayBtn:true,
-                                    			      assumeNearbyYear:true,
-                                    			      todayHighlight:true,	                
-                                    			      autoclose: true
-                                    			    })		  
+                    $(document).ready(function()
+                    {	             		
+                        	CKEDITOR.replace('editor1')	
+                			
+                			//Date picker
+                		    $('#datepicker1').datepicker({	    
+                		      format:"yyyy-mm-dd",
+                		      todayBtn:true,
+                		      assumeNearbyYear:true,
+                		      todayHighlight:true,	                
+                		      autoclose: true
+                		    })		  
                 
-                                    			    $('#datepicker2').datepicker({	    
-                                    			      format:"yyyy-mm-dd",
-                                    			      todayBtn:true,
-                                    			      assumeNearbyYear:true,
-                                    			      todayHighlight:true,	                
-                                    			      autoclose: true
-                                    			    })			    
-            			 				}
-		 			); 
-					
-    			</script>	           
+                		    $('#datepicker2').datepicker({	    
+                		      format:"yyyy-mm-dd",
+                		      todayBtn:true,
+                		      assumeNearbyYear:true,
+                		      todayHighlight:true,	                
+                		      autoclose: true
+                		    })	                    	  
+                    }
+                    );            	  									
+                	</script> 	        
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
@@ -300,7 +296,8 @@
     			</section>
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->
-			                 	
+			
+        		                   	
 			                                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

@@ -39,7 +39,7 @@ function loadCSS($arquivo=null,$media='screen',$import=false)
 	{
 		if ($import==true) 
 		{
-			echo '<style type="text/css">@import url("'.BASEURL.CSSPATH.$arquivo.'.css");</style>'."\n";
+			echo '<style type="text/css">@import url("'.BASEURL.$arquivo.'.css");</style>'."\n";
 		} 
 		else 
 		{
