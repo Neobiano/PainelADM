@@ -11,11 +11,12 @@ class tarefa extends Base
         if (sizeof($campos)<=0) 
         {
             $this->campos_valores = array(
-                                        "assunto"=>null,                                            
+                                        "assunto"=>null,   
+                                        "descricao"=>null,
                                         "id_tipo"=>null,
                                         "id_status"=>null,
                                         "id_prioridade"=>null,
-                                        "id_projeto"=>null,
+                                        "id_projeto"=>null,                                        
                                         "id_categoria"=>null,
                                         "data_inicio"=>null,
                                         "data_fim"=>null,

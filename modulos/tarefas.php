@@ -28,20 +28,11 @@
                     
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
-                    {
-                       /* printMSG('Veio pelo editar :'.$_POST['assunto'].'<br> Tipo: '
-                            .$_POST['tipo'].'<br> Status: '
-                            .$_POST['status'].'<br> Prioridade: '
-                            .$_POST['prioridade'].'<br> Projeto: '
-                            .$_POST['projeto'].'<br> Categoria: '
-                            .$_POST['categoria'].'<br> DataIni: '
-                            .$_POST['dataini'].'<br> DataFim:'
-                            .$_POST['datafim'].'<br> ID '
-                            .$id.'<br>'
-                            .' <a href="?m=tarefas&t=listar">editar</a>','sucesso');*/
+                    {                       
                         // se for usuário do tarefa admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $tarefa = new tarefa(array(
                             'assunto'=>$_POST['assunto'],
+                            'descricao'=>$_POST['editor1'],
                             'id_tipo'=>$_POST['tipo'],
                             'id_status'=>$_POST['status'],
                             'id_prioridade'=>$_POST['prioridade'],
@@ -97,9 +88,35 @@
                     printMSG('tarefa não definido, <a href="?m=tarefas&t=listar">escolha um tarefa para alterar</a>','erro');
                 
                 
-                //formulário de edição de usuário   
+                   
                 ?>
-                                        
+                <script type="text/javascript">
+					$(document).ready
+					(
+            			function () 
+            			{
+            			    						CKEDITOR.replace('editor1')	
+            			
+                        			  				//Date picker
+                                    			    $('#datepicker1').datepicker({	    
+                                    			      format:"yyyy-mm-dd",
+                                    			      todayBtn:true,
+                                    			      assumeNearbyYear:true,
+                                    			      todayHighlight:true,	                
+                                    			      autoclose: true
+                                    			    })		  
+                
+                                    			    $('#datepicker2').datepicker({	    
+                                    			      format:"yyyy-mm-dd",
+                                    			      todayBtn:true,
+                                    			      assumeNearbyYear:true,
+                                    			      todayHighlight:true,	                
+                                    			      autoclose: true
+                                    			    })			    
+            			 				}
+		 			); 
+					
+    			</script>	           
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
@@ -153,6 +170,7 @@
                                             	<div class="col-xs-12" >                                                               
                                             			<label>Descrição</label>
                                             			<textarea form-control id="editor1" name="editor1" rows="10" cols="80">
+    															<?php if($resbd) echo html_entity_decode($resbd->descricao);?>                                        				                                            				
                                             			</textarea>                                                                                                                                       
                                             	</div>		                                    	     									                                             
     										</div>            							 	   	
@@ -281,7 +299,9 @@
     		 			</div><!-- Final box-primary -->    					  			
     			</section>
                 <!-- /.content -->
-			</div> <!-- /.content-wrapper -->			                                     
+			</div> <!-- /.content-wrapper -->
+			                 	
+			                                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
             else
@@ -391,7 +411,7 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        tarefas
+    		        Tarefas
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
@@ -405,7 +425,7 @@
                 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
                 	<div class="box">                              
                     	<div class="box-body">
-                        	<table id="gridfull" class="table table-bordered table-striped">
+                        	<table id="gridfull" class="table table-bordered table-striped table-sm">
                            		<thead>
                             		<tr>
                               			<th>Código</th>
@@ -414,7 +434,9 @@
                               			<th>Projeto</th>                              			
                               			<th>Categoria</th>
                               			<th>Prioridade</th>
-                              			<th>Atribuído à</th>                              			                 
+                              			<th>Atribuído à</th>
+                              			<th>Data Inicio</th>
+                              			<th>Data Fim</th>                              			                 
                               			<th>Ações</th>
                             		</tr>
                             	</thead>
@@ -442,6 +464,8 @@
                                         printf('<td>%s</td>',$res->categoria);
                                         printf('<td>%s</td>',$res->prioridade);
                                         printf('<td>%s</td>',$res->usr_atribuido);
+                                        printf('<td>%s</td>',$res->data_inicio);
+                                        printf('<td>%s</td>',$res->data_fim);
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -452,6 +476,8 @@
                               			<th></th>
                               			<th></th>
                               			<th></th>                              			        
+                              			<th></th>
+                              			<th></th>
                               			<th></th>
                               			<th></th>
                               			<th></th>

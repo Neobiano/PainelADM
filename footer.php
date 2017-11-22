@@ -38,29 +38,7 @@
 	<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 	
 	<!-- page script -->
-	<script>
-	 $(function () {
-	    CKEDITOR.replace('editor1')	
-	
-	  //Date picker
-	    $('#datepicker1').datepicker({	    
-	      format:"yyyy-mm-dd",
-	      todayBtn:true,
-	      assumeNearbyYear:true,
-	      todayHighlight:true,	                
-	      autoclose: true
-	    })		  
-
-	    $('#datepicker2').datepicker({	    
-	      format:"yyyy-mm-dd",
-	      todayBtn:true,
-	      assumeNearbyYear:true,
-	      todayHighlight:true,	                
-	      autoclose: true
-	    })
-	    
-	 }); 	
-	
+	<script>	 	
 	  
 	  $(function () {		
 		
