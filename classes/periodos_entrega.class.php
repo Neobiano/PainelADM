@@ -3,20 +3,20 @@
 require_once(dirname(__FILE__).'/autoload.php');
 protegeArquivo(basename(__FILE__));
 
-class status extends Base
+class periodos_entrega extends Base
 {
     public function __construct($campos=array())
     {
         parent::__construct();
-        $this->tabela = "status";
+        $this->tabela = "periodos_entrega";
         if (sizeof($campos)<=0) 
         {
             $this->campos_valores = array(
                                            "id"=>null,
                                            "nome"=>null,
-                                           "fechado"=>null,
-                                           "cor"=>null,
-                                           "padrao_abertura"=>null
+                                           "inter_ini"=>null,
+                                           "inter_fim"=>null,
+                                           "cor"=>null                                           
                                           );
         }
         else

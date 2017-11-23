@@ -28,8 +28,7 @@
                     
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
-                    {                       
-                        // se for usuário do tarefa admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
+                    {                                                                                    
                         $tarefa = new tarefa(array(
                             'assunto'=>$_POST['assunto'],
                             'descricao'=>$_POST['editor1'],
@@ -41,8 +40,7 @@
                             'id_atribuido'=>$_POST['atribuido'],
                             'id_criador'=>$_POST['atribuido'],
                             'data_inicio'=>$_POST['dataini'],
-                            'data_fim'=>$_POST['datafim'],
-                            'data_cacad'=>$_POST['datafim']
+                            'data_prev_fim'=>$_POST['dataprevfim']
                         ));
                         
                         $duplicado=false;
@@ -136,11 +134,11 @@
     									 	<div class="form-group">
             									<div class="col-xs-2">
                       								<label>Código</label>
-                      								<input disabled name="assunto" type="text" class="form-control input-sm" placeholder="assunto do tarefa" value="<?php if($resbd) echo $resbd->id;?>">
+                      								<input disabled name="assunto" type="text" class="form-control input-sm" placeholder="Código é Automático" value="<?php if($resbd) echo $resbd->id;?>">
             									</div>
             									<div class="col-xs-8">
                       								<label>Assunto</label>
-                      								<input autofocus name="assunto" type="text" class="form-control input-sm" placeholder="assunto do tarefa" value="<?php if($resbd) echo $resbd->assunto;?>">
+                      								<input autofocus name="assunto" type="text" class="form-control input-sm" placeholder="Assunto da Tarefa" value="<?php if($resbd) echo $resbd->assunto;?>">
             									</div>            									                                                         								
             									<div class="col-xs-2">
                       								<label>Tipo</label>
@@ -274,12 +272,12 @@
                                                                                                                                                 
             									</div>  
             									<div class="col-xs-2">
-                      								<label>Data Fim</label>
+                      								<label>Data Prev. Fim</label>
                       								<div class="input-group date">
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input name="datafim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_fim;?>">
+                                                      <input name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_prev_fim;?>">
                                                     </div>
                                                                                                                                                 
             									</div>           									     									
@@ -308,12 +306,24 @@
         case 'incluir':             
             if (isset($_POST['cadastrar']))
             {    
-              
-                $tarefa = new tarefa(
-                                        array(
-                                        'assunto'=>$_POST['assunto']                                       
-                                        )
-                                    ); 
+                //identificando o usuário logado
+                $sessao = new sessao();
+                $iduser = $sessao->getVar('iduser');
+                
+                $tarefa = new tarefa(array(
+                    'assunto'=>$_POST['assunto'],
+                    'descricao'=>$_POST['editor1'],
+                    'id_tipo'=>$_POST['tipo'],
+                    'id_status'=>$_POST['status'],
+                    'id_prioridade'=>$_POST['prioridade'],
+                    'id_projeto'=>$_POST['projeto'],
+                    'id_categoria'=>$_POST['categoria'],
+                    'id_atribuido'=>$_POST['atribuido'],
+                    'id_criador'=>$_POST['atribuido'],
+                    'data_inicio'=>$_POST['dataini'],
+                    'data_prev_fim'=>$_POST['dataprevfim'],
+                    'data_cacad'=>date("Y-m-d") 
+                ));
              
             
                 //verificando se ja existem registros com o parametro solicitado para inserção      
@@ -336,67 +346,204 @@
             }
            
         ?>          
-            <script type="text/javascript">
-                    $(document).ready
-                    (
-                        function()
-                        {
-                            $(".userform").validate
-                            (
-                                {
-                                    rules:
-                                    {
-                                        assunto:{required:true,minlength:5}                                        
-                                    }
-                                }
-                            )
-                            
-                        }
-                    );
-			</script>
-			<div class="content-wrapper">
+           
+			<script type="text/javascript">
+                    $(document).ready(function()
+                    {	             		
+                        	CKEDITOR.replace('editor1')	
+                			
+                			//Date picker
+                		    $('#datepicker1').datepicker({	    
+                		      format:"yyyy-mm-dd",
+                		      todayBtn:true,
+                		      assumeNearbyYear:true,
+                		      todayHighlight:true,	                
+                		      autoclose: true
+                		    })		  
+                
+                		    $('#datepicker2').datepicker({	    
+                		      format:"yyyy-mm-dd",
+                		      todayBtn:true,
+                		      assumeNearbyYear:true,
+                		      todayHighlight:true,	                
+                		      autoclose: true
+                		    })	                    	  
+                    }
+                    );            	  									
+                	</script> 	        
+                <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
                 <section class="content-header">
                 	<h1>
-                		tarefas
+                		Tarefas
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Tarefas</a></li>
-                		<li class="active">Editar</li>
+                		<li><a ><i class="fa fa-dashboard"></i> Editar</a></li>
+                		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
     
-                <!-- Main content -->
-    			<section class="content">
-      				<div class="row">
-    	            <!-- left column -->
-    					<div class="col-md-6">
-                        <!-- general form elements -->
-    						<div class="box box-primary">    							    							
-    							<!-- form start -->	
+                
+    			<section class="content">      				    	           
+    						<div class="box box-primary">    								
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-    									<div class="form-group">
-              								<label>Assunto</label>
-              								<input autofocus name="assunto" type="text" class="form-control input-sm" placeholder="assunto do tarefa" value="<?php echo $_POST['assunto']?>">
-    									</div>
-                                            								
-    								</div>                                
-                                  
+    									<div class="row">
+    									 	<div class="form-group">
+            									<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="assunto" type="text" class="form-control input-sm" placeholder="Código é Automático" >
+            									</div>
+            									<div class="col-xs-8">
+                      								<label>Assunto</label>
+                      								<input autofocus name="assunto" type="text" class="form-control input-sm" placeholder="Assunto da tarefa" value="<?php echo $_POST['assunto']?>">
+            									</div>            									                                                         								
+            									<div class="col-xs-2">
+                      								<label>Tipo</label>
+                                                    <select name="tipo" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qtipo = new tipo();                                                	
+                                                            $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
+                                                            while ($res = $qtipo->retornaDados())
+                                                            {                                                                                                         
+                                                               printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            } 
+                                                        ?>                                              
+                                                    </select>
+            									</div>        									
+            							 	</div>            							 	   	
+            							</div>	
+            							<div class="row top-buffer">
+    									 	<div class="form-group">    									 	
+                                            	<div class="col-xs-12" >                                                               
+                                            			<label>Descrição</label>
+                                            			<textarea form-control id="editor1" name="editor1" rows="10" cols="80">
+    															<?php if($resbd) echo html_entity_decode($resbd->descricao);?>                                        				                                            				
+                                            			</textarea>                                                                                                                                       
+                                            	</div>		                                    	     									                                             
+    										</div>            							 	   	
+            							</div> 	
+            							<div class="row top-buffer">
+    									 	<div class="form-group">            								
+            									<div class="col-xs-4">
+                      								<label>Prioridade</label>
+                                                    <select name="prioridade" class="form-control select2 input-sm" style="width: 100%;">
+                                                    <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qprioridade = new prioridade();
+                                                        	$qprioridade->selecionaTudo($qprioridade);
+                                                        	while ($res = $qprioridade->retornaDados())
+                                                        	{                                                        	    
+                                                        	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>  
+            									<div class="col-xs-4">
+                      								<label>Categoria</label>
+                                                    <select name="categoria" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qcategoria = new categoria();
+                                                        	$qcategoria->selecionaTudo($qcategoria);
+                                                        	while ($res = $qcategoria->retornaDados())
+                                                        	{                                                        	   
+                                                        	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div> 
+            									<div class="col-xs-4">
+                      								<label>Status</label>
+                                                    <select name="status" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qstatus= new status();
+                                                        	$qstatus->selecionaTudo($qstatus);
+                                                        	while ($res = $qstatus->retornaDados())
+                                                        	{
+                                                        	    if (strtoupper($res->padrao_abertura=='S')) 
+                                                        	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>       									
+            							 	</div>            							 	   	
+            							</div>	  
+            							
+            							<div class="row top-buffer">
+    									 	<div class="form-group">            								
+            									<div class="col-xs-4">
+                      								<label>Projeto</label>
+                                                    <select name="projeto" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                    	   $qprojeto = new projeto();
+                                                    	   $qprojeto->selecionaTudo($qprojeto);
+                                                    	   while ($res = $qprojeto->retornaDados())
+                                                        	{                                                        	   
+                                                        	   printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>  
+            									<div class="col-xs-4">
+                      								<label>Atribuido à</label>
+                                                    <select name="atribuido" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qusuario = new usuario();
+                                                        	$qusuario->selecionaTudo($qusuario);
+                                                        	while ($res = $qusuario->retornaDados())
+                                                            	{
+                                                            	    //sugere automaticamento o usuário logado para a tarefa
+                                                            	    if ($iduser == $res->id)
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                         ?>                                              
+                                                    </select>
+            									</div>                									
+            									<div class="col-xs-2">
+                      								<label>Data Início</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php echo $_POST['dataini'];?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>  
+            									<div class="col-xs-2">
+                      								<label>Data Prev. Fim</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php echo $_POST['dataprevfim'];;?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>           									     									
+            							 	</div>            							 	   	
+            							</div>	   
+    								</div> 	  	                               
+                                  		 
     								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=tarefas&t=listar'" >Cancelar</button>
-    									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
-    									 
-    								</div>                              
-    							</form>
-    		 				</div><!-- Final box-primary -->
-    					</div><!-- Final col-md-6 -->
-    				</div>
+    									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									    									 
+    								</div>       							                          
+    						</form>
+    		 			</div><!-- Final box-primary -->    					  			
     			</section>
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->
+						
         	
             <?php
             break;
@@ -432,15 +579,17 @@
                               			<th>Categoria</th>
                               			<th>Prioridade</th>
                               			<th>Atribuído à</th>
-                              			<th>Data Inicio</th>
-                              			<th>Data Fim</th>                              			                 
+                              			<th>Dt Ini.</th>
+                              			<th>Dt. Prev Fim</th>
+                              			<th>Dt. Fim</th>
+                              			<th>Atraso</th>                                			                 
                               			<th>Ações</th>
                             		</tr>
                             	</thead>
                             	<tbody>
                                     <?php 
                                     $select = ' SELECT tarefas.*, c.nome categoria, p.nome prioridade, pj.nome projeto,
-                                                st.nome status, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido
+                                                st.nome status, st.cor, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido
                                                 FROM ';
                                     $tarefa = new tarefa();
                                     $tarefa->extras_select = "  left join categorias c on (c.id = tarefas.id_categoria)
@@ -455,14 +604,16 @@
                                     while ($res = $tarefa->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
-                                        printf('<td>%s</td>',$res->status);
+                                        printf('<td bgcolor="%s">%s</td>',$res->cor,$res->status);
                                         printf('<td>%s</td>',$res->assunto);
                                         printf('<td>%s</td>',$res->projeto);
                                         printf('<td>%s</td>',$res->categoria);
                                         printf('<td>%s</td>',$res->prioridade);
                                         printf('<td>%s</td>',$res->usr_atribuido);
-                                        printf('<td>%s</td>',$res->data_inicio);
+                                        printf('<td>%s</td>',$res->data_inicio);                                        
+                                        printf('<td>%s</td>',$res->data_prev_fim);
                                         printf('<td>%s</td>',$res->data_fim);
+                                        printf('<td>%s</td>',0);
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -473,6 +624,8 @@
                               			<th></th>
                               			<th></th>
                               			<th></th>                              			        
+                              			<th></th>
+                              			<th></th>
                               			<th></th>
                               			<th></th>
                               			<th></th>

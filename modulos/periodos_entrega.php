@@ -10,9 +10,9 @@
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
     {
-        $qstatus = new status();
-        $qstatus->selecionaTudo($qstatus);
-        if ($qstatus->linhasafetadas <= 0)
+        $qperiodos_entrega = new periodos_entrega();
+        $qperiodos_entrega->selecionaTudo($qperiodos_entrega);
+        if ($qperiodos_entrega->linhasafetadas <= 0)
             $tela = 'incluir';        
     }
     
@@ -33,26 +33,27 @@
                     if (isset($_POST['editar']))
                     {
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
-                        $status = new status(array(
+                        $periodos_entrega = new periodos_entrega(array(
                             'nome'=>$_POST['nome'],
                             'cor'=>$_POST['cor'],
-                            'fechado'=>($_POST['fechado']=='on') ? 'S' : 'N',
-                            'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N'                            
+                            'inter_ini'=>$_POST['interini'],
+                            'inter_fim'=>$_POST['interini'],
+                                                        
                             
                         ));
                         
-                        $status->valorpk = $id;
-                        $status->extras_select = "WHERE id=$id";
-                        $status->selecionaTudo($status);
-                        $res = $status->retornaDados();
+                        $periodos_entrega->valorpk = $id;
+                        $periodos_entrega->extras_select = "WHERE id=$id";
+                        $periodos_entrega->selecionaTudo($periodos_entrega);
+                        $res = $periodos_entrega->retornaDados();
                         
                         //se o NOME foi alterado do inicilamente carregado para o registro
                         if ($res->nome != $_POST['nome'])
                         {
                             //verificando se já existe um email no BD como o 'novo' email cadastrado
-                            if ($status->existeRegistro('nome',$_POST['nome']))
+                            if ($periodos_entrega->existeRegistro('nome',$_POST['nome']))
                             {
-                                printMSG('status já existe no sistema, escolha outro nome!','erro');
+                                printMSG('Período definido já existe no sistema, escolha outro nome!','erro');
                                 $duplicado = TRUE;
                             }
                         }
@@ -60,26 +61,26 @@
                         //se não existe vai atualizar normalmente
                         if ($duplicado!=TRUE)
                         {
-                            $status->atualizar($status);
-                            if ($status->linhasafetadas==1)
+                            $periodos_entrega->atualizar($periodos_entrega);
+                            if ($periodos_entrega->linhasafetadas==1)
                             {
-                                printMSG('Dados alterados com sucesso. <a href="?m=status&t=listar">Exibir cadastros</a>','sucesso');
+                                printMSG('Dados alterados com sucesso. <a href="?m=periodos_entrega&t=listar">Exibir cadastros</a>','sucesso');
                                 unset($_POST);
                             }
 							else                         
-                            	printMSG('Nenhum dado foi alterado. <a href="?m=status&t=listar">Exibir cadastros</a>','alerta');
+                            	printMSG('Nenhum dado foi alterado. <a href="?m=periodos_entrega&t=listar">Exibir cadastros</a>','alerta');
                         }
                                     
                     }
                     
                     //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
-                    $statusbd = new status();
-                    $statusbd->extras_select = "WHERE id=$id";
-                    $statusbd->selecionaTudo($statusbd);
-                    $resbd = $statusbd->retornaDados();
+                    $periodos_entregabd = new periodos_entrega();
+                    $periodos_entregabd->extras_select = "WHERE id=$id";
+                    $periodos_entregabd->selecionaTudo($periodos_entregabd);
+                    $resbd = $periodos_entregabd->retornaDados();
                 }
                 else
-                    printMSG('status não definido, <a href="?m=status&t=listar">escolha um status para alterar</a>','erro');
+                    printMSG('periodos_entrega não definido, <a href="?m=periodos_entrega&t=listar">escolha um periodos_entrega para alterar</a>','erro');
                 
                 
                 //formulário de edição de usuário   
@@ -96,11 +97,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Status
+                		Períodos de Entrega
                 		<small>Editar</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Períodos de Entrega</a></li>
                 		<li class="active">Editar</li>
                   	</ol>
                 </section> 
@@ -121,12 +122,12 @@
         									<div class="form-group">
         										<div class="col-xs-2">
                       								<label>Código</label>
-                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
+                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código é Automático" value="<?php if($resbd) echo $resbd->id;?>">
                       							</div>        									
         									
             									<div class="col-xs-10">
                       								<label>Nome</label>
-                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Período" value="<?php if($resbd) echo $resbd->nome;?>">
             									</div>                                        
             								</div>
         								</div> 
@@ -142,31 +143,12 @@
                                                       </div>
                                                     </div>                      								
             									</div>                                        
-            								</div>
-            								
-            								<div class="col-xs-2">
-            										<br>                      								
-                      								<input type="checkbox" name="fechado"  <?php																			
-																			
-                																			if (strtoupper($resbd->fechado)=='S')
-                																				echo ' checked';
-                																		?> /><b> Fechado</b> 
-                      								 
-                      						</div>  
-                      						<div class="col-xs-4">
-            										<br>                      								
-                      								<input type="checkbox" name="padraoabertura"  <?php																			
-																			
-                																			if (strtoupper($resbd->padrao_abertura)=='S')
-                																				echo ' checked';
-                																		?> /><b> Padrão de Abertura</b> 
-                      								 
-                      						</div> 
+            								</div>            								            								
         								</div>                                
                                      </div>
                                       
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=periodos_entrega&t=listar'" >Cancelar</button>
     									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									        									 
     								</div>                              
     							</form>
@@ -189,7 +171,7 @@
             if (isset($_POST['cadastrar']))
             {    
               
-                $status = new status(
+                $periodos_entrega = new periodos_entrega(
                                         array(
                                         'nome'=>$_POST['nome'],
                                         'fechado'=>($_POST['fechado']=='on') ? 'S' : 'N',
@@ -200,19 +182,19 @@
              
             
                 //verificando se ja existem registros com o parametro solicitado para inserção      
-                if ($status->existeRegistro('nome',$_POST['nome'])) 
+                if ($periodos_entrega->existeRegistro('nome',$_POST['nome'])) 
                 {
-                    printMSG('status já existe no sistema, escolha outro nome!','erro');
+                    printMSG('periodos_entrega já existe no sistema, escolha outro nome!','erro');
                     $duplicado = true;
                 }
                                
                 if ($duplicado!=true) 
                 {
-                    $status->inserir($status);
+                    $periodos_entrega->inserir($periodos_entrega);
                    
-                    if ($status->linhasafetadas==1)
+                    if ($periodos_entrega->linhasafetadas==1)
                     {
-                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=status&t=listar">Exibir Cadastros</a>','sucesso');   
+                        printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=periodos_entrega&t=listar">Exibir Cadastros</a>','sucesso');   
                         unset($_POST);                                                                                                                                           
                     }   
                 }                               
@@ -236,11 +218,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		Status
+                		periodos_entrega
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> periodos_entrega</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -268,7 +250,7 @@
         									
             									<div class="col-xs-10">
                       								<label>Nome</label>
-                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php echo $_POST['nome']?>">
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do periodos_entrega" value="<?php echo $_POST['nome']?>">
             									</div>                                        
             								</div>
         								</div> 
@@ -306,7 +288,7 @@
                                      </div>    								                      
                                   
     								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
+    									 <button type="button" class="btn btn-default" onclick="location.href='?m=periodos_entrega&t=listar'" >Cancelar</button>
     									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
     									 
     								</div>                              
@@ -329,11 +311,11 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        Status
+    		        periodos_entrega
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> Status</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> periodos_entrega</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>
@@ -356,16 +338,16 @@
                             	</thead>
                             	<tbody>
                                     <?php 
-                                    $status = new status();
-                                    $status->selecionaTudo($status);                       					                                              
-                                    while ($res = $status->retornaDados()):
+                                    $periodos_entrega = new periodos_entrega();
+                                    $periodos_entrega->selecionaTudo($periodos_entrega);                       					                                              
+                                    while ($res = $periodos_entrega->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td>%s</td>',$res->nome);
                                         printf('<td>%s</td>',(strtoupper($res->fechado=='S') ? 'Sim' : 'Não'));
                                         printf('<td>%s</td>',(strtoupper($res->padrao_abertura=='S') ? 'Sim' : 'Não'));
                                         printf('<td bgcolor="%s">%s</td>',$res->cor,$res->cor);
-                                        printf('<td><a href="?m=status&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=status&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=status&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
+                                        printf('<td><a href="?m=periodos_entrega&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=periodos_entrega&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=periodos_entrega&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
                                     ?>
@@ -399,29 +381,29 @@
                     //iniciando processo de salvamento se o usuário deu POST
                     if (isset($_POST['excluir']))
                     {
-                        $status = new status();
-                        $status->valorpk =$id;                   
+                        $periodos_entrega = new periodos_entrega();
+                        $periodos_entrega->valorpk =$id;                   
                                                 
                         
-                        $status->deletar($status);
-                        if ($status->linhasafetadas==1)
+                        $periodos_entrega->deletar($periodos_entrega);
+                        if ($periodos_entrega->linhasafetadas==1)
                         {
-                            printMSG('Registro excluído com sucesso. <a href="?m=status&t=listar">Exibir cadastros</a>','sucesso');                                                     
+                            printMSG('Registro excluído com sucesso. <a href="?m=periodos_entrega&t=listar">Exibir cadastros</a>','sucesso');                                                     
                             unset($_POST);                           
                         }
                         else 
-                            printMSG('Nenhum dado foi excluído. <a href="?m=status&t=listar">Exibir cadastros</a>','alerta');
+                            printMSG('Nenhum dado foi excluído. <a href="?m=periodos_entrega&t=listar">Exibir cadastros</a>','alerta');
                         
                     } //final isset $_POST['excluir']
-                    $statusbd = new status();
-                    $statusbd->extras_select = "where id=$id";
-                    $statusbd->selecionaTudo($statusbd);
-                    $resbd = $statusbd->retornaDados();                   
+                    $periodos_entregabd = new periodos_entrega();
+                    $periodos_entregabd->extras_select = "where id=$id";
+                    $periodos_entregabd->selecionaTudo($periodos_entregabd);
+                    $resbd = $periodos_entregabd->retornaDados();                   
                 }//final isset $_GET['id']
                 else
-                    printMSG('status não definido, <a href="?status&t=listar">escolha um status para excluir</a>','erro');
+                    printMSG('periodos_entrega não definido, <a href="?periodos_entrega&t=listar">escolha um periodos_entrega para excluir</a>','erro');
                 
-                //formulário de edição de status   
+                //formulário de edição de periodos_entrega   
                 ?> 
                 <script type="text/javascript">
                         $(document).ready(function(){
@@ -435,11 +417,11 @@
                 <div class="content-wrapper">                                 
                         <section class="content-header">
                         	<h1>
-                        		Status
+                        		periodos_entrega
                         		<small>Excluir</small>
                           	</h1>
                           	<ol class="breadcrumb">
-                        		<li><a ><i class="fa fa-dashboard"></i> Status</a></li>
+                        		<li><a ><i class="fa fa-dashboard"></i> periodos_entrega</a></li>
                         		<li class="active">Excluir</li>
                           	</ol>
                         </section>                            
@@ -457,12 +439,12 @@
             											<div class="form-group">
             												<div class="col-xs-2">
                           										<label>Código</label>
-                          										<input disabled name="id" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
+                          										<input disabled name="id" type="text" class="form-control input-sm" placeholder="Nome do periodos_entrega" value="<?php if($resbd) echo $resbd->id;?>">
                           									</div>        									
             									
                 											<div class="col-xs-10">
                           										<label>Nome</label>
-                          										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->nome;?>">
+                          										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do periodos_entrega" value="<?php if($resbd) echo $resbd->nome;?>">
                 											</div>                                        
                 										</div>
             										</div>         										
@@ -500,7 +482,7 @@
                                      			</div> li<!-- final box body -->                               
                                       
                 								<div class="box-footer">  
-                									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>
+                									 <button type="button" class="btn btn-default" onclick="location.href='?m=periodos_entrega&t=listar'" >Cancelar</button>
                 									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									                									 
                 								</div>                              
         										</form>

@@ -19,7 +19,8 @@ class tarefa extends Base
                                         "id_projeto"=>null,                                        
                                         "id_categoria"=>null,
                                         "data_inicio"=>null,
-                                        "data_fim"=>null,
+                                        "data_fim"=>null,//data em que efetivamente 'fechou' a demanda
+                                        "data_prev_fim"=>null,//data previsão de fim
                                         "data_cacad"=>null,
                                         "id_criador"=>null, //usuário criador da demanda
                                         "id_atribuido"=>null //usuário responsável 'atualmente' pela demanda
