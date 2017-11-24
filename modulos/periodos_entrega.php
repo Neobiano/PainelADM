@@ -37,7 +37,7 @@
                             'nome'=>$_POST['nome'],
                             'cor'=>$_POST['cor'],
                             'inter_ini'=>$_POST['interini'],
-                            'inter_fim'=>$_POST['interini'],
+                            'inter_fim'=>$_POST['interfim']
                                                         
                             
                         ));
@@ -110,7 +110,7 @@
     			<section class="content">
       				<div class="row">
     	            <!-- left column -->
-    					<div class="col-md-9">
+    					<div class="col-md-6">
                         <!-- general form elements -->
     						<div class="box box-primary">
     							<div class="box-header with-border">
@@ -118,7 +118,7 @@
     							</div>   	    							   							    						
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-        								<div class="row">
+        								<div class="row botton-buffer " >
         									<div class="form-group">
         										<div class="col-xs-2">
                       								<label>Código</label>
@@ -141,9 +141,18 @@
                                                       <div class="input-group-addon">
                                                         <i></i>
                                                       </div>
-                                                    </div>                      								
-            									</div>                                        
-            								</div>            								            								
+                                                    </div>                                                                                                                           									               								
+            									</div>  
+            									<div class="col-xs-4">
+            										<label>Int. Inicial (Dias)</label>
+            										  <input name="interini" type="number" class="form-control input-sm"   value="<?php  if($resbd) echo $resbd->inter_ini;?>">                                                                                                                                                                                                                                                                              								
+            									</div>
+            									
+            									<div class="col-xs-4">
+            										<label>Int. Final (Dias)</label>
+            										 <input name="interfim" type="number" class="form-control input-sm"   value="<?php  if($resbd) echo $resbd->inter_fim;?>">                                                                                                                                                                                                                                                                              								
+            									</div>
+            								</div>              								            								            									                                                 								           								            								
         								</div>                                
                                      </div>
                                       
@@ -173,10 +182,10 @@
               
                 $periodos_entrega = new periodos_entrega(
                                         array(
-                                        'nome'=>$_POST['nome'],
-                                        'fechado'=>($_POST['fechado']=='on') ? 'S' : 'N',
-                                        'cor'=>$_POST['cor'],
-                                        'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N'    
+                                            'nome'=>$_POST['nome'],
+                                            'cor'=>$_POST['cor'],
+                                            'inter_ini'=>$_POST['interini'],
+                                            'inter_fim'=>$_POST['interfim']
                                         )
                                     ); 
              
@@ -218,11 +227,11 @@
         
                 <section class="content-header">
                 	<h1>
-                		periodos_entrega
+                		Períodos de Entrega
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> periodos_entrega</a></li>
+                		<li><a ><i class="fa fa-dashboard"></i> Períodos de Entrega</a></li>
                 		<li class="active">Incluir</li>
                   	</ol>
                 </section> 
@@ -241,7 +250,7 @@
     							<!-- form start -->	
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-        								<div class="row">
+        								<div class="row botton-buffer" >
         									<div class="form-group">
         										<div class="col-xs-2">
                       								<label>Código</label>
@@ -265,25 +274,20 @@
                                                         <i></i>
                                                       </div>
                                                     </div>                      								
-            									</div>                                        
+            									</div>    
+            									                                    
+                								<div class="col-xs-4">
+            										<label>Int. Inicial (Dias)</label>
+            										  <input name="interini" type="number" class="form-control input-sm"   value="<?php $_POST['interini'];?>">                                                                                                                                                                                                                                                                              								
+            									</div>
+            									
+            									<div class="col-xs-4">
+            										<label>Int. Final (Dias)</label>
+            										 <input name="interfim" type="number" class="form-control input-sm"   value="<?php $_POST['interfim'];?>">                                                                                                                                                                                                                                                                              								
+            									</div>
             								</div>
             								
-            								<div class="col-xs-2">
-            										<br>                      								
-                      								<input  type="checkbox" name="fechado"  <?php																			
-                                                                  								if ($_POST['fechado'])
-                                                                  								    echo ' checked';                																			
-                																		?> /><b> Fechado</b> 
-                      								 
-                      						</div> 
-                      						<div class="col-xs-4">
-            										<br>                      								
-                      								<input type="checkbox" name="padraoabertura"  <?php																			
-                                                                      								if ($_POST['padraoabertura'])
-                                                                      								    echo ' checked';     
-                																		?> /><b> Padrão de Abertura</b> 
-                      								 
-                      						</div>  
+        									            								  
         								</div>                                
                                      </div>    								                      
                                   
@@ -311,11 +315,11 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        periodos_entrega
+    		        Períodos de Entrega
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> periodos_entrega</a></li>
+    		        <li><a ><i class="fa fa-dashboard"></i> Períodos de Entrega</a></li>
     		        <li class="active">Listagem</li>
     		      </ol>
     		    </section>
@@ -330,8 +334,8 @@
                             		<tr>
                               			<th>Código</th>
                               			<th>Nome</th>                              			
-                              			<th>Fechado</th>
-                              			<th>Padrão Abertura</th>
+                              			<th>Int. Inicial (Dias)</th>
+                              			<th>Int. Final (Dias)</th>
                               			<th>Cor</th>
                               			<th>Ações</th>                  
                             		</tr>
@@ -344,8 +348,8 @@
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td>%s</td>',$res->nome);
-                                        printf('<td>%s</td>',(strtoupper($res->fechado=='S') ? 'Sim' : 'Não'));
-                                        printf('<td>%s</td>',(strtoupper($res->padrao_abertura=='S') ? 'Sim' : 'Não'));
+                                        printf('<td>%s</td>',$res->inter_ini);
+                                        printf('<td>%s</td>',$res->inter_fim);
                                         printf('<td bgcolor="%s">%s</td>',$res->cor,$res->cor);
                                         printf('<td><a href="?m=periodos_entrega&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=periodos_entrega&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=periodos_entrega&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';

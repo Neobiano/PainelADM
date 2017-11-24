@@ -569,7 +569,7 @@
                 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
                 	<div class="box">                              
                     	<div class="box-body">
-                        	<table id="gridfull" class="table table-bordered table-striped table-sm">
+                        	<table id="gridfull" class="table table-bordered  table-sm">
                            		<thead>
                             		<tr>
                               			<th>Código</th>
@@ -580,16 +580,24 @@
                               			<th>Prioridade</th>
                               			<th>Atribuído à</th>
                               			<th>Dt Ini.</th>
-                              			<th>Dt. Prev Fim</th>
-                              			<th>Dt. Fim</th>
-                              			<th>Atraso</th>                                			                 
+                              			<th>Dt. Prev Fim</th>                              			
+                              			<th>Atraso</th>
+                              			                                			                 
                               			<th>Ações</th>
                             		</tr>
                             	</thead>
                             	<tbody>
                                     <?php 
-                                    $select = ' SELECT tarefas.*, c.nome categoria, p.nome prioridade, pj.nome projeto,
-                                                st.nome status, st.cor, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido
+                                    $select = ' SELECT tarefas.*, 
+                                                case
+                                                    when (tarefas.data_fim >0) then null
+                                                    else (CURRENT_DATE() - tarefas.data_prev_fim) 
+                                                end atraso, c.nome categoria, p.nome prioridade, pj.nome projeto,
+                                                st.nome status, st.cor, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido,
+                                                case
+                                                    when (tarefas.data_fim >0) then null
+                                                    else (select pe.cor from periodos_entrega pe where (CURRENT_DATE() - tarefas.data_prev_fim) BETWEEN pe.inter_ini and pe.inter_fim)
+                                                end cor_linha 
                                                 FROM ';
                                     $tarefa = new tarefa();
                                     $tarefa->extras_select = "  left join categorias c on (c.id = tarefas.id_categoria)
@@ -601,19 +609,19 @@
                                                                 left join usuarios u2 on (u2.id = tarefas.id_atribuido) ";
                                     
                                     $tarefa->selecionaTudo($tarefa,$select);                       					                                              
-                                    while ($res = $tarefa->retornaDados()):
-                                        echo '<tr>';
+                                    while ($res = $tarefa->retornaDados()):                                       
+                                        printf('<tr bgcolor="%s">',$res->cor_linha); 
+                                        //echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
-                                        printf('<td bgcolor="%s">%s</td>',$res->cor,$res->status);
+                                        printf('<td bgcolor="%s">%s</span></td>',$res->cor,$res->status);
                                         printf('<td>%s</td>',$res->assunto);
                                         printf('<td>%s</td>',$res->projeto);
                                         printf('<td>%s</td>',$res->categoria);
                                         printf('<td>%s</td>',$res->prioridade);
                                         printf('<td>%s</td>',$res->usr_atribuido);
                                         printf('<td>%s</td>',$res->data_inicio);                                        
-                                        printf('<td>%s</td>',$res->data_prev_fim);
-                                        printf('<td>%s</td>',$res->data_fim);
-                                        printf('<td>%s</td>',0);
+                                        printf('<td>%s</td>',$res->data_prev_fim);                                       
+                                        printf('<td>%s</td>',$res->atraso);                                    ;
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -630,9 +638,9 @@
                               			<th></th>
                               			<th></th>
                               			<th></th>
+                              			<th></th>                              			
                               			<th></th>
-                              			<th></th>
-                              			<th></th>
+                              		
                             		</tr>
                             	</tfoot>
                         	</table>

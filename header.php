@@ -220,7 +220,8 @@
             <li class="active"><a href="?m=tipos&t=listar"><i class="fa fa-edit"></i>Tipos</a></li>
             <li class="active"><a href="?m=status&t=listar"><i class="fa fa-ticket"></i>Status</a></li>
             <li class="active"><a href="?m=prioridades&t=listar"><i class="fa fa-calendar-check-o"></i>Prioridade</a></li>    
-            <li class="active"><a href="?m=categorias&t=listar"><i class="fa fa-tag"></i>Categoria</a></li>           
+            <li class="active"><a href="?m=categorias&t=listar"><i class="fa fa-tag"></i>Categoria</a></li>
+            <li class="active"><a href="?m=periodos_entrega&t=listar"><i class="fa fa-tag"></i>Períodos de Entrega</a></li>           
           </ul>
         </li>
 
