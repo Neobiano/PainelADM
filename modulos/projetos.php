@@ -419,7 +419,7 @@
         				</div>
         			</section>
                     <!-- /.content -->
-    			</div> <!-- /.content-wrapper         			                                  
+    			</div>                                  
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

@@ -509,7 +509,7 @@
         					</div>
         				</section>
                     <!-- /.content -->
-    			</div> <!-- /.content-wrapper         			                                  
+    			</div> <!-- content-wrapper -->         			                                  
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

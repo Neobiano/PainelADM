@@ -146,7 +146,8 @@
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qtipo = new tipo();                                                	
-                                                            $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
+                                                        	$qtipo->extras_select = " order by nome"
+                                                        	$qtipo->selecionaTudo($qtipo);                                                                
                                                             while ($res = $qtipo->retornaDados())
                                                             {                                         
                                                                 if ($resbd->id_tipo == $res->id)
@@ -177,7 +178,9 @@
                                                     <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qprioridade = new prioridade();
+                                                        	$qprioridade->extras_select = " order by nome"
                                                         	$qprioridade->selecionaTudo($qprioridade);
+                                                        	
                                                         	while ($res = $qprioridade->retornaDados())
                                                         	{
                                                         	    if ($resbd->id_prioridade == $res->id)
@@ -575,12 +578,12 @@
                               			<th>Código</th>
                               			<th>Status</th>
                               			<th>Assunto</th>
-                              			<th>Projeto</th>                              			
+                              		                         			
                               			<th>Categoria</th>
-                              			<th>Prioridade</th>
+                              			
                               			<th>Atribuído à</th>
                               			<th>Dt Ini.</th>
-                              			<th>Dt. Prev Fim</th>                              			
+                              		                     			
                               			<th>Atraso</th>
                               			                                			                 
                               			<th>Ações</th>
@@ -591,12 +594,12 @@
                                     $select = ' SELECT tarefas.*, 
                                                 case
                                                     when (tarefas.data_fim >0) then null
-                                                    else (CURRENT_DATE() - tarefas.data_prev_fim) 
+                                                    else DATEDIFF (CURRENT_DATE(),tarefas.data_prev_fim)
                                                 end atraso, c.nome categoria, p.nome prioridade, pj.nome projeto,
                                                 st.nome status, st.cor, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido,
                                                 case
                                                     when (tarefas.data_fim >0) then null
-                                                    else (select pe.cor from periodos_entrega pe where (CURRENT_DATE() - tarefas.data_prev_fim) BETWEEN pe.inter_ini and pe.inter_fim)
+                                                    else (select pe.cor from periodos_entrega pe where (DATEDIFF (CURRENT_DATE(),tarefas.data_prev_fim)) BETWEEN pe.inter_ini and pe.inter_fim)
                                                 end cor_linha 
                                                 FROM ';
                                     $tarefa = new tarefa();
@@ -615,12 +618,12 @@
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td bgcolor="%s">%s</span></td>',$res->cor,$res->status);
                                         printf('<td>%s</td>',$res->assunto);
-                                        printf('<td>%s</td>',$res->projeto);
+                                      
                                         printf('<td>%s</td>',$res->categoria);
-                                        printf('<td>%s</td>',$res->prioridade);
+                                     
                                         printf('<td>%s</td>',$res->usr_atribuido);
                                         printf('<td>%s</td>',$res->data_inicio);                                        
-                                        printf('<td>%s</td>',$res->data_prev_fim);                                       
+                                      
                                         printf('<td>%s</td>',$res->atraso);                                    ;
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
@@ -631,14 +634,14 @@
                             		<tr>
                               			<th></th>
                               			<th></th>
-                              			<th></th>                              			        
+                              		                        			        
                               			<th></th>
                               			<th></th>
                               			<th></th>
+                              			
                               			<th></th>
-                              			<th></th>
-                              			<th></th>
-                              			<th></th>                              			
+                              			
+                              		    <th></th>                  			
                               			<th></th>
                               		
                             		</tr>
@@ -736,7 +739,7 @@
         				</div>
         			</section>
                     <!-- /.content -->
-    			</div> <!-- /.content-wrapper         			                                  
+    			</div>                     
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

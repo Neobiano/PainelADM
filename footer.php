@@ -43,6 +43,14 @@
 	  $(function () {		
 		
 	    $('#gridfull').DataTable({
+	    	"iDisplayLength": 25,	
+	    	"columnDefs": [
+
+	    		
+	            
+	        ],
+
+	        fixedColumns: true,	   
 	    	"oLanguage": {
 	                    "sZeroRecords": "Nenhum dado econtrado para exibição",
 	                    "sInfo": "Exibindo _START_ à _END_ de _TOTAL_ de registros",

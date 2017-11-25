@@ -31,7 +31,8 @@
                     {
                         // se for usuário do prioridade admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $prioridade = new prioridade(array(
-                            'nome'=>$_POST['nome']
+                            'nome'=>$_POST['nome'],
+                            'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N' 
                         ));
                         
                         $prioridade->valorpk = $id;
@@ -77,76 +78,72 @@
                 
                 //formulário de edição de usuário   
                 ?>
-                    <script type="text/javascript">
-                        $(document).ready
-                        (
-                            function()
-                            {
-                                $(".userform").validate
-                                (
-                                    {
-                                        rules:
-                                        {
-                                            nome:{required:true,minlength:5}
-                                                                                        
-                                        }
-                                    }
-                                )
-                                
-                            }
-                        );
-                    </script>
-                    
+                                        
                 <div class="content-wrapper">
-                <!-- Content Header (Page header) --> 
+               
         
-                <section class="content-header">
-                	<h1>
-                		Prioridades
-                		<small>Incluir</small>
-                  	</h1>
-                  	<ol class="breadcrumb">
-                		<li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
-                		<li class="active">Incluir</li>
-                  	</ol>
-                </section> 
-    
-                <!-- Main content -->
-    			<section class="content">
-      				<div class="row">
-    	            <!-- left column -->
-    					<div class="col-md-6">
-                        <!-- general form elements -->
-    						<div class="box box-primary">
-    							<div class="box-header with-border">
-    								<h3 class="box-title">Informe os dados para cadastro</h3>
-    							</div>   	
-    							
-    							<!-- form start -->	
-    							<form class="userform" role="form" method="post" action="">
-    								<div class="box-body">
-    									<div class="form-group">
-              								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->id;?>">
-    									</div>
-    									
-    									<div class="form-group">
-              								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->nome;?>">
-    									</div>
-                                            									
-    								</div>                                
-                                  
-    								<div class="box-footer">  
-    									 <button type="button" class="btn btn-default" onclick="location.href='?m=prioridades&t=listar'" >Cancelar</button>
-    									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
-    									 
-    								</div>                              
-    							</form>
-    		 				</div><!-- Final box-primary -->
-    					</div><!-- Final col-md-6 -->
-    				</div>
-    			</section>
+                    <section class="content-header">
+                    	<h1>
+                    		Prioridades
+                    		<small>Incluir</small>
+                      	</h1>
+                      	<ol class="breadcrumb">
+                    		<li><a ><i class="fa fa-dashboard"></i> Prioridades</a></li>
+                    		<li class="active">Incluir</li>
+                      	</ol>
+                    </section> 
+                   
+        			<section class="content">
+          				<div class="row">
+        	            <!-- left column -->
+        					<div class="col-md-6">
+                            <!-- general form elements -->
+        						<div class="box box-primary">
+        							<div class="box-header with-border">
+        								<h3 class="box-title">Informe os dados para cadastro</h3>
+        							</div>   	
+        							
+        							<!-- form start -->	
+        							<form class="userform" role="form" method="post" action="">
+        									
+            								<div class="box-body">
+            									<div class="form-group">
+                      								<label>Código</label>
+                      								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->id;?>">
+            									</div>
+            									
+            									<div class="form-group">
+                      								<label>Nome</label>
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->nome;?>">
+            									</div>
+                                                    									
+            								</div>                                
+                                      	 
+                                      		
+                                      		<div class="form-group">																	
+                      							<div class="col-xs-6">                    								                    								
+                      								<input type="checkbox" name="padraoabertura"  <?php																			
+                    														
+                    																		if (strtoupper($resbd->padrao_abertura)=='S')
+                    																			echo ' checked';
+                    																	?> /><b> Padrão de Abertura</b> 
+                      								 
+                      							</div>
+                      							<br>
+                      						</div> 
+                    					 
+    					
+        								<div class="box-footer">  
+        									 <button type="button" class="btn btn-default" onclick="location.href='?m=prioridades&t=listar'" >Cancelar</button>
+        									 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
+        									 
+        								</div>                              
+        							</form>
+        		 				</div><!-- Final box-primary -->
+        					</div><!-- Final col-md-6 -->
+        				</div>
+        				      
+        			</section>
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->			                                     
                 <?php   
@@ -161,7 +158,8 @@
               
                 $prioridade = new prioridade(
                                         array(
-                                        'nome'=>$_POST['nome']                                       
+                                        'nome'=>$_POST['nome'],
+                                        'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N' 
                                         )
                                     ); 
              
@@ -233,21 +231,41 @@
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
     									<div class="form-group">
+              								<label>Código</label>
+              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Código é Automático">
+    									</div>
+            									
+    									<div class="form-group">
               								<label>Nome</label>
               								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php echo $_POST['nome']?>">
     									</div>
-                                            								
-    								</div>                                
-                                  
-    								<div class="box-footer">  
+    									    															
+    								</div> 
+    								<div class="form-group">																	
+              							<div class="col-xs-6">                    								                    								
+              								<input type="checkbox" name="padraoabertura"  <?php																			
+                                                              								if ($_POST['padraoabertura'])
+                                                              								    echo ' checked';     
+                																?> /><b> Padrão de Abertura</b>
+              								 
+              							</div>
+              							<br>
+              						</div>                                
+
+	   								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=prioridades&t=listar'" >Cancelar</button>
     									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
     									 
-    								</div>                              
+    								</div>
+    								
+    								                           
     							</form>
     		 				</div><!-- Final box-primary -->
     					</div><!-- Final col-md-6 -->
     				</div>
+    																					
+					
+					  
     			</section>
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->
@@ -281,6 +299,7 @@
                             		<tr>
                               			<th>Código</th>
                               			<th>Nome</th>
+                              			<th>Padrão Abertura</th>
                               			<th>Ações</th>                               			                 
                             		</tr>
                             	</thead>
@@ -291,7 +310,8 @@
                                     while ($res = $prioridade->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
-                                        printf('<td>%s</td>',$res->nome);                                                               
+                                        printf('<td>%s</td>',$res->nome);  
+                                        printf('<td>%s</td>',(strtoupper($res->padrao_abertura=='S') ? 'Sim' : 'Não'));
                                         printf('<td><a href="?m=prioridades&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=prioridades&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=prioridades&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -299,6 +319,7 @@
                              	</tbody>
                             	<tfoot>
                             		<tr>
+                              			<th></th>
                               			<th></th>
                               			<th></th>
                               			<th></th>                              			        
@@ -347,7 +368,7 @@
                 
                 //formulário de edição de prioridade   
                 ?>   
-                	<div class="content-wrapper">
+                <div class="content-wrapper">
                     <!-- Content Header (Page header) --> 
             
                     <section class="content-header">
@@ -384,7 +405,18 @@
                   								<label>Nome</label>
                   								<input  name="nome" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->nome;?>">
         									</div>        									        									
-        								</div>                                
+        								</div> 
+        																								
+                  						<div class="col-xs-4">
+                								                    								
+                  								<input disabled type="checkbox" name="padraoabertura"  <?php																			
+                														
+                																		if (strtoupper($resbd->padrao_abertura)=='S')
+                																			echo ' checked';
+                																	?> /><b> Padrão de Abertura</b> 
+                  								 
+                  						</div> 
+                					    <br>                              
                                       
         								<div class="box-footer">  
         									 <button type="button" class="btn btn-default" onclick="location.href='?m=prioridades&t=listar'" >Cancelar</button>
@@ -396,8 +428,8 @@
         					</div><!-- Final col-md-6 -->
         				</div>
         			</section>
-                    <!-- /.content -->
-    			</div> <!-- /.content-wrapper         			                                  
+                    
+    			</div>    			                                  
                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
