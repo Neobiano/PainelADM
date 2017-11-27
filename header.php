@@ -12,17 +12,18 @@
 		<?php
 			loadCSS('bower_components/font-awesome/css/font-awesome.min','screen',true);
 			loadCSS('bower_components/Ionicons/css/ionicons.min','screen',true);
+			loadCSS('bower_components/select2/dist/css/select2.min','screen',true);
 			loadCSS('dist/css/AdminLTE.min','screen',true);
 			loadCSS('dist/css/skins/skin-blue.min','screen',true);
 			loadCSS('bower_components/bootstrap/dist/css/bootstrap.min','screen',true);
 			loadCSS('bower_components/datatables.net-bs/css/dataTables.bootstrap.min','screen',true);
 			loadCSS('dist/css/skins/_all-skins.min','screen',true);
-			loadCSS('plugins/iCheck/square/blue','screen',true);
-			loadCSS('bower_components/select2/dist/css/select2.min','screen',true);
+			loadCSS('plugins/iCheck/square/blue','screen',true);			
 			loadCSS('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min','screen',true);
 			//loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic','screen',true);
 			loadCSS('style');			
-	        loadJS('geral');			 
+	        loadJS('geral');
+	        loadJS('bower_components/jquery/dist/jquery.min.js',true);	
 	       
 		?>
 	</head> 

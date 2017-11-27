@@ -1,6 +1,8 @@
 <?php 
 	require_once("funcoes.php");
 	protegeArquivo(basename(__FILE__));
+	
+	     
 ?>
     
         
@@ -18,10 +20,10 @@
  
 </div><!-- ./wrapper -->
 	
-    
-    loadJS('bower_components/jquery/dist/jquery.min.js',true); 
+   
 	   
 	<!-- Bootstrap 3.3.7 -->
+	<script src="'"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- DataTables -->
 	<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -32,23 +34,20 @@
 	<script src="bower_components/fastclick/lib/fastclick.js"></script>
 	<!-- AdminLTE App -->
 	<script src="dist/js/adminlte.min.js"></script>
-	<!-- AdminLTE for demo purposes -->
+	
 	<script src="dist/js/demo.js"></script>
 	<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-	loadJS('bower_components/ckeditor/ckeditor.js',true);
-    loadJS('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',true);              	   
+	<script src="bower_components/ckeditor/ckeditor.js"></script>
+	<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>	         	   	
 	
 	<!-- page script -->
 	<script>	
 	 		  
-	  $(function () {		
-
-	    $('.select2').select2()
+	  $(function () {			   
 				
 	    $('#gridfull').DataTable({
 	    	"iDisplayLength": 25,	
 	    	"columnDefs": [
-
 	    		
 	            
 	        ],

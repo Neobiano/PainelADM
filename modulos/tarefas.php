@@ -2,9 +2,7 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
-    loadJS('bower_components/ckeditor/ckeditor.js',true);
-   
-    
+      
            
 	
     //verificando se há registros no BD, caso contrario abrirá a inserção.
@@ -110,7 +108,9 @@
                 		      assumeNearbyYear:true,
                 		      todayHighlight:true,	                
                 		      autoclose: true
-                		    })	                    	  
+                		    })	
+
+                		    $('.select2').select2()                      	  
                     }
                     );            	  									
                 	</script> 	        
@@ -292,28 +292,7 @@
                                                                                                                                                 
             									</div>           									     									
             							 	</div>            							 	   	
-            							</div>	   
-            							
-            							<div class="box box-default">                
-                                            <div class="box-body">
-                                              <div class="row">
-                                                <div class="col-md-6">
-                                                  <div class="form-group">
-                                                    <label>Minimal</label>
-                                                    <select class="form-control select2" style="width: 100%;">
-                                                      <option selected="selected">Alabama</option>
-                                                      <option>Alaska</option>
-                                                      <option>California</option>
-                                                      <option>Delaware</option>
-                                                      <option>Tennessee</option>
-                                                      <option>Texas</option>
-                                                      <option>Washington</option>
-                                                    </select>
-                                                  </div>                          
-                                                </div>            
-                                              </div>          
-                                            </div>                
-                                        </div>
+            							</div>	               							            							
     								</div> 	  	                               
                                   		 
     								<div class="box-footer">  
@@ -326,8 +305,7 @@
                 <!-- /.content -->
 			</div> <!-- /.content-wrapper -->
 			
-        		                   	
-			                                     
+                                     
                 <?php   
             }//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])
             else
@@ -377,12 +355,15 @@
             }
            
         ?>          
-           
+       
 			<script type="text/javascript">
                     $(document).ready(function()
                     {	             		
-                        	CKEDITOR.replace('editor1')	
+
+                    		CKEDITOR.replace('editor1')	
                 			
+                			 $('.select2').select2()  
+                			  
                 			//Date picker
                 		    $('#datepicker1').datepicker({	    
                 		      format:"yyyy-mm-dd",
