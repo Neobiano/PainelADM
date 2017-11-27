@@ -1,8 +1,11 @@
+	
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
     loadJS('bower_components/ckeditor/ckeditor.js',true);
-    loadJS('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',true);
+   
+    
+           
 	
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
@@ -146,7 +149,7 @@
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qtipo = new tipo();                                                	
-                                                        	$qtipo->extras_select = " order by nome"
+                                                        	$qtipo->extras_select = " order by nome";
                                                         	$qtipo->selecionaTudo($qtipo);                                                                
                                                             while ($res = $qtipo->retornaDados())
                                                             {                                         
@@ -178,7 +181,7 @@
                                                     <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qprioridade = new prioridade();
-                                                        	$qprioridade->extras_select = " order by nome"
+                                                        	$qprioridade->extras_select = " order by nome";
                                                         	$qprioridade->selecionaTudo($qprioridade);
                                                         	
                                                         	while ($res = $qprioridade->retornaDados())
@@ -197,6 +200,7 @@
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qcategoria = new categoria();
+                                                        	$qcategoria->extras_select = " order by nome";
                                                         	$qcategoria->selecionaTudo($qcategoria);
                                                         	while ($res = $qcategoria->retornaDados())
                                                         	{
@@ -210,10 +214,11 @@
             									</div> 
             									<div class="col-xs-4">
                       								<label>Status</label>
-                                                    <select name="status" class="form-control select2 input-sm" style="width: 100%;">
+                                                    <select name="status" class="form-control select2" style="width: 100%;">
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qstatus= new status();
+                                                        	$qstatus->extras_select = " order by nome";
                                                         	$qstatus->selecionaTudo($qstatus);
                                                         	while ($res = $qstatus->retornaDados())
                                                         	{
@@ -236,6 +241,7 @@
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                     	   $qprojeto = new projeto();
+                                                    	   $qprojeto->extras_select = " order by nome";
                                                     	   $qprojeto->selecionaTudo($qprojeto);
                                                     	   while ($res = $qprojeto->retornaDados())
                                                         	{
@@ -253,6 +259,7 @@
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qusuario = new usuario();
+                                                        	$qusuario->extras_select = " order by nome";
                                                         	$qusuario->selecionaTudo($qusuario);
                                                         	while ($res = $qusuario->retornaDados())
                                                             	{
@@ -286,6 +293,27 @@
             									</div>           									     									
             							 	</div>            							 	   	
             							</div>	   
+            							
+            							<div class="box box-default">                
+                                            <div class="box-body">
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                  <div class="form-group">
+                                                    <label>Minimal</label>
+                                                    <select class="form-control select2" style="width: 100%;">
+                                                      <option selected="selected">Alabama</option>
+                                                      <option>Alaska</option>
+                                                      <option>California</option>
+                                                      <option>Delaware</option>
+                                                      <option>Tennessee</option>
+                                                      <option>Texas</option>
+                                                      <option>Washington</option>
+                                                    </select>
+                                                  </div>                          
+                                                </div>            
+                                              </div>          
+                                            </div>                
+                                        </div>
     								</div> 	  	                               
                                   		 
     								<div class="box-footer">  
@@ -408,7 +436,8 @@
                                                     <select name="tipo" class="form-control select2 input-sm" style="width: 100%;">
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
-                                                        	$qtipo = new tipo();                                                	
+                                                        	$qtipo = new tipo();    
+                                                        	$qtipo->extras_select = " order by nome";
                                                             $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
                                                             while ($res = $qtipo->retornaDados())
                                                             {                                                                                                         
@@ -437,6 +466,7 @@
                                                     <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qprioridade = new prioridade();
+                                                        	$qprioridade->extras_select = " order by nome";
                                                         	$qprioridade->selecionaTudo($qprioridade);
                                                         	while ($res = $qprioridade->retornaDados())
                                                         	{                                                        	    
@@ -451,6 +481,7 @@
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qcategoria = new categoria();
+                                                        	$qcategoria->extras_select = " order by nome";
                                                         	$qcategoria->selecionaTudo($qcategoria);
                                                         	while ($res = $qcategoria->retornaDados())
                                                         	{                                                        	   
@@ -465,6 +496,7 @@
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qstatus= new status();
+                                                        	$qstatus->extras_select = " order by nome";
                                                         	$qstatus->selecionaTudo($qstatus);
                                                         	while ($res = $qstatus->retornaDados())
                                                         	{
@@ -487,6 +519,7 @@
                                                        <option selected="selected" value="0"> </option>
                                                     	<?php 
                                                     	   $qprojeto = new projeto();
+                                                    	   $qprojeto->extras_select = " order by nome";
                                                     	   $qprojeto->selecionaTudo($qprojeto);
                                                     	   while ($res = $qprojeto->retornaDados())
                                                         	{                                                        	   
@@ -501,6 +534,7 @@
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
                                                         	$qusuario = new usuario();
+                                                        	$qusuario->extras_select = " order by nome";
                                                         	$qusuario->selecionaTudo($qusuario);
                                                         	while ($res = $qusuario->retornaDados())
                                                             	{
@@ -689,55 +723,200 @@
                 
                 //formulário de edição de tarefa   
                 ?>   
+                	<script type="text/javascript">
+                    $(document).ready(function()
+                    {	             		
+                      	CKEDITOR.replace('editor1')	                	
+                    });            	  									
+                	</script> 	 
                 	<div class="content-wrapper">
                     <!-- Content Header (Page header) --> 
             
                     <section class="content-header">
                     	<h1>
-                    		tarefas
+                    		Tarefas
                     		<small>Excluir</small>
                       	</h1>
                       	<ol class="breadcrumb">
-                    		<li><a ><i class="fa fa-dashboard"></i> tarefas</a></li>
+                    		<li><a ><i class="fa fa-dashboard"></i> Tarefas</a></li>
                     		<li class="active">Excluir</li>
                       	</ol>
                     </section> 
         
-                    <!-- Main content -->
-        			<section class="content">
-          				<div class="row">
-        	            <!-- left column -->
-        					<div class="col-md-6">
-                            <!-- general form elements -->
-        						<div class="box box-primary">
-        							<div class="box-header with-border">
-        								<h3 class="box-title">Informe os dados para cadastro</h3>
-        							</div>   	
-        							
-        							<!-- form start -->	
-        							<form class="userform" role="form" method="post" action="">
-        								<div class="box-body">
-        									<div class="form-group">
-                  								<label>Código</label>
-                  								<input  name="id" type="text" class="form-control input-sm"  disabled value="<?php if($resbd) echo $resbd->id;?>">
-        									</div>
-                                            
-                                            <div class="form-group">
-                  								<label>Assunto</label>
-                  								<input  name="assunto" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->assunto;?>">
-        									</div>        									        									
-        								</div>                                
-                                      
-        								<div class="box-footer">  
+                    <section class="content">      				    	           
+    						<div class="box box-primary">    								
+    							<form class="userform" role="form" method="post" action="">
+    								<div class="box-body">
+    									<div class="row">
+    									 	<div class="form-group">
+            									<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="assunto" type="text" class="form-control input-sm" placeholder="Código é Automático" value="<?php if($resbd) echo $resbd->id;?>">
+            									</div>
+            									<div class="col-xs-8">
+                      								<label>Assunto</label>
+                      								<input disabled name="assunto" type="text" class="form-control input-sm" placeholder="Assunto da Tarefa" value="<?php if($resbd) echo $resbd->assunto;?>">
+            									</div>            									                                                         								
+            									<div class="col-xs-2">
+                      								<label>Tipo</label>
+                                                    <select disabled name="tipo" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qtipo = new tipo();                                                	
+                                                        	$qtipo->extras_select = " order by nome";
+                                                        	$qtipo->selecionaTudo($qtipo);                                                                
+                                                            while ($res = $qtipo->retornaDados())
+                                                            {                                         
+                                                                if ($resbd->id_tipo == $res->id)
+                                                                    printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                                else
+                                                                    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            } 
+                                                        ?>                                              
+                                                    </select>
+            									</div>        									
+            							 	</div>            							 	   	
+            							</div>	
+            							<div class="row top-buffer">
+    									 	<div class="form-group">    									 	
+                                            	<div class="col-xs-12" >                                                               
+                                            			<label>Descrição</label>
+                                            			<textarea disabled form-control id="editor1" name="editor1" rows="10" cols="80">
+    															<?php if($resbd) echo html_entity_decode($resbd->descricao);?>                                        				                                            				
+                                            			</textarea>                                                                                                                                       
+                                            	</div>		                                    	     									                                             
+    										</div>            							 	   	
+            							</div> 	
+            							<div class="row top-buffer">
+    									 	<div class="form-group">            								
+            									<div class="col-xs-4">
+                      								<label>Prioridade</label>
+                                                    <select disabled name="prioridade" class="form-control select2 input-sm" style="width: 100%;">
+                                                    <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qprioridade = new prioridade();
+                                                        	$qprioridade->extras_select = " order by nome";
+                                                        	$qprioridade->selecionaTudo($qprioridade);
+                                                        	
+                                                        	while ($res = $qprioridade->retornaDados())
+                                                        	{
+                                                        	    if ($resbd->id_prioridade == $res->id)
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>  
+            									<div class="col-xs-4">
+                      								<label>Categoria</label>
+                                                    <select disabled name="categoria" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qcategoria = new categoria();
+                                                        	$qcategoria->extras_select = " order by nome";
+                                                        	$qcategoria->selecionaTudo($qcategoria);
+                                                        	while ($res = $qcategoria->retornaDados())
+                                                        	{
+                                                        	    if ($resbd->id_categoria == $res->id)
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div> 
+            									<div class="col-xs-4">
+                      								<label>Status</label>
+                                                    <select disabled name="status" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qstatus= new status();
+                                                        	$qstatus->extras_select = " order by nome";
+                                                        	$qstatus->selecionaTudo($qstatus);
+                                                        	while ($res = $qstatus->retornaDados())
+                                                        	{
+                                                        	    if ($resbd->id_status == $res->id)
+                                                        	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>       									
+            							 	</div>            							 	   	
+            							</div>	  
+            							
+            							<div class="row top-buffer">
+    									 	<div class="form-group">            								
+            									<div class="col-xs-4">
+                      								<label>Projeto</label>
+                                                    <select disabled name="projeto" class="form-control select2 input-sm" style="width: 100%;">
+                                                       <option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                    	   $qprojeto = new projeto();
+                                                    	   $qprojeto->extras_select = " order by nome";
+                                                    	   $qprojeto->selecionaTudo($qprojeto);
+                                                    	   while ($res = $qprojeto->retornaDados())
+                                                        	{
+                                                        	    if ($resbd->id_projeto == $res->id)
+                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                        	    else
+                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                        	} 
+                                                        ?>                                              
+                                                    </select>
+            									</div>  
+            									<div class="col-xs-4">
+                      								<label>Atribuido à</label>
+                                                    <select disabled name="atribuido" class="form-control select2 input-sm" style="width: 100%;">
+                                                    	<option selected="selected" value="0"> </option>
+                                                    	<?php 
+                                                        	$qusuario = new usuario();
+                                                        	$qusuario->extras_select = " order by nome";
+                                                        	$qusuario->selecionaTudo($qusuario);
+                                                        	while ($res = $qusuario->retornaDados())
+                                                            	{
+                                                            	    if ($resbd->id_atribuido == $res->id)
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                         ?>                                              
+                                                    </select>
+            									</div>                									
+            									<div class="col-xs-2">
+                      								<label>Data Início</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input disabled name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php if($resbd) echo $resbd->data_inicio;?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>  
+            									<div class="col-xs-2">
+                      								<label>Data Prev. Fim</label>
+                      								<div class="input-group date">
+                                                      <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                      <input disabled name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_prev_fim;?>">
+                                                    </div>
+                                                                                                                                                
+            									</div>           									     									
+            							 	</div>            							 	   	
+            							</div>	   
+    								</div> 	  	                               
+                                  		 
+    								<div class="box-footer">  
         									 <button type="button" class="btn btn-default" onclick="location.href='?m=tarefas&t=listar'" >Cancelar</button>
-        									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
-        									 
-        								</div>                              
-        							</form>
-        		 				</div><!-- Final box-primary -->
-        					</div><!-- Final col-md-6 -->
-        				</div>
-        			</section>
+        									 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									        									 
+        							</div>        							                          
+    						</form>
+    		 			</div><!-- Final box-primary -->    					  			
+    				</section>
+                    
                     <!-- /.content -->
     			</div>                     
                     
