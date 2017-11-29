@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="UTF-8">    
-        <title>Painel Administrativo</title>
+        <title>PainelCERAT</title>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
          <!-- Font Awesome -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">

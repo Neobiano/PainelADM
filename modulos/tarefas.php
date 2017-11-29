@@ -118,7 +118,7 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tarefas
+                		Demandas
                 		<small>Editar</small>
                   	</h1>
                   	<ol class="breadcrumb">
@@ -387,7 +387,7 @@
         
                 <section class="content-header">
                 	<h1>
-                		Tarefas
+                		Demandas
                 		<small>Incluir</small>
                   	</h1>
                   	<ol class="breadcrumb">
@@ -572,7 +572,7 @@
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
     		      <h1>
-    		        Tarefas
+    		        Demandas
     		        <small>Listagem</small>
     		      </h1>
     		      <ol class="breadcrumb">
@@ -714,11 +714,11 @@
             
                     <section class="content-header">
                     	<h1>
-                    		Tarefas
+                    		Demandas
                     		<small>Excluir</small>
                       	</h1>
                       	<ol class="breadcrumb">
-                    		<li><a ><i class="fa fa-dashboard"></i> Tarefas</a></li>
+                    		<li><a ><i class="fa fa-dashboard"></i> Demandas</a></li>
                     		<li class="active">Excluir</li>
                       	</ol>
                     </section> 

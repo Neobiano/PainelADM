@@ -49,7 +49,7 @@
 				
 				<div class="login-box">
                   <div class="login-logo">
-                    <a><b>Controle</b> de Tarefas</a>
+                    <a><b>Painel</b>CERAT</a>
                   </div>
                   <!-- /.login-logo -->
                   <div class="login-box-body">

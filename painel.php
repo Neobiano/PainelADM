@@ -32,7 +32,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                     <div class="col-md-6">                                                   
                           <div class="box box-primary">
                             <div class="box-header with-border">
-                              <h3 class="box-title">Demandas por Operador</h3>
+                              <h3 class="box-title">Demandas por Colaborador</h3>
                 
                               <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -41,7 +41,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                               </div>
                             </div>
                             <div class="box-body chart-responsive">
-                              <div class="chart" id="demandasoperador" style="height: 300px; position: relative;"></div>
+                              <div class="chart" id="demandascolaborador" style="height: 230px; position: relative;"></div>
                             </div>
                             <!-- /.box-body -->
                           </div>
@@ -58,7 +58,9 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                               </div>
                             </div>
                             <div class="box-body">
-                              <canvas id="pieChart" style="height:250px"></canvas>
+                           
+                            
+                              <canvas id="pieChart" style="height:230px"></canvas>
                            	  <div id="js-legend" class="chart-legend"></div>
                             </div>
                             <!-- /.box-body -->
@@ -71,7 +73,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
         				<!-- LINE CHART -->
         				<div class="box box-info">
         				<div class="box-header with-border">
-        				  <h3 class="box-title">Line Chart</h3>
+        				  <h3 class="box-title">Demandas por STATUS</h3>
         
         				  <div class="box-tools pull-right">
         					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -81,8 +83,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
         				</div>
         				<div class="box-body">
         				  <div class="chart">
-        				    <div id="donutchart" style="height: 300px;"></div>        				    
-        					
+        				    <div id="demandasstatus" style="height: 230px;"></div>        				            					
         				  </div>
         				</div>
         				<!-- /.box-body -->
@@ -116,138 +117,67 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
       </div>
       <!-- /.content-wrapper -->
       <script>
-      $(function() {
-    	  "use strict";
+              $(function() {
+            	                         	 
+            	  google.charts.load("current", {packages:["corechart"]});
+                  google.charts.setOnLoadCallback(drawChartStatus);
+                  function drawChartStatus() {
+                    var data = google.visualization.arrayToDataTable([
+                    	<?php 
+                    	       echo "['Status','Qtde'],";
+                    	        $select = " select count(*) qtde, st.nome, st.cor  from ";
+                                $qtarefa = new tarefa();
+                                $qtarefa->extras_select = "  left join status st on (st.id = tarefas.id_status)
+                                                            group by st.nome , st.cor ";
+                                
+                                $qtarefa->selecionaTudo($qtarefa,$select);         
+                                while ($res = $qtarefa->retornaDados()):
+                                    echo "['".$res->nome."',".$res->qtde."],";                                        
+                                endwhile; 
+                            ?>	                              
+                    ]);
+        
+                    var options = {
+                      title: 'Demandas por STATUS',
+                      is3D : true,
+                      pieHole: 0.4,
+                    };
+        
+                    var chart = new google.visualization.PieChart(document.getElementById('demandasstatus'));
+                    chart.draw(data, options);
+                  }     	  	   		    
 
-		  //função para gerar cores randomicas
-    	  function getRandomColor() {
-              var letters = '0123456789ABCDEF'.split('');
-              var color = '#';
-              for (var i = 0; i < 6; i++ ) {
-                  color += letters[Math.floor(Math.random() * 16)];
-              }
-              return color;
-          }	
-
-		  	
-    	  /*MORRIS CHART*/		 
-    	  // DONUT CHART
-    	    
-            var donut = new Morris.Donut({
-              element: 'demandasoperador',
-              resize: true,
-              colors: ["#f56954","#00a65a","#f39c12","#3c8dbc","#d2d6de","#3c8dbc", "#f56954", "#00a65a"],
-              data: [
-            	  <?php 
-                          $select = " select count(*) qtde, us.nome from  ";
-                          $qtarefa = new tarefa();
-                          $qtarefa->extras_select = "  left join status st on (st.id = tarefas.id_status)
+                  google.charts.load("current", {packages:["corechart"]});
+                  google.charts.setOnLoadCallback(drawChartColaborador);
+                  function drawChartColaborador() {
+                    var data = google.visualization.arrayToDataTable([
+                    	<?php 
+                    	       echo "['Colaborador','Qtde'],";
+                    	       $select = " select count(*) qtde, us.nome from  ";
+                    	       $qtarefa = new tarefa();
+                    	       $qtarefa->extras_select = "  left join status st on (st.id = tarefas.id_status)
                                                        left join usuarios us on (us.id = tarefas.id_atribuido)
                                                        group by us.nome ";
-                          
-                          $qtarefa->selecionaTudo($qtarefa,$select);
-                          
-                          while ($res = $qtarefa->retornaDados()):
-                            echo  '{label: "'.$res->nome.'", value:'.$res->qtde.'},';                     
-                          endwhile; 
-                      ?>
-              ],
-              hideHover: 'auto'
-            })	
-    	  /* ChartJS */		  		  
-    	  //-------------
-    	  //- PIE CHART -
-    	  //-------------
-    	  // Get context with jQuery - using jQuery's .get() method.
-    	  var pieChartCanvas = document.getElementById("pieChart").getContext("2d");
-    	  var pieChart = new Chart(pieChartCanvas);
-    	  var PieData        = [
-              <?php 
-                  $select = " select count(*) qtde, st.nome, st.cor  from ";
-                  $qtarefa = new tarefa();
-                  $qtarefa->extras_select = "  left join status st on (st.id = tarefas.id_status)
-                                              group by st.nome , st.cor ";
-                  
-                  $qtarefa->selecionaTudo($qtarefa,$select);         
-                  while ($res = $qtarefa->retornaDados()):
-                      echo "{
-                                  value    : ".$res->qtde.",
-                                  color    : '".$res->cor."',                                  
-                                  highlight: '".$res->cor."',
-                                  label    : '".$res->nome."'
-                                }," ;
-                  endwhile; 
-              ?>
-           
-          ]
-    	  var pieOptions     = {
-                  
-                  //Boolean - Whether we should show a stroke on each segment
-                  segmentShowStroke    : true,
-                  //String - The colour of each segment stroke
-                  segmentStrokeColor   : '#fff',
-                  //Number - The width of each segment stroke
-                  segmentStrokeWidth   : 2,
-                  //Number - The percentage of the chart that we cut out of the middle
-                  percentageInnerCutout: 50, // This is 0 for Pie charts
-                  //Number - Amount of animation steps
-                  animationSteps       : 100,
-                  //String - Animation easing effect
-                  animationEasing      : 'easeOutBounce',
-                  //Boolean - Whether we animate the rotation of the Doughnut
-                  animateRotate        : true,
-                  //Boolean - Whether we animate scaling the Doughnut from the centre
-                  animateScale         : true,
-                  //Boolean - whether to make the chart responsive to window resizing
-                  responsive           : true,
-                  // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                  maintainAspectRatio  : true,
-                  //String - A legend template
-                   responsive: true,
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Chart.js Doughnut Chart'
-                        },
-                  legendTemplate: '<ul>' + '<% for (var i=0; i<segments.length; i++) { %>' + '<li>' + '<span style=\"background-color:<%=segments[i].fillColor%>\"></span>' + '<% if (segments[i].label) { %><%= segments[i].label+": "+segments[i].value %><% } %>' + '</li>' + '<% } %>' + '</ul>'
-                  //legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-                }
-                //Create pie or douhnut chart
-                // You can switch between pie and douhnut using the method below.
-    	  //Create pie or douhnut chart
-    	  // You can switch between pie and douhnut using the method below.
-    	  var myChart = pieChart.Doughnut(PieData, pieOptions);
-    	  document.getElementById("js-legend").innerHTML = myChart.generateLegend();
-
-    	  google.charts.load("current", {packages:["corechart"]});
-          google.charts.setOnLoadCallback(drawChart);
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-              ['Task', 'Hours per Day'],
-              ['Work',     11],
-              ['Eat',      2],
-              ['Commute',  2],
-              ['Watch TV', 2],
-              ['Sleep',    7]
-            ]);
-
-            var options = {
-              title: 'My Daily Activities',
-              is3D : true,
-              pieHole: 0.4,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-            chart.draw(data, options);
-          }
-     	  	   
-
-  
-   
-    	});
-    	      
+                                
+                                $qtarefa->selecionaTudo($qtarefa,$select);         
+                                while ($res = $qtarefa->retornaDados()):
+                                    echo "['".$res->nome."',".$res->qtde."],";                                        
+                                endwhile; 
+                            ?>	                              
+                    ]);
+        
+                    var options = {
+                      title: 'Demandas por Colaborador',
+                     
+                      pieHole: 0.4,
+                    };
+        
+                    var chart = new google.visualization.PieChart(document.getElementById('demandascolaborador'));
+                    chart.draw(data, options);
+                  }                    
+            	});
+             
+              	 
           
         </script>
     <?php     

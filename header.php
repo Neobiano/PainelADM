@@ -8,7 +8,7 @@
 <html lang="pt">
 	<head>
 		<meta charset="UTF-8" >		
-      	<title>Painel Administrativo</title>		
+      	<title>PainelCERAT</title>		
 		<?php
 			loadCSS('bower_components/font-awesome/css/font-awesome.min','screen',true);
 			loadCSS('bower_components/Ionicons/css/ionicons.min','screen',true);
@@ -34,9 +34,9 @@
 				 <!-- Logo -->
 			    <a href="painel.php" class="logo">
 			      <!-- mini logo for sidebar mini 50x50 pixels -->
-			      <span class="logo-mini"><b>C</b>T</span>
+			      <span class="logo-mini"><b>P</b>CT</span>
 			      <!-- logo for regular state and mobile devices -->
-			      <span class="logo-lg"><b>Controle de </b>Tarefas</span>
+			      <span class="logo-lg"><b>Painel</b>CERAT</span>
 			    </a>
 			    
 			    <!-- Header Navbar -->
@@ -56,7 +56,7 @@
 			              <span class="label label-success">4</span>
 			            </a>
 			            <ul class="dropdown-menu">
-			              <li class="header">You have 4 messages</li>
+			              <li class="header">Você tem 4 mensagens</li>
 			              <li>
 			                <!-- inner menu: contains the messages -->
 			                <ul class="menu">
@@ -68,18 +68,18 @@
 			                      </div>
 			                      <!-- Message title and timestamp -->
 			                      <h4>
-			                        Support Team
-			                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+			                        Equipe de Produção
+			                        <small><i class="fa fa-clock-o"></i> 5 minutos</small>
 			                      </h4>
 			                      <!-- The message -->
-			                      <p>Why not buy a new awesome theme?</p>
+			                      <p>Avaliar resposta a CEDES</p>
 			                    </a>
 			                  </li>
 			                  <!-- end message -->
 			                </ul>
 			                <!-- /.menu -->
 			              </li>
-			              <li class="footer"><a href="#">See All Messages</a></li>
+			              <li class="footer"><a href="#">Visualizar todas as mensagens</a></li>
 			            </ul>
 			          </li>
 			          <!-- /.messages-menu -->
@@ -92,19 +92,19 @@
 			              <span class="label label-warning">10</span>
 			            </a>
 			            <ul class="dropdown-menu">
-			              <li class="header">You have 10 notifications</li>
+			              <li class="header">Você 10 notificações</li>
 			              <li>
 			                <!-- Inner Menu: contains the notifications -->
 			                <ul class="menu">
 			                  <li><!-- start notification -->
 			                    <a href="#">
-			                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+			                      <i class="fa fa-users text-aqua"></i> 5 novos usuários incluídos hoje
 			                    </a>
 			                  </li>
 			                  <!-- end notification -->
 			                </ul>
 			              </li>
-			              <li class="footer"><a href="#">View all</a></li>
+			              <li class="footer"><a href="#">Visualizar todos</a></li>
 			            </ul>
 			          </li>
 			          <!-- Tasks Menu -->
@@ -115,7 +115,7 @@
 			              <span class="label label-danger">9</span>
 			            </a>
 			            <ul class="dropdown-menu">
-			              <li class="header">You have 9 tasks</li>
+			              <li class="header">Vocês tem 9 tarefas</li>
 			              <li>
 			                <!-- Inner menu: contains the tasks -->
 			                <ul class="menu">
@@ -123,7 +123,7 @@
 			                    <a href="#">
 			                      <!-- Task title and progress text -->
 			                      <h3>
-			                        Design some buttons
+			                        Configurar tela de fatura
 			                        <small class="pull-right">20%</small>
 			                      </h3>
 			                      <!-- The progress bar -->
@@ -131,7 +131,7 @@
 			                        <!-- Change the css width attribute to simulate progress -->
 			                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
 			                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-			                          <span class="sr-only">20% Complete</span>
+			                          <span class="sr-only">20% Completo</span>
 			                        </div>
 			                      </div>
 			                    </a>
@@ -140,7 +140,7 @@
 			                </ul>
 			              </li>
 			              <li class="footer">
-			                <a href="#">View all tasks</a>
+			                <a href="#">Visualizar todas as tarefas</a>
 			              </li>
 			            </ul>
 			          </li>
@@ -209,7 +209,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>          
-       	<li class="active"><a href="?m=tarefas&t=listar"><i class="fa fa-tasks"></i> <span>Tarefas</span></a></li>                           
+       	<li class="active"><a href="?m=tarefas&t=listar"><i class="fa fa-tasks"></i> <span>Demandas</span></a></li>                           
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text""></i> <span>Cadastros</span>
