@@ -36,8 +36,7 @@
 	<script src="dist/js/adminlte.min.js"></script>
 	
 	<script src="dist/js/demo.js"></script>
-	<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-	<script src="bower_components/ckeditor/ckeditor.js"></script>
+	<script src="bower_components/select2/dist/js/select2.full.min.js"></script>	
 	<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>	         	   	
 	
 	<!-- page script -->

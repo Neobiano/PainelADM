@@ -2,9 +2,8 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
-      
-           
-	
+    loadJS('bower_components/ckeditor/ckeditor.js',true);	
+   
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
     {
@@ -88,32 +87,32 @@
                                                    
                 ?>
                     			            	
-                <script type="text/javascript">
+                 <script type="text/javascript">
                     $(document).ready(function()
-                    {	             		
-                        	CKEDITOR.replace('editor1')	
-                			
-                			//Date picker
-                		    $('#datepicker1').datepicker({	    
-                		      format:"yyyy-mm-dd",
-                		      todayBtn:true,
-                		      assumeNearbyYear:true,
-                		      todayHighlight:true,	                
-                		      autoclose: true
-                		    })		  
-                
-                		    $('#datepicker2').datepicker({	    
-                		      format:"yyyy-mm-dd",
-                		      todayBtn:true,
-                		      assumeNearbyYear:true,
-                		      todayHighlight:true,	                
-                		      autoclose: true
-                		    })	
-
-                		    $('.select2').select2()                      	  
+                    {
+                        CKEDITOR.replace('editor1')
+                        
+                        //Date picker
+                        $('#datepicker1').datepicker({
+                            format:"yyyy-mm-dd",
+                            todayBtn:true,
+                            assumeNearbyYear:true,
+                            todayHighlight:true,
+                            autoclose: true
+                        })
+                        
+                        $('#datepicker2').datepicker({
+                            format:"yyyy-mm-dd",
+                            todayBtn:true,
+                            assumeNearbyYear:true,
+                            todayHighlight:true,
+                            autoclose: true
+                        })
+                        
+                        $('.select2').select2()
                     }
-                    );            	  									
-                	</script> 	        
+                    );
+                    </script>       
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
@@ -356,33 +355,33 @@
            
         ?>          
        
-			<script type="text/javascript">
-                    $(document).ready(function()
-                    {	             		
-
-                    		CKEDITOR.replace('editor1')	
-                			
-                			 $('.select2').select2()  
-                			  
-                			//Date picker
-                		    $('#datepicker1').datepicker({	    
-                		      format:"yyyy-mm-dd",
-                		      todayBtn:true,
-                		      assumeNearbyYear:true,
-                		      todayHighlight:true,	                
-                		      autoclose: true
-                		    })		  
+			    <script type="text/javascript">
+                $(document).ready(function()
+                {
+                    CKEDITOR.replace('editor1')
+                    
+                    //Date picker
+                    $('#datepicker1').datepicker({
+                        format:"yyyy-mm-dd",
+                        todayBtn:true,
+                        assumeNearbyYear:true,
+                        todayHighlight:true,
+                        autoclose: true
+                    })
+                    
+                    $('#datepicker2').datepicker({
+                        format:"yyyy-mm-dd",
+                        todayBtn:true,
+                        assumeNearbyYear:true,
+                        todayHighlight:true,
+                        autoclose: true
+                    })
+                    
+                    $('.select2').select2()
+                }
+                );
+                </script>  
                 
-                		    $('#datepicker2').datepicker({	    
-                		      format:"yyyy-mm-dd",
-                		      todayBtn:true,
-                		      assumeNearbyYear:true,
-                		      todayHighlight:true,	                
-                		      autoclose: true
-                		    })	                    	  
-                    }
-                    );            	  									
-                	</script> 	        
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         

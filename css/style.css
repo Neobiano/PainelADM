@@ -3,11 +3,11 @@
     color:#333;
     background: #F8F8F8;
 } 
-a:link, a:active, a:visited{
+a-retirado:link, a:active, a:visited{
     text-decoration: none;
     color:#09f;
 }
-a:hover{
+a-retirado:hover{
     text-decoration: underline;
 }
 #wrapper-retirado{
@@ -77,7 +77,7 @@ fieldset{
     border:1px solid #f4f4f4;
     padding:20px 10px;
 }
-legend{
+legend-retirado{
     font-size:16px;
     padding: 0 10px;
 }

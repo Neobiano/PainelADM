@@ -23,7 +23,8 @@
 				if ($user->doLogin($user))                 
                     redireciona('painel.php');                
 				else		
-					print_r($user);//redireciona('?erro=2');
+				    redireciona('?erro=2');
+					//print_r($user);//
 			}            
 			?>					
 				<script type="text/javascript">
@@ -44,25 +45,40 @@
 							
 						}
 					);
-				</script>		
-				<div id="loginform">
-					<form class="userform" method="post" action="">
-						<fieldset>
-							<legend>Acesso restrito, idenfique-se</legend>
-							<ul>
-								<li>
-									<label  for="usuario">Usuário:</label>
-									<input type="text" size="35" name="usuario" value="<?php echo $_POST['usuario']; ?>" />
-								</li>
-								<li>
-									<label for="senha">Senha:</label>
-									<input  type="password" size="35" name="senha" value="<?php echo $_POST['senha'];?>"/>
-								</li>
-								<li class="center">	
-									<input type="submit" name="logar" value="login"/>		
-								</li>
-							</ul>
-							<?php 
+				</script>	
+				
+				<div class="login-box">
+                  <div class="login-logo">
+                    <a><b>Controle</b> de Tarefas</a>
+                  </div>
+                  <!-- /.login-logo -->
+                  <div class="login-box-body">
+                    <p class="login-box-msg">Acesso restrito, idenfique-se</p>
+                
+                    <form class="userform" method="post" action="">
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Usuário" name="usuario" value="<?php echo $_POST['usuario']; ?>"/>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                      <div class="form-group has-feedback">
+                        <input type="password" class="form-control" placeholder="Senha" name="senha" value="<?php echo $_POST['senha'];?>"/>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-8">
+                          <div class="checkbox icheck">
+                            <label>
+                              <input type="checkbox"> Memorizar
+                            </label>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                          <button type="submit" name="logar" value="login" class="btn btn-primary btn-block btn-flat">Login</button>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <?php 
 								$erro = $_GET['erro'];
 								switch ($erro) 
 								{
@@ -76,10 +92,14 @@
 										echo '<div class="erro"> Faça login antes de acessar a página solicitada. </div>';
 										break;									
 								}								
-							?>
-						</fieldset>
-					</form>
-				</div>
+						?>
+                    </form>                                                   
+                  </div>
+                  <!-- /.login-box-body -->
+                </div>
+                <!-- /.login-box -->
+					
+				
 									
 			<?php				
 			break;
