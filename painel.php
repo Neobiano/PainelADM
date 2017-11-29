@@ -58,11 +58,10 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                               </div>
                             </div>
                             <div class="box-body">
-                           
-                            
-                              <canvas id="pieChart" style="height:230px"></canvas>
-                           	  <div id="js-legend" class="chart-legend"></div>
-                            </div>
+            				  <div class="chart">
+            				    <div id="demandasstatusbar" style="height: 230px;"></div>        				            					
+            				  </div>
+            				</div>
                             <!-- /.box-body -->
                           </div>
                           <!-- /.box -->        
@@ -72,20 +71,19 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                     <div class="col-md-6">
         				<!-- LINE CHART -->
         				<div class="box box-info">
-        				<div class="box-header with-border">
-        				  <h3 class="box-title">Demandas por STATUS</h3>
-        
-        				  <div class="box-tools pull-right">
-        					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-        					</button>
-        					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        				  </div>
-        				</div>
-        				<div class="box-body">
-        				  <div class="chart">
-        				    <div id="demandasstatus" style="height: 230px;"></div>        				            					
-        				  </div>
-        				</div>
+            				<div class="box-header with-border">
+            				      <h3 class="box-title">Demandas por STATUS</h3>            
+                                  <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                  </div>
+            				</div>
+            				<div class="box-body">
+            				  <div class="chart">
+            				    <div id="demandasstatus" style="height: 230px;"></div>        				            					
+            				  </div>
+            				</div>
         				<!-- /.box-body -->
         				</div>
         				<!-- /.box -->
