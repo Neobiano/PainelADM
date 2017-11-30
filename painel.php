@@ -18,11 +18,11 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
             <section class="content-header">
               <h1>
                 Dashboard
-                <small>Controle de Tarefas</small>
+                <small>Controle de Demandas</small>
               </h1>
               <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>            
-                <li class="active">Controle de Tarefas</li>
+                <li class="active">Controle de Demandas</li>
               </ol>
             </section>
     
@@ -68,8 +68,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                 	</div> 
                 	<!-- /.col (LEFT) -->
                     
-                    <div class="col-md-6">
-        				<!-- LINE CHART -->
+                    <div class="col-md-6">        				
         				<div class="box box-info">
             				<div class="box-header with-border">
             				      <h3 class="box-title">Demandas por STATUS</h3>            
@@ -91,7 +90,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
         				<!-- BAR CHART -->
         				<div class="box box-success">
         					<div class="box-header with-border">
-        					  <h3 class="box-title">Bar Chart</h3>
+        					  <h3 class="box-title">Demandas Abertas X Fechadas</h3>
         
         					  <div class="box-tools pull-right">
         						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -101,7 +100,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
         					</div>
         					<div class="box-body">
         					  <div class="chart">
-        						<canvas id="barChart" style="height:230px"></canvas>
+        					  	<div id="demandasfechadasxabertas" style="height: 230px;"></div>        					    
         					  </div>
         					</div>
         					<!-- /.box-body -->
@@ -118,6 +117,8 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
               $(function() {
             	                         	 
             	  google.charts.load("current", {packages:["corechart"]});
+
+            	  //Grafico de Pizza
                   google.charts.setOnLoadCallback(drawChartStatus);
                   function drawChartStatus() {
                     var data = google.visualization.arrayToDataTable([
@@ -145,7 +146,7 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                     chart.draw(data, options);
                   }     	  	   		    
 
-                  google.charts.load("current", {packages:["corechart"]});
+                                   
                   google.charts.setOnLoadCallback(drawChartColaborador);
                   function drawChartColaborador() {
                     var data = google.visualization.arrayToDataTable([
@@ -165,18 +166,66 @@ if (isset($_GET['t'])) $tela = $_GET['t'];
                     ]);
         
                     var options = {
-                      title: 'Demandas por Colaborador',
-                     
+                      title: 'Demandas por Colaborador',                     
                       pieHole: 0.4,
                     };
         
                     var chart = new google.visualization.PieChart(document.getElementById('demandascolaborador'));
                     chart.draw(data, options);
-                  }                    
-            	});
-             
-              	 
-          
+                  }
+
+                 //Grafico de Barras - Status                  
+                  google.charts.setOnLoadCallback(drawChartStatusBarra);
+                  function drawChartStatusBarra() {                	              	        
+                    var data = google.visualization.arrayToDataTable([
+                    	<?php 
+                     	       echo "['Status','Qtde', { role: 'style' }, { role: 'annotation' }],";
+                     	        $select = " select count(*) qtde, st.nome, st.cor  from ";
+                                 $qtarefa = new tarefa();
+                                 $qtarefa->extras_select = "  left join status st on (st.id = tarefas.id_status)
+                                                             group by st.nome , st.cor ";
+                                 
+                                 $qtarefa->selecionaTudo($qtarefa,$select);         
+                                 while ($res = $qtarefa->retornaDados()):
+                                     echo "['".$res->nome."',".$res->qtde.",'".$res->cor."',".$res->qtde."],";                                        
+                                 endwhile; 
+                             ?>	                              
+                    ]);
+                   
+                    
+                    var options = {
+                      title: 'Demandas por STATUS',
+                      legend: { position: "none" },
+                      is3D : true,
+                      pieHole: 0.4,
+                    };
+        
+                    var chart = new google.visualization.ColumnChart(document.getElementById('demandasstatusbar'));
+                    chart.draw(data, options);
+                  }	
+
+                  google.charts.setOnLoadCallback(drawChartFechadasXAbertas);
+                  function drawChartFechadasXAbertas() {
+                    var data = google.visualization.arrayToDataTable([
+                      ['Data', 'Fechadas', 'Abertas'],
+                      ['11/2017',  1,      3],
+                      ['10/2017',  5,     3],
+                      ['09/2017',  2,      3],
+                      ['08/2017',  1,      4]
+                    ]);
+
+                    var options = {
+                      title: 'Demandas Abertas X Fechadas',
+                      curveType: 'function',
+                      legend: { position: 'bottom' }
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('demandasfechadasxabertas'));
+
+                    chart.draw(data, options);
+                  }
+                                      
+            	});                           	           
         </script>
     <?php     
     endif;

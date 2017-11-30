@@ -25,22 +25,7 @@
 	        loadJS('geral');
 	        loadJS('bower_components/jquery/dist/jquery.min.js',true);		        
 	       
-		?>
-		<style>
-            .example-modal .modal {
-              position: relative;
-              top: auto;
-              bottom: auto;
-              right: auto;
-              left: auto;
-              display: block;
-              z-index: 1;
-            }
-        
-            .example-modal .modal {
-              background: transparent !important;
-            }
-       </style>
+		?>		
 	</head> 
 		
 	<body class="hold-transition skin-blue sidebar-mini">
