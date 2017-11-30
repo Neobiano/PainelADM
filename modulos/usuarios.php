@@ -104,7 +104,8 @@
 			<?php				
 			break;
 			
-		case 'editar':			           
+		case 'editar':	
+		   	
 			$sessao = new sessao();
             
             //verificando se o usuário logado é admin, ou é o dono do cadastro            
@@ -118,6 +119,7 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
+                            
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins         
                         if(isAdmin()==TRUE)
                         {    
@@ -126,6 +128,7 @@
                                 'email'=>$_POST['email'],
                                 'ativo'=>($_POST['ativo']=='on') ? 's' : 'n',
                                 'administrador'=>($_POST['adm']=='on') ? 's' : 'n',
+                                'administrador'=>$img 
                             ));
                         }
                         else //senão vai criar um objeto com campos limitados para edição
@@ -133,6 +136,7 @@
                             $user = new usuario(array(
                                 'nome'=>$_POST['nome'],
                                 'email'=>$_POST['email'],
+                                'administrador'=>$img
                             ));
                         }
                         $user->valorpk = $id;
@@ -179,23 +183,11 @@
 				//formulário de edição de usuário	
 				?>
 					<script type="text/javascript">
-						$(document).ready
-						(
-							function()
-							{
-								$(".userform").validate
-								(
-									{
-										rules:
-										{
-											nome:{required:true,minlength:3},
-											email:{required:true,email:true}											
-										}
-									}
-								)
-								
-							}
-						);
+    					$(document).ready
+    					(    		    		       		    		    
+							
+    	     
+    					)																
 					</script>	
 					
                     <div class="content-wrapper">
@@ -218,14 +210,10 @@
                     		<!-- left column -->
                     			<div class="col-md-6">
                     			<!-- general form elements -->
-                    				<div class="box box-primary">
-                    					<div class="box-header with-border">
-                    						<h3 class="box-title">Informe os dados para alteração</h3>
-                    					</div>   	
-                    					
+                    				<div class="box box-primary">                    					  	                    					
                     					<!-- form start -->	
-                    					<form name="userform" role="form" method="post" action="">
-                    						<div class="box-body">
+                    					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
+ 	                  						<div class="box-body">
                     							<div class="form-group">
                     								<label>Código</label>
                     								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
@@ -271,7 +259,18 @@
                                                              		         echo ' checked';
 																		?> />dar controle total ao usuário     		 
                                                		 </label>                                                
-                    							</div>                             
+                    							</div>    
+                    							
+                    							<!-- Profile Image -->
+                                                  <div class="box box-primary">
+                                                    <div class="box-body box-profile">
+                                                    	  <label for="imagem">Imagem:</label>	
+                                                    	  
+                                                    	  <input type="file" onchange="exibeFoto()" name="imagem" class="btn btn-primary btn-block"/>                                                    	 
+                                                          <img class="profile-user-img img-responsive img-circle" src="" alt="User profile picture">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                    </div>
+                                                    <!-- /.box-body -->
+                                                  </div>                         
                     					  
                     						<div class="box-footer">  
                     							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
