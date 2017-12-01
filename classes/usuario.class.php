@@ -18,6 +18,7 @@ class usuario extends Base
                                            "ativo"=>null,
                                            "administrador"=>null,
                                            "datacad"=>null,
+                                           "imagem"=>null,
                                           );
         }
         else
