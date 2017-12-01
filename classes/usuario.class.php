@@ -39,6 +39,7 @@ class usuario extends Base
             $usLogado = $objeto->retornaDados();                    
             $sessao->setVar('iduser', $usLogado->id);
             $sessao->setVar('nomeuser', $usLogado->nome);
+            $sessao->setVar('imagem', $usLogado->imagem);
             $sessao->setVar('loginuser', $usLogado->login);
             $sessao->setVar('logado', true);
             $sessao->setVar('ip', $_SERVER['REMOTE_ADDR']);             

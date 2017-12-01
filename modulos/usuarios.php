@@ -119,7 +119,48 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {
+                        //salvando imagem do usuário
+                        //valida se tem arquivo setado e se ele possui o tamanho autorizado pelo php (2mb default)
+                        if ( isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 )
+                        {
+                            $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+                            $nome = $_FILES[ 'arquivo' ][ 'name' ];
+
+                            // Pega a extensão
+                            $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
                             
+                            // Converte a extensão para minúsculo
+                            $extensao = strtolower ($extensao);
+                            
+                            // Somente imagens, .jpg;.jpeg;.gif;.png
+                            // Aqui eu enfileiro as extensões permitidas e separo por ';'
+                            // Isso serve apenas para eu poder pesquisar dentro desta String
+                            if (strstr( '.jpg;.jpeg;.gif;.png',$extensao ) ) 
+                            {
+                                // Cria um nome único para esta imagem
+                                // Evita que duplique as imagens no servidor.
+                                // Evita nomes com acentos, espaços e caracteres não alfanuméricos
+                                $novoNome = $id.'-Usuario.png';// . $extensao;
+                                
+                                // Concatena a pasta com o nome
+                                $destino = 'images/' . $novoNome;
+                                
+                                // tenta mover o arquivo para o destino
+                                //if ( @move_uploaded_file ( $arquivo_tmp, $destino ) )
+                                move_uploaded_file ( $arquivo_tmp, $destino );
+                                //{
+                                //    printMSG('Arquivo salvo com sucesso em : <strong>' . $destino . '</strong><br />','sucesso');
+                                //    printMSG(' < img src = "' . $destino . '" />','sucesso');
+                                //}
+                                //else
+                                //    printMSG('Erro ao salvar o arquivo. Aparentemente você não tem permissão de escrita.<br />','erro');
+                            }
+                            else
+                                printMSG('Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />','erro');
+                        }
+                        //else
+                        //    printMSG('Arquivo não definido','alerta');
+                        
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins         
                         if(isAdmin()==TRUE)
                         {    
@@ -128,7 +169,7 @@
                                 'email'=>$_POST['email'],
                                 'ativo'=>($_POST['ativo']=='on') ? 's' : 'n',
                                 'administrador'=>($_POST['adm']=='on') ? 's' : 'n',
-                                'administrador'=>$img 
+                                'imagem'=>$destino
                             ));
                         }
                         else //senão vai criar um objeto com campos limitados para edição
@@ -136,7 +177,7 @@
                             $user = new usuario(array(
                                 'nome'=>$_POST['nome'],
                                 'email'=>$_POST['email'],
-                                'administrador'=>$img
+                                'imagem'=>$destino
                             ));
                         }
                         $user->valorpk = $id;
@@ -264,18 +305,16 @@
                     							<!-- Profile Image -->
                                                   <div class="box box-primary">
                                                     <div class="box-body box-profile">
-                                                    	  <label for="imagem">Imagem:</label>	
-                                                    	  
-                                                    	  <input type="file" onchange="exibeFoto()" name="imagem" class="btn btn-primary btn-block"/>                                                    	 
-                                                          <img class="profile-user-img img-responsive img-circle" src="" alt="User profile picture">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                    	  <label for="imagem">Imagem:</label>	                                                    	  
+                                                    	  <input type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-primary btn-block"/>                                                    	 
+                                                          <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
                                                     </div>
                                                     <!-- /.box-body -->
                                                   </div>                         
                     					  
                     						<div class="box-footer">  
                     							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
-                    							 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									
-                    							 
+                    							 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									                    							 
                     						</div>                              
                     					</form>
                     				</div><!-- Final box-primary -->
