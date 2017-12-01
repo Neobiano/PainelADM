@@ -172,6 +172,9 @@ form textarea{
 
 .top-buffer { margin-top:10px; }
 .botton-buffer { margin-bottom:10px; }
+.left-buffer { margin-left:10px; }
+
+.left-buffer-zero { margin-left:0px; }
 
 #js-legend ul {
   list-style: none;

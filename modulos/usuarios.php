@@ -221,14 +221,33 @@
                     printMSG('Usuário não definido, <a href="?m=usuarios&t=listar">escolha um usuário para alterar</a>','erro');
                 
 				
-				//formulário de edição de usuário	
+					
 				?>
-					<script type="text/javascript">
-    					$(document).ready
-    					(    		    		       		    		    
-							
-    	     
-    					)																
+					<!-- script utilizado para exibir a imagem no display-->
+					<script type="text/javascript">    					  		    		       		    		    
+						function readURL(input) {
+				            if (input.files && input.files[0]) {
+				                var reader = new FileReader();
+				                reader.onload = function (e) {
+				                    $(input).next()
+				                    .attr('src', e.target.result)
+				                };
+				                reader.readAsDataURL(input.files[0]);
+				            }
+				            else {
+				                var img = input.value;
+				                $(input).next().attr('src',img);
+				            }
+				         }
+				    
+				      	 function exibeFoto(){
+				    		    		        $('input[type=file]').each(function(index){
+				    		    		            if ($('input[type=file]').eq(index).val() != "")
+				    		    		            {
+				    		    		                readURL(this);
+				    		    		            }
+				    		    		        });
+						    		    }				    	     		    																					
 					</script>	
 					
                     <div class="content-wrapper">
@@ -248,70 +267,80 @@
                     	<!-- Main content -->
                     	<section class="content">
                     		<div class="row">
-                    		<!-- left column -->
+                    		
                     			<div class="col-md-6">
-                    			<!-- general form elements -->
+                    			
                     				<div class="box box-primary">                    					  	                    					
-                    					<!-- form start -->	
+                    				
                     					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
  	                  						<div class="box-body">
-                    							<div class="form-group">
-                    								<label>Código</label>
-                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+ 	                  							<div class="row">                        							
+                    								<div class="col-md-2">
+                        								<label>Código</label>
+                        								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                        							</div>
+                    							                    							                    								                    									                    						
+            										<div class="col-md-10">
+                										<label>Nome</label>
+                										<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                									</div>                    							                    							
                     							</div>
                     							
-                    							<div class="form-group">
-                    								<label>Nome</label>
-                    								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
-                    							</div>
-                    							
-                    							
-                    							<div class="form-group">
-                    								<label>Email</label>
-                    								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
-                    							</div>
-                    							
-                    							<div class="form-group">
-                    								<label>Email</label>
-                    								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
-                    							</div>
-                    							
-                                                <div class="form-group">
-                                                	<label for="ativo">Ativo:</label>
-                                                	<label>
-                                                 		 <input type="checkbox" name="ativo"  <?php
-																			if (!isAdmin())
-																				echo ' disabled';
-																			
-																			if (strtoupper($resbd->ativo)=='S')
-																				echo ' checked';
-																		?> />Habilitar ou desabilitar o usuário     		 
-                                               		 </label>                                                
-                    							</div>    
-                    							
-                    							<div class="form-group">
-                                                	<label for="adm">Administrador:</label>
-                                                	<label>
-                                                 		 <input type="checkbox"  name="adm"  <?php
-                                                                 		 if (!isAdmin())
-                                                                 		     echo ' disabled';
-                                                             		     
-                                                             		     if (strtoupper($resbd->administrador) == 'S')
-                                                             		         echo ' checked';
-																		?> />dar controle total ao usuário     		 
-                                               		 </label>                                                
-                    							</div>    
-                    							
-                    							<!-- Profile Image -->
-                                                  <div class="box box-primary">
-                                                    <div class="box-body box-profile">
-                                                    	  <label for="imagem">Imagem:</label>	                                                    	  
-                                                    	  <input type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-primary btn-block"/>                                                    	 
-                                                          <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
-                                                    </div>
-                                                    <!-- /.box-body -->
-                                                  </div>                         
-                    					  
+                    							<div class="row top-buffer">                 							
+                        							<div class="col-md-12">
+                        								<label>Email</label>
+                        								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                        							</div>
+                        						</div>
+                        						
+                        						<div class="row top-buffer">	
+                        							<div class="col-md-12 botton-buffer">
+                        								<label>Login</label>
+                        								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                        							</div>
+												</div>                      
+												
+												<div class="row top-buffer">  							
+                                                    <div class="col-md-12">
+                                                    	<label for="ativo">Ativo:</label>
+                                                    	<label>
+                                                     		 <input type="checkbox" name="ativo"  <?php
+    																			if (!isAdmin())
+    																				echo ' disabled';
+    																			
+    																			if (strtoupper($resbd->ativo)=='S')
+    																				echo ' checked';
+    																		?> /> Habilitar ou desabilitar o usuário     		 
+                                                   		 </label>                                                
+                        							</div>    
+                        						</div>	
+                        						
+                        						<div class="row top-buffer">  
+                        							<div class="col-md-12">
+                                                    	<label for="adm">Administrador:</label>
+                                                    	<label>
+                                                     		 <input type="checkbox"  name="adm"  <?php
+                                                                     		 if (!isAdmin())
+                                                                     		     echo ' disabled';
+                                                                 		     
+                                                                 		     if (strtoupper($resbd->administrador) == 'S')
+                                                                 		         echo ' checked';
+    																		?> /> dar controle total ao usuário     		 
+                                                   		 </label>                                                
+                        							</div>    
+                        						</div>	
+                        						
+                        						<div class="row top-buffer"> 	
+                        							<!-- Profile Image -->
+                                                      <div class="col-md-10">
+                                                            <div class=" box-profile ">
+                                                            	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
+                                                            	  <input type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
+                                                                  <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                            </div>
+                                                        <!-- /.box-body -->
+                                                      </div>                         
+                    					  		</div>                    					  		
                     						<div class="box-footer">  
                     							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
                     							 <button type="submit" name="editar" class="btn btn-info pull-right">Salvar Alterações</button>  									                    							 
@@ -333,7 +362,31 @@
 			
 		case 'incluir':			
             if (isset($_POST['cadastrar']))
-			{				    
+			{	
+			 
+			    //valida se tem arquivo setado e se ele possui o tamanho autorizado pelo php (2mb default)
+			    if ( isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 )
+			    {
+			        $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+			        $nome = $_FILES[ 'arquivo' ][ 'name' ];
+			        
+			        // Pega a extensão
+			        $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+			        
+			        // Converte a extensão para minúsculo
+			        $extensao = strtolower ($extensao);
+			        
+			        // Somente imagens, .jpg;.jpeg;.gif;.png			       
+			        if (strstr( '.jpg;.jpeg;.gif;.png',$extensao ) )
+			        {			            
+			            $novoNome = $id.'-Usuario.png';			            			            
+			            $destino = 'images/' . $novoNome;			            			            
+			            move_uploaded_file ( $arquivo_tmp, $destino );			           
+			        }
+			        else
+			            printMSG('Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />','erro');
+			    }
+			   			    			    
 				$user = new usuario(
 										array(
 										'nome'=>$_POST['nome'],
@@ -342,6 +395,7 @@
 										'senha'=>codificaSenha($_POST['senha']),
 										'administrador'=>($_POST['adm']=='on')?'S':'N',
 										'ativo'=>'S',
+										'imagem'=>$destino,
 										'datacad'=>date('d/m/y')
 										)
 									); 
@@ -370,27 +424,50 @@
 				}								
 			}
 	?>			
-			<script type="text/javascript">
-					$(document).ready
-					(
-						function()
-						{
-							$(".userform").validate
-							(
-								{
-									rules:
-									{
-										nome:{required:true,minlength:3},
-										email:{required:true,email:true},
-										login:{required:true,minlength:5},
-										senha:{required:true,rangelength:[4,10]},
-										senhaconf:{required:true,equalTo:"#senha"}
-									}
-								}
-							)
-							
-						}
-					);
+				<script type="text/javascript">
+    				<!-- script utilizado para exibir a imagem no display-->			    					  		    		       		    		    
+    				function readURL(input) {
+    		            if (input.files && input.files[0]) {
+    		                var reader = new FileReader();
+    		                reader.onload = function (e) {
+    		                    $(input).next()
+    		                    .attr('src', e.target.result)
+    		                };
+    		                reader.readAsDataURL(input.files[0]);
+    		            }
+    		            else {
+    		                var img = input.value;
+    		                $(input).next().attr('src',img);
+    		            }
+    		         }
+    		    
+    		      	 function exibeFoto(){
+    		    		    		        $('input[type=file]').each(function(index){
+    		    		    		            if ($('input[type=file]').eq(index).val() != "")
+    		    		    		            {
+    		    		    		                readURL(this);
+    		    		    		            }
+    		    		    		        });
+    				    		    }				    	     		    																					
+    		
+    				
+    				function()
+    				{
+    					$(".userform").validate
+    					(
+    						{
+    							rules:
+    							{
+    								nome:{required:true,minlength:3},
+    								email:{required:true,email:true},
+    								login:{required:true,minlength:5},
+    								senha:{required:true,rangelength:[4,10]},
+    								senhaconf:{required:true,equalTo:"#senha"}
+    							}
+    						}
+    					)
+    					
+    				}					
 				</script>
 				
 				<div class="content-wrapper">
@@ -410,33 +487,40 @@
                     	<!-- Main content -->
                     	<section class="content">
                     		<div class="row">
-                    		<!-- left column -->
+                    		
                     			<div class="col-md-6">
-                    			<!-- general form elements -->
-                    				<div class="box box-primary">
-                    					<div class="box-header with-border">
-                    						<h3 class="box-title">Informe os dados para cadastro</h3>
-                    					</div>   	
-                    					
-                    					<!-- form start -->	
-                    					<form name="userform" role="form" method="post" action="">
-                    						<div class="box-body">                    							                    							
-                    							<div class="form-group">
-                    								<label>Nome</label>
-                    								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do usuário" value="<?php echo $_POST['nome'];?>">
-                    							</div>                    							
-                    							
-                    							<div class="form-group">
-                    								<label>Email</label>
-                    								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php echo $_POST['email'];?>">
+                    			
+                    				<div class="box box-primary">                    					  	                    					
+                    				
+                    					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
+ 	                  						<div class="box-body">
+ 	                  							<div class="row">                        							
+                    								<div class="col-md-2">
+                        								<label>Código</label>
+                        								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código é Automático">
+                        							</div>
+                    							                    							                    								                    									                    						
+            										<div class="col-md-10">
+                										<label>Nome</label>
+                										<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php  echo $_POST['nome'];?>">
+                									</div>                    							                    							
                     							</div>
                     							
-                    							<div class="form-group">
-                    								<label>Login</label>
-                    								<input name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
-                    							</div>
-                    							
-                    							<div class="form-group">
+                    							<div class="row top-buffer">                 							
+                        							<div class="col-md-12">
+                        								<label>Email</label>
+                        								<input name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php echo $_POST['email'];?>">
+                        							</div>
+                        						</div>
+                        						
+                        						<div class="row top-buffer">	
+                        							<div class="col-md-12 botton-buffer">
+                        								<label>Login</label>
+                        								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
+                        							</div>
+												</div>                      
+												
+												<div class="form-group">
                                                   	<label for="senha">Senha</label>
                                                   	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
                                                 </div>
@@ -444,33 +528,47 @@
                                                 <div class="form-group">
                                                   	<label for="senhaconf">Repita a senha</label>
                                                   	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
-                                                </div>                    							                                                
-                    							
-                    							<div class="form-group">
-                                                	<label for="adm">Administrador:</label>
-                                                	<label>
-                                                 		 <input type="checkbox"  name="adm"  <?php
+                                                </div>  
+                                                												
+                        						
+                        						<div class="row top-buffer">  
+                        							<div class="col-md-12">
+                                                    	<label for="adm">Administrador:</label>
+                                                    	<label>
+                                                     		 <input type="checkbox"  name="adm"  <?php
                                                                  		 if (!isAdmin())
                                                                  		     echo ' disabled';
                                                              		     
                                                                  		 if ($_POST['adm'])
                                                              		         echo ' checked';
-																		?> />dar controle total ao usuário     		 
-                                               		 </label>                                                
-                    							</div>                             
-                    					  
+																		?> />dar controle total ao usuário    		 
+                                                   		 </label>                                                
+                        							</div>    
+                        						</div>	
+                        						
+                        						<div class="row top-buffer"> 	
+                        							<!-- Profile Image -->
+                                                      <div class="col-md-10">
+                                                            <div class=" box-profile ">
+                                                            	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
+                                                            	  <input type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
+                                                                  <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                            </div>
+                                                        <!-- /.box-body -->
+                                                      </div>                         
+                    					  		</div>                    					  		
                     						<div class="box-footer">  
                     							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
-                    							 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar Dados</button>  									
-                    							 
-                    						</div>                              
+                    							 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar Dados</button>  									                    							
+                    						</div>                                                          
                     					</form>
                     				</div><!-- Final box-primary -->
                     			</div><!-- Final col-md-6 -->
                     		</div>
                     	</section>
                     	<!-- /.content -->
-                    </div> <!-- /.content-wrapper -->                    			
+                    </div> <!-- /.content-wrapper -->
+                    				                   			
 			<?php
 			break;
 		
