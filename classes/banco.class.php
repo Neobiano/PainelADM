@@ -10,7 +10,7 @@ abstract class Banco{
 	public $conexao 	= null;
 	public $dataset		= null;
 	public $linhasafetadas = -1; //quantidade de linhas que uma instrucao ira impactar no bd
-	
+	public $lastid = null;
 	//------------------------métodos----------------------
 	public function __construct(){
 		$this->conecta();
@@ -87,6 +87,7 @@ abstract class Banco{
 			next($objeto->campos_valores); 
 		}
 		$this->executaSQL($sql);
+		
 	}//final inserir
 	
 	public function atualizar($objeto)
@@ -167,12 +168,20 @@ abstract class Banco{
 								    		   
 			$query = $this->conexao->query($sql) or $this->trataerro(__FILE__,__FUNCTION__);	
 											            
-            $this->linhasafetadas = $query->RowCount();            
+            $this->linhasafetadas = $query->RowCount();
+                                    
 			if (substr(trim(strtolower($sql)),0,6)=='select') 
 			{
 				$this->dataset = $query;
 				return $this->dataset; 
 			}
+			else if (substr(trim(strtolower($sql)),0,6)=='insert')
+			{
+			    $stmt = $this->conexao->query("SELECT LAST_INSERT_ID()");
+			    $this->lastId = $stmt->fetchColumn();
+			}
+			else
+			    $this->lastId = null;
             		   			
 		}
 		else 

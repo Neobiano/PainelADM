@@ -222,34 +222,7 @@
                 
 				
 					
-				?>
-					<!-- script utilizado para exibir a imagem no display-->
-					<script type="text/javascript">    					  		    		       		    		    
-						function readURL(input) {
-				            if (input.files && input.files[0]) {
-				                var reader = new FileReader();
-				                reader.onload = function (e) {
-				                    $(input).next()
-				                    .attr('src', e.target.result)
-				                };
-				                reader.readAsDataURL(input.files[0]);
-				            }
-				            else {
-				                var img = input.value;
-				                $(input).next().attr('src',img);
-				            }
-				         }
-				    
-				      	 function exibeFoto(){
-				    		    		        $('input[type=file]').each(function(index){
-				    		    		            if ($('input[type=file]').eq(index).val() != "")
-				    		    		            {
-				    		    		                readURL(this);
-				    		    		            }
-				    		    		        });
-						    		    }				    	     		    																					
-					</script>	
-					
+				?>					
                     <div class="content-wrapper">
                     	<!-- Content Header (Page header) --> 
                     
@@ -363,30 +336,7 @@
 		case 'incluir':			
             if (isset($_POST['cadastrar']))
 			{	
-			 
-			    //valida se tem arquivo setado e se ele possui o tamanho autorizado pelo php (2mb default)
-			    if ( isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 )
-			    {
-			        $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
-			        $nome = $_FILES[ 'arquivo' ][ 'name' ];
-			        
-			        // Pega a extensão
-			        $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
-			        
-			        // Converte a extensão para minúsculo
-			        $extensao = strtolower ($extensao);
-			        
-			        // Somente imagens, .jpg;.jpeg;.gif;.png			       
-			        if (strstr( '.jpg;.jpeg;.gif;.png',$extensao ) )
-			        {			            
-			            $novoNome = $id.'-Usuario.png';			            			            
-			            $destino = 'images/' . $novoNome;			            			            
-			            move_uploaded_file ( $arquivo_tmp, $destino );			           
-			        }
-			        else
-			            printMSG('Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />','erro');
-			    }
-			   			    			    
+			 			    			   			    			    
 				$user = new usuario(
 										array(
 										'nome'=>$_POST['nome'],
@@ -417,41 +367,45 @@
 				{
 					$user->inserir($user);
 					if ($user->linhasafetadas==1)
-					{
-						printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=usuarios&t=listar">Exibir Cadastros</a>','sucesso');
+					{					   					   
+					    //valida se tem arquivo setado e se ele possui o tamanho autorizado pelo php (2mb default)
+					    if ( isset( $_FILES[ 'arquivo' ][ 'name' ] ) && $_FILES[ 'arquivo' ][ 'error' ] == 0 )
+					    {
+					        $id = $user->lastId;
+					        $arquivo_tmp = $_FILES[ 'arquivo' ][ 'tmp_name' ];
+					        $nome = $_FILES[ 'arquivo' ][ 'name' ];
+					        
+					        // Pega a extensão
+					        $extensao = pathinfo ($nome, PATHINFO_EXTENSION);
+					        
+					        // Converte a extensão para minúsculo
+					        $extensao = strtolower ($extensao);
+					        
+					        // Somente imagens, .jpg;.jpeg;.gif;.png
+					        if (strstr( '.jpg;.jpeg;.gif;.png',$extensao ) )
+					        {
+					            $novoNome = $id.'-Usuario.png';
+					            $destino = 'images/' . $novoNome;
+					            move_uploaded_file ( $arquivo_tmp, $destino );
+					            
+					            //apenas para atualizar o campo imagem
+					            $user = new usuario(array('imagem'=>$destino));					        
+    					        $user->valorpk = $id;    					       
+    					        $user->atualizar($user);    					        
+					        }
+					        else
+					            printMSG('Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />','erro');
+					    }
+					    
+					    printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=usuarios&t=listar">Exibir Cadastros</a>','sucesso');
 						unset($_POST);
 					}	
 				}								
 			}
 	?>			
-				<script type="text/javascript">
-    				<!-- script utilizado para exibir a imagem no display-->			    					  		    		       		    		    
-    				function readURL(input) {
-    		            if (input.files && input.files[0]) {
-    		                var reader = new FileReader();
-    		                reader.onload = function (e) {
-    		                    $(input).next()
-    		                    .attr('src', e.target.result)
-    		                };
-    		                reader.readAsDataURL(input.files[0]);
-    		            }
-    		            else {
-    		                var img = input.value;
-    		                $(input).next().attr('src',img);
-    		            }
-    		         }
-    		    
-    		      	 function exibeFoto(){
-    		    		    		        $('input[type=file]').each(function(index){
-    		    		    		            if ($('input[type=file]').eq(index).val() != "")
-    		    		    		            {
-    		    		    		                readURL(this);
-    		    		    		            }
-    		    		    		        });
-    				    		    }				    	     		    																					
-    		
-    				
-    				function()
+				<!-- script utilizado para exibir a imagem no display-->
+				<script type="text/javascript">    					  		    		       		    		    
+			      	function()
     				{
     					$(".userform").validate
     					(
@@ -467,9 +421,8 @@
     						}
     					)
     					
-    				}					
-				</script>
-				
+    				}    								    	     		    																					
+				</script>									
 				<div class="content-wrapper">
                     	<!-- Content Header (Page header) --> 
                     
@@ -486,18 +439,15 @@
                     
                     	<!-- Main content -->
                     	<section class="content">
-                    		<div class="row">
-                    		
-                    			<div class="col-md-6">
-                    			
-                    				<div class="box box-primary">                    					  	                    					
-                    				
+                    		<div class="row">                    		
+                    			<div class="col-md-6">                    			
+                    				<div class="box box-primary">                    					  	                    					                    				
                     					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
  	                  						<div class="box-body">
  	                  							<div class="row">                        							
                     								<div class="col-md-2">
                         								<label>Código</label>
-                        								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código é Automático">
+                        								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
                         							</div>
                     							                    							                    								                    									                    						
             										<div class="col-md-10">
@@ -516,7 +466,7 @@
                         						<div class="row top-buffer">	
                         							<div class="col-md-12 botton-buffer">
                         								<label>Login</label>
-                        								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
+                        								<input name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php $_POST['login'];?>">
                         							</div>
 												</div>                      
 												
@@ -552,7 +502,7 @@
                                                             <div class=" box-profile ">
                                                             	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
                                                             	  <input type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
-                                                                  <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                  <img class="profile-user-img img-responsive img-circle"  alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
                                                             </div>
                                                         <!-- /.box-body -->
                                                       </div>                         
@@ -696,75 +646,80 @@ case 'senha':
 						);
 					</script>
 				
-				<div class="content-wrapper">
-            	<!-- Content Header (Page header) --> 
-            
-            	<section class="content-header">
-            		<h1>
-            			Usuários
-            			<small>Alterar Senha</small>
-            		</h1>
-            		<ol class="breadcrumb">
-            			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
-            			<li class="active">Alterar Senha</li>
-            		</ol>
-            	</section> 
-            
-            	<!-- Main content -->
-            	<section class="content">
-            		<div class="row">
-            		<!-- left column -->
-            			<div class="col-md-6">
-            			<!-- general form elements -->
-            				<div class="box box-primary">
-            					<div class="box-header with-border">
-            						<h3 class="box-title">Informe os dados para alteração</h3>
-            					</div>   	
-            					
-            					<!-- form start -->	
-            					<form name="userform" role="form" method="post" action="">
-            						<div class="box-body">
-            							<div class="form-group">
-            								<label>Código</label>
-            								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
-            							</div>
-            							
-            							<div class="form-group">
-            								<label>Nome</label>
-            								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
-            							</div>
-            							
-            							
-            							<div class="form-group">
-            								<label>Email</label>
-            								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
-            							</div>
-            							
-            							<div class="form-group">
-            								<label>Login</label>
-            								<input disabled disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
-            							</div>
-            							
-                                        <div class="form-group">
-                                          	<label for="senha">Senha</label>
-                                          	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                          	<label for="senhaconf">Repita a senha</label>
-                                          	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
-                                        </div>                           
-            					  
-            						<div class="box-footer">  
-            							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
-            							 <button type="submit" name="mudasenha" class="btn btn-info pull-right">Salvar Alterações</button>  									            							 
-            						</div>                              
-            					</form>
-            				</div><!-- Final box-primary -->
-            			</div><!-- Final col-md-6 -->
-            		</div>
-            	</section>
-            	<!-- /.content -->
+			<div class="content-wrapper">            	             
+                	<section class="content-header">
+                		<h1>
+                			Usuários
+                			<small>Alterar Senha</small>
+                		</h1>
+                		<ol class="breadcrumb">
+                			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+                			<li class="active">Alterar Senha</li>
+                		</ol>
+                	</section> 
+                	
+        			<section class="content">
+                		<div class="row">                    		
+                			<div class="col-md-6">                    			
+                				<div class="box box-primary">                    					  	                    					                    				
+                					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
+                  						<div class="box-body">
+                  							<div class="row">                        							
+                								<div class="col-md-2">
+                    								<label>Código</label>
+                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    							</div>
+                							                    							                    								                    									                    						
+        										<div class="col-md-10">
+            										<label>Nome</label>
+            										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+            									</div>                    							                    							
+                							</div>
+                							
+                							<div class="row top-buffer">                 							
+                    							<div class="col-md-12">
+                    								<label>Email</label>
+                    								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                    							</div>
+                    						</div>
+                    						
+                    						<div class="row top-buffer">	
+                    							<div class="col-md-12 botton-buffer">
+                    								<label>Login</label>
+                    								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                    							</div>
+    										</div>                      
+    										
+    										<div class="form-group">
+                                              	<label for="senha">Senha</label>
+                                              	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                              	<label for="senhaconf">Repita a senha</label>
+                                              	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                            </div> 
+                    						
+                    						<div class="row top-buffer"> 	
+                    							<!-- Profile Image -->
+                                                  <div class="col-md-10">
+                                                        <div class=" box-profile ">
+                                                        	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
+                                                        	  <input disabled type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
+                                                              <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                        </div>
+                                                    <!-- /.box-body -->
+                                                  </div>                         
+                					  		</div>                    					  		
+                						<div class="box-footer">  
+                							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
+                							 <button type="submit" name="mudasenha" class="btn btn-info pull-right">Salvar Alterações</button>  									            							 
+                						</div>                            
+                					</form>
+                				</div><!-- Final box-primary -->
+                			</div><!-- Final col-md-6 -->
+                		</div>
+                	</section>                    	           
             </div> <!-- /.content-wrapper -->										
 				
 			<?php	
@@ -821,79 +776,89 @@ case 'senha':
                     			<li class="active">Exlcuir</li>
                     		</ol>
                     	</section> 
-                    
-                    	<!-- Main content -->
+                    	
                     	<section class="content">
-                    		<div class="row">
-                    		<!-- left column -->
-                    			<div class="col-md-6">
-                    			<!-- general form elements -->
-                    				<div class="box box-primary">
-                    					<div class="box-header with-border">
-                    						<h3 class="box-title">Informe os dados para alteração</h3>
-                    					</div>   	
-                    					
-                    					<!-- form start -->	
-                    					<form name="userform" role="form" method="post" action="">
-                    						<div class="box-body">
-                    							<div class="form-group">
-                    								<label>Código</label>
-                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                    		<div class="row">                    		
+                    			<div class="col-md-6">                    			
+                    				<div class="box box-primary">                    					  	                    					                    				
+                    					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
+ 	                  						<div class="box-body">
+ 	                  							<div class="row">                        							
+                    								<div class="col-md-2">
+                        								<label>Código</label>
+                        								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                        							</div>
+                    							                    							                    								                    									                    						
+            										<div class="col-md-10">
+                										<label>Nome</label>
+                										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                									</div>                    							                    							
                     							</div>
                     							
-                    							<div class="form-group">
-                    								<label>Nome</label>
-                    								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
-                    							</div>
-                    							
-                    							
-                    							<div class="form-group">
-                    								<label>Email</label>
-                    								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
-                    							</div>
-                    							
-                    							<div class="form-group">
-                    								<label>Login</label>
-                    								<input disabled disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
-                    							</div>
-                    							
-                                                <div class="form-group">
-                                                	<label for="ativo">Ativo:</label>
-                                                	<label>
-                                                 		 <input disabled type="checkbox" name="ativo"  <?php
-																			if (!isAdmin())
-																				echo ' disabled';
-																			
-																			if (strtoupper($resbd->ativo)=='S')
-																				echo ' checked';
-																		?> />Habilitar ou desabilitar o usuário     		 
-                                               		 </label>                                                
-                    							</div>    
-                    							
-                    							<div class="form-group">
-                                                	<label for="adm">Administrador:</label>
-                                                	<label>
-                                                 		 <input disabled type="checkbox"  name="adm"  <?php
-                                                                 		 if (!isAdmin())
-                                                                 		     echo ' disabled';
-                                                             		     
-                                                             		     if (strtoupper($resbd->administrador) == 'S')
-                                                             		         echo ' checked';
-																		?> />dar controle total ao usuário     		 
-                                               		 </label>                                                
-                    							</div>                             
-                    					  
+                    							<div class="row top-buffer">                 							
+                        							<div class="col-md-12">
+                        								<label>Email</label>
+                        								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                        							</div>
+                        						</div>
+                        						
+                        						<div class="row top-buffer">	
+                        							<div class="col-md-12 botton-buffer">
+                        								<label>Login</label>
+                        								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                        							</div>
+												</div>                      
+												
+												<div class="row top-buffer">  							
+                                                    <div class="col-md-12">
+                                                    	<label for="ativo">Ativo:</label>
+                                                    	<label>
+                                                     		 <input disabled type="checkbox" name="ativo"  <?php
+    																			if (!isAdmin())
+    																				echo ' disabled';
+    																			
+    																			if (strtoupper($resbd->ativo)=='S')
+    																				echo ' checked';
+    																		?> /> Habilitar ou desabilitar o usuário     		 
+                                                   		 </label>                                                
+                        							</div>    
+                        						</div>	
+                        						
+                        						<div class="row top-buffer">  
+                        							<div class="col-md-12">
+                                                    	<label for="adm">Administrador:</label>
+                                                    	<label>
+                                                     		 <input disabled type="checkbox"  name="adm"  <?php
+                                                                     		 if (!isAdmin())
+                                                                     		     echo ' disabled';
+                                                                 		     
+                                                                 		     if (strtoupper($resbd->administrador) == 'S')
+                                                                 		         echo ' checked';
+    																		?> /> dar controle total ao usuário     		 
+                                                   		 </label>                                                
+                        							</div>    
+                        						</div>	
+                        						
+                        						<div class="row top-buffer"> 	
+                        							<!-- Profile Image -->
+                                                      <div class="col-md-10">
+                                                            <div class=" box-profile ">
+                                                            	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
+                                                            	  <input disabled type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
+                                                                  <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                            </div>
+                                                        <!-- /.box-body -->
+                                                      </div>                         
+                    					  		</div>                    					  		
                     						<div class="box-footer">  
                     							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
-                    							 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									
-                    							 
-                    						</div>                              
+                    							 <button type="submit" name="excluir" class="btn btn-info pull-right">Confirmar exclusão</button>  									                    							
+                    						</div>                             
                     					</form>
                     				</div><!-- Final box-primary -->
                     			</div><!-- Final col-md-6 -->
                     		</div>
-                    	</section>
-                    	<!-- /.content -->
+                    	</section>                    	                    	                    
                     </div> <!-- /.content-wrapper -->                                                           
                     
                 <?php   

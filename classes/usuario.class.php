@@ -10,7 +10,7 @@ class usuario extends Base
         $this->tabela = "usuarios";
         if (sizeof($campos)<=0) 
         {
-            $this->campos_valores = array(
+            $this->campos_valores = array(                                           
                                            "nome"=>null,
                                            "email"=>null,
                                            "login"=>null,

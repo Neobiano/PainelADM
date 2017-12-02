@@ -179,6 +179,7 @@
                    
                     if ($tipo->linhasafetadas==1)
                     {
+                        printMSG('Dados inseridos com sucesso: IDIDIDID<'.$tipo->lastId.'','sucesso');
                         printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=tipos&t=listar">Exibir Cadastros</a>','sucesso');   
                         unset($_POST);                                                                                                                                           
                     }   
