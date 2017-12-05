@@ -626,101 +626,101 @@ case 'senha':
 				
 				//formulário de edição de usuário	
 				?>
-					<script type="text/javascript">
-						$(document).ready
-						(
-							function()
-							{
-								$(".userform").validate
-								(
-									{
-										rules:
-										{
-											senha:{required:true,rangelength:[4,10]},
-											senhaconf:{required:true,equalTo:"#senha"}										
-										}
-									}
-								)
-								
-							}
-						);
-					</script>
+    				<script type="text/javascript">
+    					$(document).ready
+    					(
+    						function()
+    						{
+    							$(".userform").validate
+    							(
+    								{
+    									rules:
+    									{
+    										senha:{required:true,rangelength:[4,10]},
+    										senhaconf:{required:true,equalTo:"#senha"}										
+    									}
+    								}
+    							)
+    							
+    						}
+    					);
+    				</script>
 				
-			<div class="content-wrapper">            	             
-                	<section class="content-header">
-                		<h1>
-                			Usuários
-                			<small>Alterar Senha</small>
-                		</h1>
-                		<ol class="breadcrumb">
-                			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
-                			<li class="active">Alterar Senha</li>
-                		</ol>
-                	</section> 
-                	
-        			<section class="content">
-                		<div class="row">                    		
-                			<div class="col-md-6">                    			
-                				<div class="box box-primary">                    					  	                    					                    				
-                					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
-                  						<div class="box-body">
-                  							<div class="row">                        							
-                								<div class="col-md-2">
-                    								<label>Código</label>
-                    								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
-                    							</div>
-                							                    							                    								                    									                    						
-        										<div class="col-md-10">
-            										<label>Nome</label>
-            										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
-            									</div>                    							                    							
-                							</div>
-                							
-                							<div class="row top-buffer">                 							
-                    							<div class="col-md-12">
-                    								<label>Email</label>
-                    								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
-                    							</div>
-                    						</div>
-                    						
-                    						<div class="row top-buffer">	
-                    							<div class="col-md-12 botton-buffer">
-                    								<label>Login</label>
-                    								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
-                    							</div>
-    										</div>                      
-    										
-    										<div class="form-group">
-                                              	<label for="senha">Senha</label>
-                                              	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                              	<label for="senhaconf">Repita a senha</label>
-                                              	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
-                                            </div> 
-                    						
-                    						<div class="row top-buffer"> 	
-                    							<!-- Profile Image -->
-                                                  <div class="col-md-10">
-                                                        <div class=" box-profile ">
-                                                        	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
-                                                        	  <input disabled type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
-                                                              <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
-                                                        </div>
-                                                    <!-- /.box-body -->
-                                                  </div>                         
-                					  		</div>                    					  		
-                						<div class="box-footer">  
-                							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
-                							 <button type="submit" name="mudasenha" class="btn btn-info pull-right">Salvar Alterações</button>  									            							 
-                						</div>                            
-                					</form>
-                				</div><!-- Final box-primary -->
-                			</div><!-- Final col-md-6 -->
-                		</div>
-                	</section>                    	           
-            </div> <!-- /.content-wrapper -->										
+        			<div class="content-wrapper">            	             
+                        	<section class="content-header">
+                        		<h1>
+                        			Usuários
+                        			<small>Alterar Senha</small>
+                        		</h1>
+                        		<ol class="breadcrumb">
+                        			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
+                        			<li class="active">Alterar Senha</li>
+                        		</ol>
+                        	</section> 
+                        	
+                			<section class="content">
+                        		<div class="row">                    		
+                        			<div class="col-md-6">                    			
+                        				<div class="box box-primary">                    					  	                    					                    				
+                        					<form name="userform" role="form" method="post" enctype="multipart/form-data" action="">
+                          						<div class="box-body">
+                          							<div class="row">                        							
+                        								<div class="col-md-2">
+                            								<label>Código</label>
+                            								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Código do Usuário" value="<?php if($resbd) echo $resbd->id;?>">
+                            							</div>
+                        							                    							                    								                    									                    						
+                										<div class="col-md-10">
+                    										<label>Nome</label>
+                    										<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do Usuário" value="<?php if($resbd) echo $resbd->nome;?>">
+                    									</div>                    							                    							
+                        							</div>
+                        							
+                        							<div class="row top-buffer">                 							
+                            							<div class="col-md-12">
+                            								<label>Email</label>
+                            								<input disabled name="email" type="email" class="form-control input-sm" placeholder="Email do usuário" value="<?php if($resbd) echo $resbd->email;?>">
+                            							</div>
+                            						</div>
+                            						
+                            						<div class="row top-buffer">	
+                            							<div class="col-md-12 botton-buffer">
+                            								<label>Login</label>
+                            								<input disabled name="login" type="text" class="form-control input-sm" placeholder="Login do usuário" value="<?php if($resbd) echo $resbd->login;?>">
+                            							</div>
+            										</div>                      
+            										
+            										<div class="form-group">
+                                                      	<label for="senha">Senha</label>
+                                                      	<input name="senha" id="senha" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senha'];?>">
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                      	<label for="senhaconf">Repita a senha</label>
+                                                      	<input name="senhaconf" id="senhaconf" type="password" class="form-control input-sm" placeholder="Senha" value="<?php echo $_POST['senhaconf'];?>">
+                                                    </div> 
+                            						
+                            						<div class="row top-buffer"> 	
+                            							<!-- Profile Image -->
+                                                          <div class="col-md-10">
+                                                                <div class=" box-profile ">
+                                                                	  <label for="imagem">Imagem (tamanho máximo 2 mega bytes)</label>	                                                    	  
+                                                                	  <input disabled type="file" onchange="exibeFoto()" name="arquivo" class="btn btn-block"/>                                                    	 
+                                                                      <img class="profile-user-img img-responsive img-circle" <?php echo 'src="'.$resbd->imagem.'"'?> alt="Imagem do Usuário">                                                                                                                                                                                                                                                                                                                                                                                                              
+                                                                </div>
+                                                            <!-- /.box-body -->
+                                                          </div>                         
+                        					  		</div>                    					  		
+                        						<div class="box-footer">  
+                        							 <button type="button" class="btn btn-default" onclick="location.href='?m=usuarios&t=listar'" >Cancelar</button>
+                        							 <button type="submit" name="mudasenha" class="btn btn-info pull-right">Salvar Alterações</button>  									            							 
+                        						</div>                            
+                        					</form>
+                        				</div><!-- Final box-primary -->
+                        			</div><!-- Final col-md-6 -->
+                        		</div>
+                        	</section>                    	           
+                    </div> <!-- /.content-wrapper -->										
 				
 			<?php	
 			}//final  if ((isAdmin()==true)||$sessao->getVar('iduser')==$_GET['id'])

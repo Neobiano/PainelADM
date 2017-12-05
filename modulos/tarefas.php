@@ -1,47 +1,5 @@
 
-<<!-- Modal Prioridade -->	
-<div class="modal fade" id="modal-default" data-backdrop="static">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Prioridades -Incluir</h4>
-      </div>
-      <div class="modal-body">
-        <div class="box-body">
-			<div class="form-group">
-				<label>Código</label>
-				<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->id;?>">
-			</div>
-			
-			<div class="form-group">
-				<label>Nome</label>
-				<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do prioridade" value="<?php if($resbd) echo $resbd->nome;?>">
-			</div>
-                									
-		</div>                                  	   		
-  		<div class="form-group">																	
-			<div class="col-xs-6">                    								                    								
-				<input type="checkbox" name="padraoabertura"  <?php																			
-										
-														if (strtoupper($resbd->padrao_abertura)=='S')
-															echo ' checked';
-													?> /><b> Padrão de Abertura</b> 
-				 
-			</div>
-			<br>
-		</div> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>	
+
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
@@ -130,7 +88,31 @@
                                                    
                 ?>
                     			            	
-                 <script type="text/javascript">
+                 <script>
+                 	$(document).ready(function()
+                 	{        
+                      console.log('vai seu merda1'); 
+                 	  $('#insert_form').on("submit", function(event){
+                 		   event.preventDefault();                       	   
+                      	   console.log('vai seu merda');	        	                 	                   	 
+                    	   $.ajax({  
+                    	    url:"prioridades.php",  
+                    	    method:"POST",  
+                    	    data:$('#insert_form').serialize(),  
+                    	    beforeSend:function(){  
+                    	     						$('#insert').val("Inserting");  
+                    	    					 }, 
+                    	    					  
+                    	    success:function(data){  
+                    	     $('#insert_form')[0].reset();  
+                    	     $('#add_data_Modal').modal('hide');  
+                    	     $('#employee_table').html(data);  
+                    	    }
+                    	                    	      
+                    	   });                  	 
+                	 	});
+                 	});
+               	 
                     $(document).ready(function()
                     {
                         CKEDITOR.replace('editor1')
@@ -153,8 +135,7 @@
                         })
                         
                         $('.select2').select2()
-                    }
-                    );
+                    });
                     </script>       
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
@@ -170,8 +151,41 @@
                   	</ol>
                 </section> 
     			
-    			
-                
+    			<!-- Modal Prioridade -->	
+                <div class="modal fade" id="add_data_Modal" data-backdrop="static">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Prioridades - Incluir</h4>
+                      </div>
+                      
+                          <div class="modal-body">
+                          	<form method="post" id="insert_form">	
+                                <div class="box-body">
+                        			<div class="form-group">
+                        				<label>Código</label>
+                        				<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Automático">
+                        			</div>
+                        			
+                        			<div class="form-group">
+                        				<label>Nome</label>
+                        				<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        			</div>                                                                								
+                        		</div>      
+                        	  <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />                            	   		                                                  		                                                              
+                              <!-- <button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button> -->
+                           	</form>
+                          </div>   
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                                                           
+                          </div>                                                      
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>    			               
     			<section class="content">      				    	           
     						<div class="box box-primary">    								
     							<form class="userform" role="form" method="post" action="">
@@ -218,9 +232,8 @@
             							</div> 	
             							<div class="row top-buffer">
     									 	<div class="form-group">            								
-            									<div class="col-xs-4">
-            										
-                          								<label>Prioridade</label>
+            									<div class="col-xs-4">            										
+                          							<label>Prioridade</label>
                           						    <div class="input-group">
                                                         <select name="prioridade" class="form-control select2 " style="width: 100%;">
                                                         <option selected="selected" value="0"> </option>
@@ -239,11 +252,12 @@
                                                             ?>                                              
                                                         </select>
                                                         <span class="input-group-btn">
-                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-default"> + </button>
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal"> + </button>
                                                         </span>
                                                         
 													</div>                                                        
-            									</div>  
+            									</div>              									
+                                                
             									<div class="col-xs-4">
                       								<label>Categoria</label>
                                                     <select name="categoria" class="form-control select2 " style="width: 100%;">

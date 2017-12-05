@@ -12,6 +12,8 @@
         if ($qprioridade->linhasafetadas <= 0)
             $tela = 'incluir';        
     }
+    else if (!isset($tela))
+      $tela = 'modal';
     
     switch ($tela) 
     {                 
@@ -183,7 +185,7 @@
                 }                               
             }
            
-        ?>          
+            ?>          
             <script type="text/javascript">
                     $(document).ready
                     (
@@ -272,7 +274,35 @@
         	
             <?php
             break;
-        
+            
+            case 'modal':
+                if(!empty($_POST))
+                {
+                    
+                    $prioridade = new prioridade(array(
+                                                        'nome'=>$_POST['nome']                            
+                                                       ));
+                    
+                    
+                    //verificando se ja existem registros com o parametro solicitado para inserção
+                    if ($prioridade->existeRegistro('nome',$_POST['nome']))
+                    {
+                        printMSG('prioridade já existe no sistema, escolha outro nome!','erro');
+                        $duplicado = true;
+                    }
+                    
+                    if ($duplicado!=true)
+                    {
+                        $prioridade->inserir($prioridade);
+                        
+                        if ($prioridade->linhasafetadas==1)
+                        {
+                            printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=prioridades&t=listar">Exibir Cadastros</a>','sucesso');
+                            unset($_POST);
+                        }
+                    }
+                }
+            break;
         case 'listar':
                 			       
             ?>

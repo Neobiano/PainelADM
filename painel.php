@@ -3,10 +3,8 @@ if (isset($_GET['m'])) $modulo = $_GET['m'];
 if (isset($_GET['t'])) $tela = $_GET['t'];
 ?>
     <?php
-    loadJS('bower_components/Chart.js/Chart.js',true);
-    loadJS('bower_components/fastclick/lib/fastclick.js',true);
-    loadJS('bower_components/raphael/raphael.min.js',true);
-    loadJS('bower_components/morris.js/morris.min.js',true);
+    
+    loadJS('bower_components/fastclick/lib/fastclick.js',true);    
     loadJS('https://www.gstatic.com/charts/loader.js',true);
    
     if ($modulo && $tela):
