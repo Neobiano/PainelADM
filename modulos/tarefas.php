@@ -14,6 +14,118 @@
             $tela = 'incluir';        
     }
     
+    //validação a ser utilizada apenas 
+    if (($tela=='editar') ||($tela=='incluir'))
+    {
+        ?>
+        	<script>
+                 	$(document).ready(function()
+                 	{ 						                       
+                        //Datepickers 
+                        $('#datepicker1').datepicker({
+                            format:"yyyy-mm-dd",
+                            todayBtn:true,
+                            assumeNearbyYear:true,
+                            todayHighlight:true,
+                            autoclose: true
+                        });
+                        
+                        $('#datepicker2').datepicker({
+                            format:"yyyy-mm-dd",
+                            todayBtn:true,
+                            assumeNearbyYear:true,
+                            todayHighlight:true,
+                            autoclose: true
+                        });
+
+                      	//editor de texto
+						CKEDITOR.replace('editor1');
+
+                        //selects
+                        $('.select2').select2();
+
+						//faz com que seja possível atribuir autofocus para imputs de janelas modais 
+                        $('.modal').on('shown.bs.modal', function() {
+                        	  $(this).find('[autofocus]').focus();
+                        	});
+                    	
+                 		//modal prioridade		             	    		    	                          
+                        $('#insert_form').on("submit", function(event){ 
+                            $select = $('#idprioridade');       
+                            event.preventDefault();          	                 	                   	 
+                            $.ajax({  
+                            		url:"modulos/prioridades.php",                 			  
+                            		method:"POST",  
+                            		data: $('#insert_form').serialize(),                              	    
+                            		//dataType:'html',
+                            		dataType: 'json',					  
+                            		success:function(data){                              	    							
+                            								 $('#insert_form')[0].reset();  
+                            								 $('#add_data_Modal').modal('hide');                   										                 										 
+                            								                	     
+                            								//clear the current content of the select                                
+                            								 $select.html('');
+                            								 //iterate over the data and append a select option
+                            								 $.each(data.jprioridades, function (key, val) {
+                                								 if (val.lastid){	 							                                    								 
+                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                                								 }
+                                								 else {
+                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                    							  }	                  										   
+                            								 })	                                                   	       
+                            							   },
+                            		error: function() {
+                            							alert(data);                            							 
+                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            						  }
+                            
+                            						  
+                            	});                     	             		                 		                 		
+						});
+                 	});               	                    
+                </script> 
+                <!-- Modal Prioridade -->	
+                <div class="modal fade" id="add_data_Modal" data-backdrop="static">
+                  <div class="dialog"></div>
+                  <div class="modal-dialog">
+                    <div class="modal-content">                                                                     
+                        <form method="post" id="insert_form">	
+                        	<div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Prioridades - Incluir</h4>
+                        	</div>   
+                        	<div class="modal-body">	
+                                <div class="box-body">
+                                	<div class="row">
+                        				<div class="form-group">
+                        					<div class="col-xs-2">
+                        						<label>Código</label>
+                        						<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
+                        					</div>        									
+                        				
+                        					<div class="col-xs-10">
+                        						<label>Nome</label>
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        					</div>                                        
+                        				</div>
+                        			</div>                         			                                                              								
+                        		</div> 
+                        	</div>   
+                        	<div class="modal-footer">
+                        		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                         		    
+                        		<button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button>                                                           
+                        	</div>  	                            	                          	   		                                                  		                                                                                        
+                        </form>                                                                                                         
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- final modal prioridade -->
+                </div>
+        
+        <?php 
+    }
     switch ($tela)     
     {                      
         case 'editar':                     
@@ -88,55 +200,7 @@
                                                    
                 ?>
                     			            	
-                 <script>
-                 	$(document).ready(function()
-                 	{        
-                      console.log('vai seu merda1'); 
-                 	  $('#insert_form').on("submit", function(event){
-                 		   event.preventDefault();                       	   
-                      	   console.log('vai seu merda');	        	                 	                   	 
-                    	   $.ajax({  
-                    	    url:"prioridades.php",  
-                    	    method:"POST",  
-                    	    data:$('#insert_form').serialize(),  
-                    	    beforeSend:function(){  
-                    	     						$('#insert').val("Inserting");  
-                    	    					 }, 
-                    	    					  
-                    	    success:function(data){  
-                    	     $('#insert_form')[0].reset();  
-                    	     $('#add_data_Modal').modal('hide');  
-                    	     $('#employee_table').html(data);  
-                    	    }
-                    	                    	      
-                    	   });                  	 
-                	 	});
-                 	});
-               	 
-                    $(document).ready(function()
-                    {
-                        CKEDITOR.replace('editor1')
-                        
-                        //Date picker
-                        $('#datepicker1').datepicker({
-                            format:"yyyy-mm-dd",
-                            todayBtn:true,
-                            assumeNearbyYear:true,
-                            todayHighlight:true,
-                            autoclose: true
-                        })
-                        
-                        $('#datepicker2').datepicker({
-                            format:"yyyy-mm-dd",
-                            todayBtn:true,
-                            assumeNearbyYear:true,
-                            todayHighlight:true,
-                            autoclose: true
-                        })
-                        
-                        $('.select2').select2()
-                    });
-                    </script>       
+                       
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
@@ -149,43 +213,8 @@
                 		<li><a ><i class="fa fa-dashboard"></i> Editar</a></li>
                 		<li class="active">Editar</li>
                   	</ol>
-                </section> 
-    			
-    			<!-- Modal Prioridade -->	
-                <div class="modal fade" id="add_data_Modal" data-backdrop="static">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Prioridades - Incluir</h4>
-                      </div>
-                      
-                          <div class="modal-body">
-                          	<form method="post" id="insert_form">	
-                                <div class="box-body">
-                        			<div class="form-group">
-                        				<label>Código</label>
-                        				<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Automático">
-                        			</div>
-                        			
-                        			<div class="form-group">
-                        				<label>Nome</label>
-                        				<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
-                        			</div>                                                                								
-                        		</div>      
-                        	  <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />                            	   		                                                  		                                                              
-                              <!-- <button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button> -->
-                           	</form>
-                          </div>   
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                                                           
-                          </div>                                                      
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                  <!-- /.modal-dialog -->
-                </div>    			               
+                </section>     			    			    	
+                		               
     			<section class="content">      				    	           
     						<div class="box box-primary">    								
     							<form class="userform" role="form" method="post" action="">
@@ -227,15 +256,15 @@
                                             			<textarea form-control id="editor1" name="editor1" rows="10" cols="80">
     															<?php if($resbd) echo html_entity_decode($resbd->descricao);?>                                        				                                            				
                                             			</textarea>                                                                                                                                       
-                                            	</div>		                                    	     									                                             
+                                            	</div>                                            			                                    	     									                                             
     										</div>            							 	   	
             							</div> 	
             							<div class="row top-buffer">
     									 	<div class="form-group">            								
-            									<div class="col-xs-4">            										
+            									<div class="col-xs-4" >            										
                           							<label>Prioridade</label>
-                          						    <div class="input-group">
-                                                        <select name="prioridade" class="form-control select2 " style="width: 100%;">
+                          						    <div class="input-group" id="divselectprioridade">
+                                                        <select id="idprioridade" name="prioridade" class="form-control select2 " style="width: 100%;">
                                                         <option selected="selected" value="0"> </option>
                                                         	<?php 
                                                             	$qprioridade = new prioridade();
@@ -419,34 +448,7 @@
             }
            
         ?>          
-       
-			    <script type="text/javascript">
-                $(document).ready(function()
-                {
-                    CKEDITOR.replace('editor1')
-                    
-                    //Date picker
-                    $('#datepicker1').datepicker({
-                        format:"yyyy-mm-dd",
-                        todayBtn:true,
-                        assumeNearbyYear:true,
-                        todayHighlight:true,
-                        autoclose: true
-                    })
-                    
-                    $('#datepicker2').datepicker({
-                        format:"yyyy-mm-dd",
-                        todayBtn:true,
-                        assumeNearbyYear:true,
-                        todayHighlight:true,
-                        autoclose: true
-                    })
-                    
-                    $('.select2').select2()
-                }
-                );
-                </script>  
-                
+       			                     
                 <div class="content-wrapper">
                 <!-- Content Header (Page header) --> 
         
@@ -507,18 +509,23 @@
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
                       								<label>Prioridade</label>
-                                                    <select name="prioridade" class="form-control select2 " style="width: 100%;">
-                                                    <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qprioridade = new prioridade();
-                                                        	$qprioridade->extras_select = " order by nome";
-                                                        	$qprioridade->selecionaTudo($qprioridade);
-                                                        	while ($res = $qprioridade->retornaDados())
-                                                        	{                                                        	    
-                                                        	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group" id="divselectprioridade">
+                                                        <select id="idprioridade" name="prioridade" class="form-control select2 " style="width: 100%;">
+                                                        <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qprioridade = new prioridade();
+                                                            	$qprioridade->extras_select = " order by nome";
+                                                            	$qprioridade->selecionaTudo($qprioridade);
+                                                            	while ($res = $qprioridade->retornaDados())
+                                                            	{                                                        	    
+                                                            	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal"> + </button>
+                                                		</span>
+                                                	</div>  
             									</div>  
             									<div class="col-xs-4">
                       								<label>Categoria</label>

@@ -1,19 +1,26 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
-	
-    //verificando se há registros no BD, caso contrario abrirá a inserção.
-    if ($tela =='listar')
+    if ((!isset($tela)) && empty($_POST)) //não é modal, nem chamada convencional, logo.. acesso direto ao arquivo
+        protegeArquivo(basename(__FILE__));
+    else
     {
-        $qprioridade = new prioridade();
-        $qprioridade->selecionaTudo($qprioridade);
-        if ($qprioridade->linhasafetadas <= 0)
-            $tela = 'incluir';        
-    }
-    else if (!isset($tela))
-      $tela = 'modal';
+        if (!isset($tela)) //se tem a variabel POST, mas não tem a variavel tela, então é uma chamada modal
+            $tela = 'modal';
+            else
+            {
+                //verificando se há registros no BD, caso contrario abrirá a inserção.
+                if ($tela =='listar')
+                {
+                    $qprioridade = new prioridade();
+                    $qprioridade->selecionaTudo($qprioridade);
+                    if ($qprioridade->linhasafetadas <= 0)
+                        $tela = 'incluir';
+                }
+                
+                loadJS('jqueryvalidate');
+                loadJS('jqueryvalidate-messages');
+            }
+    }	    
     
     switch ($tela) 
     {                 
@@ -276,11 +283,12 @@
             break;
             
             case 'modal':
+                $duplicado = false;              
                 if(!empty($_POST))
                 {
                     
                     $prioridade = new prioridade(array(
-                                                        'nome'=>$_POST['nome']                            
+                                                        'nome'=>$_POST['nome']                                                                               
                                                        ));
                     
                     
@@ -293,13 +301,42 @@
                     
                     if ($duplicado!=true)
                     {
-                        $prioridade->inserir($prioridade);
-                        
+                        $prioridade->inserir($prioridade);                       
+                       // printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=prioridades&t=listar">Exibir Cadastros</a>','sucesso');
                         if ($prioridade->linhasafetadas==1)
                         {
-                            printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=prioridades&t=listar">Exibir Cadastros</a>','sucesso');
+                            $lastid = $prioridade->lastId;
+                            
+                                    
+                            $qprioridade = new prioridade();
+                            $qprioridade->extras_select = " order by nome";
+                            $qprioridade->selecionaTudo($qprioridade);
+                            
+                            while ($res = $qprioridade->retornaDados())
+                            {
+                                $row = array();
+                                $row["id"] = $res->id;
+                                $row["nome"] = $res->nome;
+                                if ($lastid==$res->id)
+                                    $row["lastid"] = true;
+                                else
+                                    $row["lastid"] = false;
+                                
+                                $ddata[] = $row;                                                                                                      
+                            }   
+                            
+                            $output = array(                                
+                                                "jprioridades" => $ddata,
+                                            );
+                                                       
+                            header('Content-type: application/json');
+                            echo json_encode($output);
+                            
                             unset($_POST);
+                            
                         }
+                        
+                        
                     }
                 }
             break;

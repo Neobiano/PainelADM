@@ -47,13 +47,9 @@ $result = mysqli_query($connect, $query);
 <script type="text/javascript" src="bower_components/ckeditor/ckeditor.js"></script>
                     			            	
  </head>  
- <body>  
-  <script>
+ <body>  <script>
 	$(document).ready(function()
-	{        
-	  console.log('vai seu merda1'); 
-	  $('#insert_form').on("submit", function(event){
-		   event.preventDefault();                       	   
+	{                     	   
 		   console.log('vai seu merda');	        	                 	                   	 
 		   $.ajax({  
 			url:"prioridades.php",  
@@ -63,38 +59,15 @@ $result = mysqli_query($connect, $query);
 									$('#insert').val("Inserting");  
 								 }, 
 								  
-			success:function(data){  
+			success:function(data)
+			{  
 			 $('#insert_form')[0].reset();  
-			 $('#add_data_Modal').modal('hide');  
+			 $('#add_data_Modal').modal('hide');  		
+	         $dialog.html('Inseriu idiota').dialog('open');		      
 			 $('#employee_table').html(data);  
 			}
-									  
-		   });                  	 
-		});
-	});
- 
-	$(document).ready(function()
-	{
-		CKEDITOR.replace('editor1')
-		
-		//Date picker
-		$('#datepicker1').datepicker({
-			format:"yyyy-mm-dd",
-			todayBtn:true,
-			assumeNearbyYear:true,
-			todayHighlight:true,
-			autoclose: true
-		})
-		
-		$('#datepicker2').datepicker({
-			format:"yyyy-mm-dd",
-			todayBtn:true,
-			assumeNearbyYear:true,
-			todayHighlight:true,
-			autoclose: true
-		})
-		
-		$('.select2').select2()
+									  	(
+	
 	});
 	</script> 
 
