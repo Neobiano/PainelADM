@@ -23,10 +23,8 @@
 			loadCSS('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min','screen',true);
 			//loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic','screen',true);
 			loadCSS('style');			
-	        loadJS('geral');
-	        
-	        loadJS('https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js',true);
-	        //loadJS('bower_components/jquery/dist/jquery.min.js',true);		        
+	        loadJS('geral');	        	      
+	        loadJS('bower_components/jquery/dist/jquery.min.js',true);		        
 	       
 		?>		
 	</head> 

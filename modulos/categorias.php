@@ -1,17 +1,26 @@
-<?php   
+<?php
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
-	
-    //verificando se há registros no BD, caso contrario abrirá a inserção.
-    if ($tela =='listar')
+    if ((!isset($tela)) && empty($_POST)) //não é modal, nem chamada convencional, logo.. acesso direto ao arquivo
+        protegeArquivo(basename(__FILE__));
+    else
     {
-        $qcategoria = new categoria();
-        $qcategoria->selecionaTudo($qcategoria);
-        if ($qcategoria->linhasafetadas <= 0)
-            $tela = 'incluir';        
-    }
+        if (!isset($tela)) //se tem a variabel POST, mas não tem a variavel tela, então é uma chamada modal
+            $tela = 'modal';
+            else
+            {
+                //verificando se há registros no BD, caso contrario abrirá a inserção.
+                if ($tela =='listar')
+                {
+                    $qcategoria = new categoria();
+                    $qcategoria->selecionaTudo($qcategoria);
+                    if ($qcategoria->linhasafetadas <= 0)
+                        $tela = 'incluir';   
+                }
+                
+                loadJS('jqueryvalidate');
+                loadJS('jqueryvalidate-messages');
+            }
+    }	        
     
     switch ($tela) 
     {                 
@@ -254,7 +263,64 @@
         	
             <?php
             break;
-        
+            
+            case 'modal':
+                $duplicado = false;
+                if(!empty($_POST))
+                {
+                    
+                    $categoria = new categoria(array(
+                        'nome'=>$_POST['nome']
+                    ));
+                    
+                    
+                    //verificando se ja existem registros com o parametro solicitado para inserção
+                    if ($categoria->existeRegistro('nome',$_POST['nome']))
+                    {
+                        printMSG('categoria já existe no sistema, escolha outro nome!','erro');
+                        $duplicado = true;
+                    }
+                    
+                    if ($duplicado!=true)
+                    {
+                        $categoria->inserir($categoria);                        
+                        if ($categoria->linhasafetadas==1)
+                        {
+                            $lastid = $categoria->lastId;
+                            
+                            
+                            $qcategoria = new categoria();
+                            $qcategoria->extras_select = " order by nome";
+                            $qcategoria->selecionaTudo($qcategoria);
+                            
+                            while ($res = $qcategoria->retornaDados())
+                            {
+                                $row = array();
+                                $row["id"] = $res->id;
+                                $row["nome"] = $res->nome;
+                                if ($lastid==$res->id)
+                                    $row["lastid"] = true;
+                                    else
+                                        $row["lastid"] = false;
+                                        
+                                        $ddata[] = $row;
+                            }
+                            
+                            $output = array(
+                                "jcategorias" => $ddata,
+                            );
+                            
+                            header('Content-type: application/json');
+                            echo json_encode($output);
+                            
+                            unset($_POST);
+                            
+                        }
+                        
+                        
+                    }
+                }
+                break;
         case 'listar':
                 			       
             ?>

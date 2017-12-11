@@ -1,18 +1,27 @@
-<?php   
+<?php  
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
-	
-    //verificando se há registros no BD, caso contrario abrirá a inserção.
-    if ($tela =='listar')
+    if ((!isset($tela)) && empty($_POST)) //não é modal, nem chamada convencional, logo.. acesso direto ao arquivo
+        protegeArquivo(basename(__FILE__));
+    else
     {
-        $qtipo = new tipo();
-        $qtipo->selecionaTudo($qtipo);
-        if ($qtipo->linhasafetadas <= 0)
-            $tela = 'incluir';        
-    }
-    
+        if (!isset($tela)) //se tem a variabel POST, mas não tem a variavel tela, então é uma chamada modal
+            $tela = 'modal';
+            else
+            {
+                //verificando se há registros no BD, caso contrario abrirá a inserção.
+                if ($tela =='listar')
+                {
+                    $qtipo = new tipo();
+                    $qtipo->selecionaTudo($qtipo);
+                    if ($qtipo->linhasafetadas <= 0)
+                        $tela = 'incluir';   
+                }
+                
+                loadJS('jqueryvalidate');
+                loadJS('jqueryvalidate-messages');
+            }
+    }	 
+        
     switch ($tela) 
     {                 
         case 'editar':                     
@@ -255,7 +264,60 @@
         	
             <?php
             break;
-        
+            case 'modal':
+                $duplicado = false;
+                if(!empty($_POST))
+                {
+                    
+                    $tipo = new tipo(array(
+                        'nome'=>$_POST['nome']
+                    ));
+                                        
+                    //verificando se ja existem registros com o parametro solicitado para inserção
+                    if ($tipo->existeRegistro('nome',$_POST['nome']))
+                    {
+                        printMSG('tipo já existe no sistema, escolha outro nome!','erro');
+                        $duplicado = true;
+                    }
+                    
+                    if ($duplicado!=true)
+                    {
+                        $tipo->inserir($tipo);
+                        // printMSG('Dados inseridos com sucesso. <a href="'.ADMURL.'?m=tipos&t=listar">Exibir Cadastros</a>','sucesso');
+                        if ($tipo->linhasafetadas==1)
+                        {
+                            $lastid = $tipo->lastId;
+                            
+                            
+                            $qtipo = new tipo();
+                            $qtipo->extras_select = " order by nome";
+                            $qtipo->selecionaTudo($qtipo);
+                            
+                            while ($res = $qtipo->retornaDados())
+                            {
+                                $row = array();
+                                $row["id"] = $res->id;
+                                $row["nome"] = $res->nome;
+                                if ($lastid==$res->id)
+                                    $row["lastid"] = true;
+                                    else
+                                        $row["lastid"] = false;
+                                        
+                                        $ddata[] = $row;
+                            }
+                            
+                            $output = array(
+                                "jtipos" => $ddata,
+                            );
+                            
+                            header('Content-type: application/json');
+                            echo json_encode($output);
+                            
+                            unset($_POST);                            
+                        }                                               
+                    }
+                }
+                break;
         case 'listar':
                 			       
             ?>

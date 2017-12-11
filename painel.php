@@ -2,14 +2,12 @@
 if (isset($_GET['m'])) $modulo = $_GET['m'];
 if (isset($_GET['t'])) $tela = $_GET['t'];
 ?>
-    <?php
-    
-    loadJS('bower_components/fastclick/lib/fastclick.js',true);    
-    loadJS('https://www.gstatic.com/charts/loader.js',true);
-   
+    <?php    
+    loadJS('bower_components/fastclick/lib/fastclick.js',true);          
     if ($modulo && $tela):
         loadmodulo($modulo,$tela);
     else:
+        loadJS('https://www.gstatic.com/charts/loader.js',true);
         ?>
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->

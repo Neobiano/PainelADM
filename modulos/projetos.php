@@ -1,18 +1,27 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
-	
-    //verificando se há registros no BD, caso contrario abrirá a inserção.
-    if ($tela =='listar')
+    if ((!isset($tela)) && empty($_POST)) //não é modal, nem chamada convencional, logo.. acesso direto ao arquivo
+        protegeArquivo(basename(__FILE__));
+    else
     {
-        $qprojeto = new projeto();
-        $qprojeto->selecionaTudo($qprojeto);
-        if ($qprojeto->linhasafetadas <= 0)
-            $tela = 'incluir';        
-    }
-    
+        if (!isset($tela)) //se tem a variabel POST, mas não tem a variavel tela, então é uma chamada modal
+            $tela = 'modal';
+            else
+            {
+                //verificando se há registros no BD, caso contrario abrirá a inserção.
+                if ($tela =='listar')
+                {
+                    $qprojeto = new projeto();
+                    $qprojeto->selecionaTudo($qprojeto);
+                    if ($qprojeto->linhasafetadas <= 0)
+                        $tela = 'incluir';  
+                }
+                
+                loadJS('jqueryvalidate');
+                loadJS('jqueryvalidate-messages');
+            }
+    }	 
+       
     switch ($tela) 
     {                 
         case 'editar':                     
@@ -268,7 +277,59 @@
       		
             <?php
             break;
-        
+            
+            case 'modal':
+                $duplicado = false;
+                if(!empty($_POST))
+                {
+                    
+                    $projeto = new projeto(array(
+                        'nome'=>$_POST['nome']
+                    ));
+                    
+                    
+                    //verificando se ja existem registros com o parametro solicitado para inserção
+                    if ($projeto->existeRegistro('nome',$_POST['nome']))
+                    {
+                        printMSG('projeto já existe no sistema, escolha outro nome!','erro');
+                        $duplicado = true;
+                    }
+                    
+                    if ($duplicado!=true)
+                    {
+                        $projeto->inserir($projeto);
+                        if ($projeto->linhasafetadas==1)
+                        {
+                            $lastid = $projeto->lastId;
+                                                        
+                            $qprojeto = new projeto();
+                            $qprojeto->extras_select = " order by nome";
+                            $qprojeto->selecionaTudo($qprojeto);
+                            
+                            while ($res = $qprojeto->retornaDados())
+                            {
+                                $row = array();
+                                $row["id"] = $res->id;
+                                $row["nome"] = $res->nome;
+                                if ($lastid==$res->id)
+                                    $row["lastid"] = true;
+                                    else
+                                        $row["lastid"] = false;
+                                        
+                                        $ddata[] = $row;
+                            }
+                            
+                            $output = array(
+                                "jprojetos" => $ddata,
+                            );
+                            
+                            header('Content-type: application/json');
+                            echo json_encode($output);                            
+                            unset($_POST);                            
+                        }                                                
+                    }
+                }
+                break;
         case 'listar':
                 			       
             ?>

@@ -1,20 +1,28 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    loadJS('jqueryvalidate');
-    loadJS('jqueryvalidate-messages');
-    loadCSS('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min','screen',true);
-    loadJS('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',true);
-    
-	
-    //verificando se há registros no BD, caso contrario abrirá a inserção.
-    if ($tela =='listar')
+    if ((!isset($tela)) && empty($_POST)) //não é modal, nem chamada convencional, logo.. acesso direto ao arquivo
+        protegeArquivo(basename(__FILE__));
+    else
     {
-        $qstatus = new status();
-        $qstatus->selecionaTudo($qstatus);
-        if ($qstatus->linhasafetadas <= 0)
-            $tela = 'incluir';        
-    }
+        if (!isset($tela)) //se tem a variabel POST, mas não tem a variavel tela, então é uma chamada modal
+            $tela = 'modal';
+            else
+            {
+                //verificando se há registros no BD, caso contrario abrirá a inserção.
+                if ($tela =='listar')
+                {
+                    $qstatus = new status();
+                    $qstatus->selecionaTudo($qstatus);
+                    if ($qstatus->linhasafetadas <= 0)
+                        $tela = 'incluir';
+                }
+                
+                loadJS('jqueryvalidate');
+                loadJS('jqueryvalidate-messages');
+                loadCSS('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min','screen',true);
+                loadJS('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',true);
+            }
+    }	               	
     
     switch ($tela) 
     {                 
@@ -321,7 +329,63 @@
       		
             <?php
             break;
-        
+            
+            case 'modal':
+                $duplicado = false;
+                if(!empty($_POST))
+                {
+                    
+                    $status = new status(array(
+                        'nome'=>$_POST['nome']
+                    ));
+                    
+                    
+                    //verificando se ja existem registros com o parametro solicitado para inserção
+                    if ($status->existeRegistro('nome',$_POST['nome']))
+                    {
+                        printMSG('status já existe no sistema, escolha outro nome!','erro');
+                        $duplicado = true;
+                    }
+                    
+                    if ($duplicado!=true)
+                    {
+                        $status->inserir($status);
+                        if ($status->linhasafetadas==1)
+                        {
+                            $lastid = $status->lastId;
+                            
+                            
+                            $qstatus = new status();
+                            $qstatus->extras_select = " order by nome";
+                            $qstatus->selecionaTudo($qstatus);
+                            
+                            while ($res = $qstatus->retornaDados())
+                            {
+                                $row = array();
+                                $row["id"] = $res->id;
+                                $row["nome"] = $res->nome;
+                                if ($lastid==$res->id)
+                                    $row["lastid"] = true;
+                                    else
+                                        $row["lastid"] = false;
+                                        
+                                        $ddata[] = $row;
+                            }
+                            
+                            $output = array(
+                                "jstatus" => $ddata,
+                            );
+                            
+                            header('Content-type: application/json');
+                            echo json_encode($output);
+                            
+                            unset($_POST);
+                            
+                        }
+                                                
+                    }
+                }
+                break;
         case 'listar':
                 			       
             ?>

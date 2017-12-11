@@ -3,7 +3,7 @@
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     protegeArquivo(basename(__FILE__));
-    loadJS('bower_components/ckeditor/ckeditor.js',true);	
+    	
    
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
@@ -17,6 +17,7 @@
     //validação a ser utilizada apenas 
     if (($tela=='editar') ||($tela=='incluir'))
     {
+        loadJS('bower_components/ckeditor/ckeditor.js',true);
         ?>
         	<script>
                  	$(document).ready(function()
@@ -50,18 +51,18 @@
                         	});
                     	
                  		//modal prioridade		             	    		    	                          
-                        $('#insert_form').on("submit", function(event){ 
+                        $('#insert_form_prioridade').on("submit", function(event){ 
                             $select = $('#idprioridade');       
                             event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/prioridades.php",                 			  
                             		method:"POST",  
-                            		data: $('#insert_form').serialize(),                              	    
+                            		data: $('#insert_form_prioridade').serialize(),                              	    
                             		//dataType:'html',
                             		dataType: 'json',					  
                             		success:function(data){                              	    							
-                            								 $('#insert_form')[0].reset();  
-                            								 $('#add_data_Modal').modal('hide');                   										                 										 
+                            								 $('#insert_form_prioridade')[0].reset();  
+                            								 $('#add_data_Modal_prioridade').modal('hide');                   										                 										 
                             								                	     
                             								//clear the current content of the select                                
                             								 $select.html('');
@@ -83,14 +84,158 @@
                             						  
                             	});                     	             		                 		                 		
 						});
+
+                        //modal categoria		             	    		    	                          
+                        $('#insert_form_categoria').on("submit", function(event){ 
+                            $select = $('#idcategoria');       
+                            event.preventDefault();          	                 	                   	 
+                            $.ajax({  
+                            		url:"modulos/categorias.php",                 			  
+                            		method:"POST",  
+                            		data: $('#insert_form_categoria').serialize(),                              	    
+                            		//dataType:'html',
+                            		dataType: 'json',					  
+                            		success:function(data){                              	    							
+                            								 $('#insert_form_categoria')[0].reset();  
+                            								 $('#add_data_Modal_categoria').modal('hide');                   										                 										 
+                            								                	     
+                            								 //clear the current content of the select                                
+                            								 $select.html('');                            								 
+                            								 //iterate over the data and append a select option                            								 
+                            								 $.each(data.jcategorias, function (key, val) {
+                                								 if (val.lastid){	 							                                    								 
+                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                                								 }
+                                								 else {
+                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                    							  }	                  										   
+                            								 })	                                                   	       
+                            							   },
+                            		error: function() {
+                            							alert(data);                            							 
+                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            						  }
+                            
+                            						  
+                            	});                     	             		                 		                 		
+						});
+
+                        //modal status		             	    		    	                          
+                        $('#insert_form_status').on("submit", function(event){ 
+                            console.log('1');
+                            $select = $('#idstatus');       
+                            event.preventDefault();          	                 	                   	 
+                            $.ajax({  
+                            		url:"modulos/status.php",                 			  
+                            		method:"POST",  
+                            		data: $('#insert_form_status').serialize(),                              	    
+                            		//dataType:'html',
+                            		dataType: 'json',					  
+                            		success:function(data){                              	    							
+                            								 $('#insert_form_status')[0].reset();  
+                            								 $('#add_data_Modal_status').modal('hide');                   										                 										 
+                            								  console.log('sucesso');               	     
+                            								 //clear the current content of the select                                
+                            								 $select.html('');                            								 
+                            								 //iterate over the data and append a select option                            								 
+                            								 $.each(data.jstatus, function (key, val) {
+                                								 if (val.lastid){	 							                                    								 
+                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                                								 }
+                                								 else {
+                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                    							  }	                  										   
+                            								 })	                                                   	       
+                            							   },
+                            		error: function() {
+                            							console.log('erri');		
+            											//alert(data);                            							 
+                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            						  }
+                            
+                            						  
+                            	});                     	             		                 		                 		
+						});
+
+                      //modal projetos		             	    		    	                          
+                        $('#insert_form_projeto').on("submit", function(event){ 
+                            $select = $('#idprojeto');       
+                            event.preventDefault();          	                 	                   	 
+                            $.ajax({  
+                            		url:"modulos/projetos.php",                 			  
+                            		method:"POST",  
+                            		data: $('#insert_form_projeto').serialize(),                              	    
+                            		//dataType:'html',
+                            		dataType: 'json',					  
+                            		success:function(data){                              	    							
+                            								 $('#insert_form_projto')[0].reset();  
+                            								 $('#add_data_Modal_projeto').modal('hide');                   										                 										 
+                            								                	     
+                            								 //clear the current content of the select                                
+                            								 $select.html('');                            								 
+                            								 //iterate over the data and append a select option                            								 
+                            								 $.each(data.jprojetos, function (key, val) {
+                                								 if (val.lastid){	 							                                    								 
+                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                                								 }
+                                								 else {
+                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                    							  }	                  										   
+                            								 })	                                                   	       
+                            							   },
+                            		error: function() {
+                            							alert(data);                            							 
+                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            						  }
+                            
+                            						  
+                            	});                     	             		                 		                 		
+						});
+
+                      //modal tipoas		             	    		    	                          
+                        $('#insert_form_tipo').on("submit", function(event){ 
+                            $select = $('#idtipo');       
+                            event.preventDefault();          	                 	                   	 
+                            $.ajax({  
+                            		url:"modulos/tipos.php",                 			  
+                            		method:"POST",  
+                            		data: $('#insert_form_tipo').serialize(),                              	    
+                            		//dataType:'html',
+                            		dataType: 'json',					  
+                            		success:function(data){                              	    							
+                            								 $('#insert_form_tipo')[0].reset();  
+                            								 $('#add_data_Modal_tipo').modal('hide');                   										                 										 
+                            								                	     
+                            								 //clear the current content of the select                                
+                            								 $select.html('');                            								 
+                            								 //iterate over the data and append a select option                            								 
+                            								 $.each(data.jtipos, function (key, val) {
+                                								 if (val.lastid){	 							                                    								 
+                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                                								 }
+                                								 else {
+                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                    							  }	                  										   
+                            								 })	                                                   	       
+                            							   },
+                            		error: function() {
+                            							alert(data);                            							 
+                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            						  }
+                            
+                            						  
+                            	});                     	             		                 		                 		
+						});
                  	});               	                    
                 </script> 
+               
+                
                 <!-- Modal Prioridade -->	
-                <div class="modal fade" id="add_data_Modal" data-backdrop="static">
+                <div class="modal fade" id="add_data_Modal_prioridade" data-backdrop="static">
                   <div class="dialog"></div>
                   <div class="modal-dialog">
                     <div class="modal-content">                                                                     
-                        <form method="post" id="insert_form">	
+                        <form method="post" id="insert_form_prioridade">	
                         	<div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span></button>
@@ -123,7 +268,164 @@
                   </div>
                   <!-- final modal prioridade -->
                 </div>
-        
+                
+                <!-- Modal Categoria -->	
+                <div class="modal fade" id="add_data_Modal_categoria" data-backdrop="static">
+                  <div class="dialog"></div>
+                  <div class="modal-dialog">
+                    <div class="modal-content">                                                                     
+                        <form method="post" id="insert_form_categoria">	
+                        	<div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Categorias - Incluir</h4>
+                        	</div>   
+                        	<div class="modal-body">	
+                                <div class="box-body">
+                                	<div class="row">
+                        				<div class="form-group">
+                        					<div class="col-xs-2">
+                        						<label>Código</label>
+                        						<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
+                        					</div>        									
+                        				
+                        					<div class="col-xs-10">
+                        						<label>Nome</label>
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        					</div>                                        
+                        				</div>
+                        			</div>                         			                                                              								
+                        		</div> 
+                        	</div>   
+                        	<div class="modal-footer">
+                        		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                         		    
+                        		<button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button>                                                           
+                        	</div>  	                            	                          	   		                                                  		                                                                                        
+                        </form>                                                                                                         
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- final modal Categoria -->
+                </div>
+        		
+        		<!-- Modal Status -->	
+                <div class="modal fade" id="add_data_Modal_status" data-backdrop="static">
+                  <div class="dialog"></div>
+                  <div class="modal-dialog">
+                    <div class="modal-content">                                                                     
+                        <form method="post" id="insert_form_status">	
+                        	<div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Status - Incluir</h4>
+                        	</div>   
+                        	<div class="modal-body">	
+                                <div class="box-body">
+                                	<div class="row">
+                        				<div class="form-group">
+                        					<div class="col-xs-2">
+                        						<label>Código</label>
+                        						<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
+                        					</div>        									
+                        				
+                        					<div class="col-xs-10">
+                        						<label>Nome</label>
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        					</div>                                        
+                        				</div>
+                        			</div>                         			                                                              								
+                        		</div> 
+                        	</div>   
+                        	<div class="modal-footer">
+                        		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                         		    
+                        		<button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button>                                                           
+                        	</div>  	                            	                          	   		                                                  		                                                                                        
+                        </form>                                                                                                         
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- final modal status -->
+                </div>
+                
+                 <!-- Modal Tipo -->	
+                <div class="modal fade" id="add_data_Modal_tipo" data-backdrop="static">
+                  <div class="dialog"></div>
+                  <div class="modal-dialog">
+                    <div class="modal-content">                                                                     
+                        <form method="post" id="insert_form_tipo">	
+                        	<div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Tipos - Incluir</h4>
+                        	</div>   
+                        	<div class="modal-body">	
+                                <div class="box-body">
+                                	<div class="row">
+                        				<div class="form-group">
+                        					<div class="col-xs-2">
+                        						<label>Código</label>
+                        						<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
+                        					</div>        									
+                        				
+                        					<div class="col-xs-10">
+                        						<label>Nome</label>
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        					</div>                                        
+                        				</div>
+                        			</div>                         			                                                              								
+                        		</div> 
+                        	</div>   
+                        	<div class="modal-footer">
+                        		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                         		    
+                        		<button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button>                                                           
+                        	</div>  	                            	                          	   		                                                  		                                                                                        
+                        </form>                                                                                                         
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- final modal tipos -->
+                </div>
+                
+                <!-- Modal Projeto -->	
+                <div class="modal fade" id="add_data_Modal_projeto" data-backdrop="static">
+                  <div class="dialog"></div>
+                  <div class="modal-dialog">
+                    <div class="modal-content">                                                                     
+                        <form method="post" id="insert_form_projeto">	
+                        	<div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Projetos - Incluir</h4>
+                        	</div>   
+                        	<div class="modal-body">	
+                                <div class="box-body">
+                                	<div class="row">
+                        				<div class="form-group">
+                        					<div class="col-xs-2">
+                        						<label>Código</label>
+                        						<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático">
+                        					</div>        									
+                        				
+                        					<div class="col-xs-10">
+                        						<label>Nome</label>
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        					</div>                                        
+                        				</div>
+                        			</div>                         			                                                              								
+                        		</div> 
+                        	</div>   
+                        	<div class="modal-footer">
+                        		<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>                         		    
+                        		<button type="submit" name="insert" id="insert" class="btn btn-primary">Salvar</button>                                                           
+                        	</div>  	                            	                          	   		                                                  		                                                                                        
+                        </form>                                                                                                         
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- final modal projetos -->
+                </div>
+                
+                
         <?php 
     }
     switch ($tela)     
@@ -231,21 +533,26 @@
             									</div>            									                                                         								
             									<div class="col-xs-2">
                       								<label>Tipo</label>
-                                                    <select name="tipo" class="form-control select2" style="width: 100%;">
-                                                    	<option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qtipo = new tipo();                                                	
-                                                        	$qtipo->extras_select = " order by nome";
-                                                        	$qtipo->selecionaTudo($qtipo);                                                                
-                                                            while ($res = $qtipo->retornaDados())
-                                                            {                                         
-                                                                if ($resbd->id_tipo == $res->id)
-                                                                    printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
-                                                                else
-                                                                    printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                            } 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group">
+                                                        <select id="idtipo"  name="tipo" class="form-control select2" style="width: 100%;">
+                                                        	<option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qtipo = new tipo();                                                	
+                                                            	$qtipo->extras_select = " order by nome";
+                                                            	$qtipo->selecionaTudo($qtipo);                                                                
+                                                                while ($res = $qtipo->retornaDados())
+                                                                {                                         
+                                                                    if ($resbd->id_tipo == $res->id)
+                                                                        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                                    else
+                                                                        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                                } 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_tipo"> + </button>
+                                                        </span>                                                        
+													</div> 
             									</div>        									
             							 	</div>            							 	   	
             							</div>	
@@ -281,7 +588,7 @@
                                                             ?>                                              
                                                         </select>
                                                         <span class="input-group-btn">
-                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal"> + </button>
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_prioridade"> + </button>
                                                         </span>
                                                         
 													</div>                                                        
@@ -289,39 +596,49 @@
                                                 
             									<div class="col-xs-4">
                       								<label>Categoria</label>
-                                                    <select name="categoria" class="form-control select2 " style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qcategoria = new categoria();
-                                                        	$qcategoria->extras_select = " order by nome";
-                                                        	$qcategoria->selecionaTudo($qcategoria);
-                                                        	while ($res = $qcategoria->retornaDados())
-                                                        	{
-                                                        	    if ($resbd->id_categoria == $res->id)
-                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
-                                                        	    else
-                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group">
+                                                        <select id="idcategoria" name="prioridade" class="form-control select2 " style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qcategoria = new categoria();
+                                                            	$qcategoria->extras_select = " order by nome";
+                                                            	$qcategoria->selecionaTudo($qcategoria);
+                                                            	while ($res = $qcategoria->retornaDados())
+                                                            	{
+                                                            	    if ($resbd->id_categoria == $res->id)
+                                                            	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_categoria"> + </button>
+                                                        </span>
+                                                    </div>
             									</div> 
             									<div class="col-xs-4">
                       								<label>Status</label>
-                                                    <select name="status" class="form-control select2" style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qstatus= new status();
-                                                        	$qstatus->extras_select = " order by nome";
-                                                        	$qstatus->selecionaTudo($qstatus);
-                                                        	while ($res = $qstatus->retornaDados())
-                                                        	{
-                                                        	    if ($resbd->id_status == $res->id)
-                                                        	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
-                                                        	    else
-                                                        	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group">
+                                                        <select id="idstatus" name="status" class="form-control select2" style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qstatus= new status();
+                                                            	$qstatus->extras_select = " order by nome";
+                                                            	$qstatus->selecionaTudo($qstatus);
+                                                            	while ($res = $qstatus->retornaDados())
+                                                            	{
+                                                            	    if ($resbd->id_status == $res->id)
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_status"> + </button>
+                                                        </span>
+                                                    </div>
             									</div>       									
             							 	</div>            							 	   	
             							</div>	  
@@ -329,22 +646,27 @@
             							<div class="row top-buffer">
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
-                      								<label>Projeto</label>
-                                                    <select name="projeto" class="form-control select2 " style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                    	   $qprojeto = new projeto();
-                                                    	   $qprojeto->extras_select = " order by nome";
-                                                    	   $qprojeto->selecionaTudo($qprojeto);
-                                                    	   while ($res = $qprojeto->retornaDados())
-                                                        	{
-                                                        	    if ($resbd->id_projeto == $res->id)
-                                                        	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
-                                                        	    else
-                                                        	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+            										<label>Projeto</label>
+            										<div class="input-group">                          								
+                                                        <select id="idprojeto" name="projeto" class="form-control select2 " style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                        	   $qprojeto = new projeto();
+                                                        	   $qprojeto->extras_select = " order by nome";
+                                                        	   $qprojeto->selecionaTudo($qprojeto);
+                                                        	   while ($res = $qprojeto->retornaDados())
+                                                            	{
+                                                            	    if ($resbd->id_projeto == $res->id)
+                                                            	        printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	        printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                               			<span class="input-group-btn">
+                                                          	<button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_projeto"> + </button>
+                                                        </span>
+                                                    </div>    
             									</div>  
             									<div class="col-xs-4">
                       								<label>Atribuido à</label>
@@ -480,18 +802,23 @@
             									</div>            									                                                         								
             									<div class="col-xs-2">
                       								<label>Tipo</label>
-                                                    <select name="tipo" class="form-control select2 " style="width: 100%;">
-                                                    	<option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qtipo = new tipo();    
-                                                        	$qtipo->extras_select = " order by nome";
-                                                            $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
-                                                            while ($res = $qtipo->retornaDados())
-                                                            {                                                                                                         
-                                                               printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                            } 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group">
+                                                        <select id="idtipo" name="tipo" class="form-control select2 " style="width: 100%;">
+                                                        	<option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qtipo = new tipo();    
+                                                            	$qtipo->extras_select = " order by nome";
+                                                                $qtipo->selecionaTudo($qtipo);                                                	                                                	                                                                                                                                                              
+                                                                while ($res = $qtipo->retornaDados())
+                                                                {                                                                                                         
+                                                                   printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                                } 
+                                                            ?>                                              
+                                                        </select>
+                                                         <span class="input-group-btn">
+                                                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_tipo"> + </button>
+                                                        </span>                                                        
+													</div>
             									</div>        									
             							 	</div>            							 	   	
             							</div>	
@@ -508,8 +835,8 @@
             							<div class="row top-buffer">
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
-                      								<label>Prioridade</label>
-                      								<div class="input-group" id="divselectprioridade">
+                      								<label>Prioridade</label>                      								
+                      								<div class="input-group" >
                                                         <select id="idprioridade" name="prioridade" class="form-control select2 " style="width: 100%;">
                                                         <option selected="selected" value="0"> </option>
                                                         	<?php 
@@ -523,42 +850,52 @@
                                                             ?>                                              
                                                         </select>
                                                         <span class="input-group-btn">
-                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal"> + </button>
+                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_prioridade"> + </button>
                                                 		</span>
                                                 	</div>  
             									</div>  
             									<div class="col-xs-4">
                       								<label>Categoria</label>
-                                                    <select name="categoria" class="form-control select2 " style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qcategoria = new categoria();
-                                                        	$qcategoria->extras_select = " order by nome";
-                                                        	$qcategoria->selecionaTudo($qcategoria);
-                                                        	while ($res = $qcategoria->retornaDados())
-                                                        	{                                                        	   
-                                                        	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group" >
+                                                        <select id="idcategoria" name="categoria" class="form-control select2 " style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qcategoria = new categoria();
+                                                            	$qcategoria->extras_select = " order by nome";
+                                                            	$qcategoria->selecionaTudo($qcategoria);
+                                                            	while ($res = $qcategoria->retornaDados())
+                                                            	{                                                        	   
+                                                            	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_categoria"> + </button>
+                                                		</span>
+                                                	</div>
             									</div> 
             									<div class="col-xs-4">
                       								<label>Status</label>
-                                                    <select name="status" class="form-control select2 " style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                        	$qstatus= new status();
-                                                        	$qstatus->extras_select = " order by nome";
-                                                        	$qstatus->selecionaTudo($qstatus);
-                                                        	while ($res = $qstatus->retornaDados())
-                                                        	{
-                                                        	    if (strtoupper($res->padrao_abertura=='S')) 
-                                                        	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
-                                                        	    else
-                                                        	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group" >                      								
+                                                        <select id="idstatus" name="status" class="form-control select2 " style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                            	$qstatus= new status();
+                                                            	$qstatus->extras_select = " order by nome";
+                                                            	$qstatus->selecionaTudo($qstatus);
+                                                            	while ($res = $qstatus->retornaDados())
+                                                            	{
+                                                            	    if (strtoupper($res->padrao_abertura=='S')) 
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>                                                        
+                                                        <span class="input-group-btn">
+                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_status"> + </button>
+                                                		</span>
+                                                	</div>
             									</div>       									
             							 	</div>            							 	   	
             							</div>	  
@@ -567,21 +904,26 @@
     									 	<div class="form-group">            								
             									<div class="col-xs-4">
                       								<label>Projeto</label>
-                                                    <select name="projeto" class="form-control select2 " style="width: 100%;">
-                                                       <option selected="selected" value="0"> </option>
-                                                    	<?php 
-                                                    	   $qprojeto = new projeto();
-                                                    	   $qprojeto->extras_select = " order by nome";
-                                                    	   $qprojeto->selecionaTudo($qprojeto);
-                                                    	   while ($res = $qprojeto->retornaDados())
-                                                        	{                                                        	   
-                                                        	   printf('<option value="%s">%s</option>',$res->id,$res->nome);
-                                                        	} 
-                                                        ?>                                              
-                                                    </select>
+                      								<div class="input-group" >
+                                                        <select id="idprojeto" name="projeto" class="form-control select2 " style="width: 100%;">
+                                                           <option selected="selected" value="0"> </option>
+                                                        	<?php 
+                                                        	   $qprojeto = new projeto();
+                                                        	   $qprojeto->extras_select = " order by nome";
+                                                        	   $qprojeto->selecionaTudo($qprojeto);
+                                                        	   while ($res = $qprojeto->retornaDados())
+                                                            	{                                                        	   
+                                                            	   printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	} 
+                                                            ?>                                              
+                                                        </select>
+                                                        <span class="input-group-btn">
+                                                		  <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#add_data_Modal_projeto"> + </button>
+                                                		</span>
+                                                	</div>
             									</div>  
             									<div class="col-xs-4">
-                      								<label>Atribuido à</label>
+                      								<label>Atribuido à</label>                      								
                                                     <select name="atribuido" class="form-control select2 " style="width: 100%;">
                                                     	<option selected="selected" value="0"> </option>
                                                     	<?php 
