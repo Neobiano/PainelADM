@@ -15,7 +15,7 @@
     }
     
     //validação a ser utilizada apenas 
-    if (($tela=='editar') ||($tela=='incluir'))
+    if ($tela !='listar')
     {
         loadJS('bower_components/ckeditor/ckeditor.js',true);
         ?>
@@ -69,16 +69,16 @@
                             								 //iterate over the data and append a select option
                             								 $.each(data.jprioridades, function (key, val) {
                                 								 if (val.lastid){	 							                                    								 
-                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                            									    $select.append('<option selected value="' + val.id + '">' + val.nome + '</option>');
                                 								 }
                                 								 else {
-                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                									 $select.append('<option value="' + val.id + '">' + val.nome + '</option>');
                                     							  }	                  										   
                             								 })	                                                   	       
                             							   },
                             		error: function() {
                             							alert(data);                            							 
-                            							$select.html('<option id="-1">ERRO NA INSERÇÃO</option>');
+                            							$select.html('<option value="-1">ERRO NA INSERÇÃO</option>');
                             						  }
                             
                             						  
@@ -104,10 +104,10 @@
                             								 //iterate over the data and append a select option                            								 
                             								 $.each(data.jcategorias, function (key, val) {
                                 								 if (val.lastid){	 							                                    								 
-                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                            									    $select.append('<option selected value="' + val.id + '">' + val.nome + '</option>');
                                 								 }
                                 								 else {
-                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                									 $select.append('<option value="' + val.id + '">' + val.nome + '</option>');
                                     							  }	                  										   
                             								 })	                                                   	       
                             							   },
@@ -140,10 +140,10 @@
                             								 //iterate over the data and append a select option                            								 
                             								 $.each(data.jstatus, function (key, val) {
                                 								 if (val.lastid){	 							                                    								 
-                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                            									    $select.append('<option selected value="' + val.id + '">' + val.nome + '</option>');
                                 								 }
                                 								 else {
-                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                									 $select.append('<option value="' + val.id + '">' + val.nome + '</option>');
                                     							  }	                  										   
                             								 })	                                                   	       
                             							   },
@@ -168,7 +168,7 @@
                             		//dataType:'html',
                             		dataType: 'json',					  
                             		success:function(data){                              	    							
-                            								 $('#insert_form_projto')[0].reset();  
+                            								 $('#insert_form_projeto')[0].reset();  
                             								 $('#add_data_Modal_projeto').modal('hide');                   										                 										 
                             								                	     
                             								 //clear the current content of the select                                
@@ -176,10 +176,10 @@
                             								 //iterate over the data and append a select option                            								 
                             								 $.each(data.jprojetos, function (key, val) {
                                 								 if (val.lastid){	 							                                    								 
-                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                            									    $select.append('<option selected value="' + val.id + '">' + val.nome + '</option>');
                                 								 }
                                 								 else {
-                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                									 $select.append('<option value="' + val.id + '">' + val.nome + '</option>');
                                     							  }	                  										   
                             								 })	                                                   	       
                             							   },
@@ -211,10 +211,10 @@
                             								 //iterate over the data and append a select option                            								 
                             								 $.each(data.jtipos, function (key, val) {
                                 								 if (val.lastid){	 							                                    								 
-                            									    $select.append('<option selected id="' + val.id + '">' + val.nome + '</option>');
+                            									    $select.append('<option selected value="' + val.id + '">' + val.nome + '</option>');
                                 								 }
                                 								 else {
-                                									 $select.append('<option id="' + val.id + '">' + val.nome + '</option>');
+                                									 $select.append('<option value="' + val.id + '">' + val.nome + '</option>');
                                     							  }	                  										   
                             								 })	                                                   	       
                             							   },
@@ -597,7 +597,7 @@
             									<div class="col-xs-4">
                       								<label>Categoria</label>
                       								<div class="input-group">
-                                                        <select id="idcategoria" name="prioridade" class="form-control select2 " style="width: 100%;">
+                                                        <select id="idcategoria" name="categoria" class="form-control select2 " style="width: 100%;">
                                                            <option selected="selected" value="0"> </option>
                                                         	<?php 
                                                             	$qcategoria = new categoria();
