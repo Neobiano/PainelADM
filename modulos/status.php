@@ -257,7 +257,7 @@
     			<section class="content">
       				<div class="row">
     	            <!-- left column -->
-    					<div class="col-md-6">
+    					<div class="col-md-9">
                         <!-- general form elements -->
     						<div class="box box-primary">
     							<div class="box-header with-border">
@@ -551,17 +551,17 @@
                     																	           	?> /><b> Fechado</b> 
                           								 
                           								</div>  
-                          								<div class="col-xs-2">
+                          								<div class="col-xs-4">
                         										<br>                      								
-                                  								<input type="checkbox" name="padraoabertura"  <?php																			
+                                  								<input disabled type="checkbox" name="padraoabertura"  <?php																			
             																			
                             																			if (strtoupper($resbd->padrao_abertura)=='S')
                             																				echo ' checked';
-                            																		?> /><b> Default Abertura</b> 
+                            																		?> /><b> Padrão Abertura</b> 
                                   								 
                                   						</div> 
             										</div>                                 
-                                     			</div> li<!-- final box body -->                               
+                                     			</div><!-- final box body -->                               
                                       
                 								<div class="box-footer">  
                 									 <button type="button" class="btn btn-default" onclick="location.href='?m=status&t=listar'" >Cancelar</button>

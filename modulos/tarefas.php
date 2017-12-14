@@ -17,28 +17,25 @@
     //validação a ser utilizada apenas 
     if ($tela !='listar')
     {
-        loadJS('bower_components/ckeditor/ckeditor.js',true);
+        loadJS('bower_components/ckeditor/ckeditor.js',true);       
         ?>
-        	<script>
-                 	$(document).ready(function()
+        	<script>        		                
+
+         			$(document).ready(function()
                  	{ 						                       
-                        //Datepickers 
-                        $('#datepicker1').datepicker({
-                            format:"yyyy-mm-dd",
-                            todayBtn:true,
-                            assumeNearbyYear:true,
-                            todayHighlight:true,
-                            autoclose: true
-                        });
-                        
-                        $('#datepicker2').datepicker({
-                            format:"yyyy-mm-dd",
+
+                       
+  
+                        $('.js_date_time').datepicker({
+                            format:"dd/mm/yyyy",
                             todayBtn:true,
                             assumeNearbyYear:true,
                             todayHighlight:true,
                             autoclose: true
                         });
 
+
+						
                       	//editor de texto
 						CKEDITOR.replace('editor1');
 
@@ -226,7 +223,8 @@
                             						  
                             	});                     	             		                 		                 		
 						});
-                 	});               	                    
+                 	});   
+                 	         			           	                    
                 </script> 
                
                 
@@ -444,6 +442,13 @@
                     //verificando se ele escolheu a botão 'editar' 
                     if (isset($_POST['editar']))
                     {                                                                                    
+                        $dataini =$_POST['dataini'];                                                
+                        $dataini = date("Y-m-d",strtotime(str_replace('/','-',$dataini)));
+                        
+                        $dataprevfim =$_POST['dataprevfim'];
+                        $dataprevfim = date("Y-m-d",strtotime(str_replace('/','-',$dataprevfim)));
+                        
+                        
                         $tarefa = new tarefa(array(
                             'assunto'=>$_POST['assunto'],
                             'descricao'=>$_POST['editor1'],
@@ -454,10 +459,10 @@
                             'id_categoria'=>$_POST['categoria'],
                             'id_atribuido'=>$_POST['atribuido'],
                             'id_criador'=>$_POST['atribuido'],
-                            'data_inicio'=>$_POST['dataini'],
-                            'data_prev_fim'=>$_POST['dataprevfim']
+                            'data_inicio'=>$dataini,
+                            'data_prev_fim'=>$dataprevfim
                         ));
-                        
+                                                
                         $duplicado=false;
                         $tarefa->valorpk = $id;
                         $tarefa->extras_select = "WHERE id=$id";
@@ -692,7 +697,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php if($resbd) echo $resbd->data_inicio;?>">
+                                                      <input class="js_date_time form-control pull-right input-sm" name="dataini" type="text" id="datepicker1" onkeypress="mascaraData(this, event)" value="<?php if($resbd) echo  date('d/m/Y', strtotime($resbd->data_inicio)); ?>">
                                                     </div>
                                                                                                                                                 
             									</div>  
@@ -701,8 +706,8 @@
                       								<div class="input-group date">
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
-                                                      </div>
-                                                      <input name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_prev_fim;?>">
+                                                      </div> <!-- class="" -->
+                                                      <input class="js_date_time form-control pull-right input-sm " name="dataprevfim" type="text"  id="datepicker2" onkeypress="mascaraData(this, event)" value="<?php if($resbd) echo date('d/m/Y',strtotime($resbd->data_prev_fim));?>">
                                                     </div>
                                                                                                                                                 
             									</div>           									     									
@@ -734,6 +739,12 @@
                 $sessao = new sessao();
                 $iduser = $sessao->getVar('iduser');
                 
+                $dataini =$_POST['dataini'];
+                $dataini = date("Y-m-d",strtotime(str_replace('/','-',$dataini)));
+                
+                $dataprevfim =$_POST['dataprevfim'];
+                $dataprevfim = date("Y-m-d",strtotime(str_replace('/','-',$dataprevfim)));
+                
                 $tarefa = new tarefa(array(
                     'assunto'=>$_POST['assunto'],
                     'descricao'=>$_POST['editor1'],
@@ -744,8 +755,8 @@
                     'id_categoria'=>$_POST['categoria'],
                     'id_atribuido'=>$_POST['atribuido'],
                     'id_criador'=>$_POST['atribuido'],
-                    'data_inicio'=>$_POST['dataini'],
-                    'data_prev_fim'=>$_POST['dataprevfim'],
+                    'data_inicio'=>$dataini,
+                    'data_prev_fim'=>$dataprevfim,
                     'data_cacad'=>date("Y-m-d") 
                 ));
              
@@ -947,7 +958,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php echo $_POST['dataini'];?>">
+                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php  echo $_POST['dataini'];?>">
                                                     </div>
                                                                                                                                                 
             									</div>  
@@ -1050,7 +1061,7 @@
                                         printf('<td>%s</td>',$res->categoria);
                                      
                                         printf('<td>%s</td>',$res->usr_atribuido);
-                                        printf('<td>%s</td>',$res->data_inicio);                                        
+                                        printf('<td>%s</td>',date('d/m/Y', strtotime($res->data_inicio)));                                        
                                       
                                         printf('<td>%s</td>',$res->atraso);                                    ;
                                         printf('<td><a href="?m=tarefas&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tarefas&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tarefas&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
@@ -1117,12 +1128,7 @@
                 
                 //formulário de edição de tarefa   
                 ?>   
-                	<script type="text/javascript">
-                    $(document).ready(function()
-                    {	             		
-                      	CKEDITOR.replace('editor1')	                	
-                    });            	  									
-                	</script> 	 
+                	
                 	<div class="content-wrapper">
                     <!-- Content Header (Page header) --> 
             
@@ -1285,7 +1291,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input disabled name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php if($resbd) echo $resbd->data_inicio;?>">
+                                                      <input disabled name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php if($resbd) echo date('d/m/Y', strtotime($resbd->data_inicio)) ;?>">
                                                     </div>
                                                                                                                                                 
             									</div>  
@@ -1295,7 +1301,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input disabled name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo $resbd->data_prev_fim;?>">
+                                                      <input disabled name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php if($resbd) echo date('d/m/Y', strtotime($resbd->data_prev_fim)) ;?>">
                                                     </div>
                                                                                                                                                 
             									</div>           									     									

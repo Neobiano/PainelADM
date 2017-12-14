@@ -20,6 +20,8 @@
 			loadCSS('bower_components/datatables.net-bs/css/dataTables.bootstrap.min','screen',true);
 			loadCSS('dist/css/skins/_all-skins.min','screen',true);
 			loadCSS('plugins/iCheck/square/blue','screen',true);			
+			//loadCSS('bower_components/jquery-ui/themes/base/jquery-ui','screen',true);
+			
 			loadCSS('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min','screen',true);
 			//loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic','screen',true);
 			loadCSS('style');			
