@@ -4,7 +4,7 @@
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     //protegeArquivo(basename(__FILE__));
     
-    $jsonData = '{ "tipos" :[';
+    $jsonData = '{ "tarefas" :[';
     $select = ' SELECT tarefas.*,
                                                 case
                                                     when (tarefas.data_fim >0) then null
