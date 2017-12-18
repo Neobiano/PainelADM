@@ -24,27 +24,33 @@ $(function(){
             visible: true
         },
         columns: [
-			"ID",
+        	"ID",
             "CompanyName",
             "Phone",
             "Fax",
             "City",
 			"State",
 			{
-			  dataField: "productID",
+			  dataField: "ID",
+			  width : 100,
 			  dataType: "string",
-			  cellTemplate: function(container, options) {				
-
-				container.append($("<a  href=\'resources/" + options.value + "'>Sei La Fi</a>"));
-			  }
+			  cellTemplate: function(container, options) {
+    		        var productName = options.value;
+    		        $("<a href=\'?m=tipos&t=incluir&id=" + options.value + "' title='Novo'><img src='images/add.png' alt='Novo cadastro' /></a>  <a href=\'?m=tipos&t=editar&id=" + options.value + "' title='Editar'><img src='images/edit.png' alt='Editar'/></a> <a href=\'?m=tipos&t=excluir&id=" + options.value + "'><img src='images/delete.png' alt='Excluir' /></a>")		      		       
+    		        .appendTo(container);
+    		       // container.append($("<a  href=\'?m=tipos&t=editar&id=" + options.value + "'><img src=images/delete.png /></a>"));
+    		      }
 			}
         ],	
 		onCellPrepared: function (e) {
             if (e.rowType == 'data') {
-                if ((e.column.dataField == 'ID') ) 
-                {
-                    //e.cellElement.addClass(css( "color", "red" ));
+                if (e.column.dataField == 'CompanyName')  
+                {                   
                   e.cellElement.addClass("cls"+"Green");                   
+                }
+				else if (e.column.dataField == 'ID')  
+                {                  
+                  e.cellElement.addClass("clsWhite");  					
                 }
             }
         },  
