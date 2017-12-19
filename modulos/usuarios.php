@@ -50,6 +50,7 @@
 				<div class="login-box">
                   <div class="login-logo">
                     <a><b>Painel</b>CERAT</a>
+                    <i class="fa fa-dashboard"></i> 
                   </div>
                   <!-- /.login-logo -->
                   <div class="login-box-body">

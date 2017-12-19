@@ -43,11 +43,9 @@
 	<script>
     				  			  
 	  $(function () {			   
-		  $('#gridfull').bootstrapTable({
-				resizable: true
-			});		
+		 
 			
-		/*  $('#gridfull').DataTable({
+		  $('#gridfull').DataTable({
 		    	"iDisplayLength": 25,	
 		    	"columnDefs": [
 		    		
@@ -74,7 +72,7 @@
 		                "bPaginate": true,
 		                 
 		                "aaSorting": [[0, "asc"]] 
-		    })	   */ 
+		    })	   
 	        	  
 		  })
 	</script>

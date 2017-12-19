@@ -1025,6 +1025,8 @@
             </style>
             
             <script type="text/javascript">
+            	   
+                   
         		   function bindGrid(data) {
         		       $("#gridContainer").dxDataGrid({
         		            dataSource: data,
@@ -1046,7 +1048,7 @@
         				         },
         		            "export": { enabled: true, fileName: "Tarefas"},
         		            columns: [
-        		            	{ dataField: "id", caption: "Código" },		                      
+        		            	{ dataField: "id", dataType: "number", caption: "Código" },		                      
                                'assunto',
                                { dataField: "id_tipo", caption: "Cód. Tipo" },
                                { dataField: "id_status", caption: "Cód. Status" },
@@ -1149,6 +1151,15 @@
         		 }
         		 hr.send();      
         		});
+
+        		$(function(){
+					$("#refreshButton").dxButton({
+					text: 'Refresh',
+					onClick: function (){
+                        					var dataGrid = $('#gridContainer').dxDataGrid('instance');
+                        					dataGrid.refresh();
+					}}) 
+                }); 
         		
            </script>
             <div class="content-wrapper">             
@@ -1170,6 +1181,10 @@
                 	<div class="box">                              
                     	<div class="box-body">
                         	<div id="gridContainer"></div>
+                        	<div style="text-align:center; margin:5px auto">
+                        		<div id="refreshButton" style="height: 40px; margin-left:10px auto; display:inline-block">
+                        		</div>
+                        	</div>
             			</div><!-- /.box -->                    
             		</div><!-- /.box-body -->
             	</section> <!-- /.Main content -->           
