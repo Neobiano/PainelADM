@@ -220,7 +220,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>          
-       	<li class="active"><a href="?m=tarefas&t=listar2"><i class="fa fa-tasks"></i> <span>Demandas</span></a></li>                           
+       	<li class="active"><a href="?m=tarefas&t=listar"><i class="fa fa-tasks"></i> <span>Demandas</span></a></li>                           
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text""></i> <span>Cadastros</span>
