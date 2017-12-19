@@ -1,10 +1,7 @@
 
-
 <?php   
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
-    protegeArquivo(basename(__FILE__));
-    	
-   
+           
     //verificando se há registros no BD, caso contrario abrirá a inserção.
     if ($tela =='listar')
     {
@@ -14,18 +11,16 @@
             $tela = 'incluir';        
     }
     
-    //validação a ser utilizada apenas 
+    //todas as telas de edição usarão os códigos abaixo
     if ($tela !='listar')
     {
+        protegeArquivo(basename(__FILE__));
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
         ?>
         	<script>        		                
-
          			$(document).ready(function()
                  	{ 						                       
-
-                       
-  
+         				//----------------------------------JAVASCRIPT CONTROLES - Data, Editor de Texto, Selects------------------ --//
                         $('.js_date_time').datepicker({
                             format:"dd/mm/yyyy",
                             todayBtn:true,
@@ -33,15 +28,14 @@
                             todayHighlight:true,
                             autoclose: true
                         });
-
-
-						
+	
                       	//editor de texto
 						CKEDITOR.replace('editor1');
 
                         //selects
                         $('.select2').select2();
 
+                        //----------------------------------JAVASCRIPT FORMULÁRIOS MODAIS -------------------------------- --//
 						//faz com que seja possível atribuir autofocus para imputs de janelas modais 
                         $('.modal').on('shown.bs.modal', function() {
                         	  $(this).find('[autofocus]').focus();
@@ -154,7 +148,7 @@
                             	});                     	             		                 		                 		
 						});
 
-                      //modal projetos		             	    		    	                          
+                        //modal projetos		             	    		    	                          
                         $('#insert_form_projeto').on("submit", function(event){ 
                             $select = $('#idprojeto');       
                             event.preventDefault();          	                 	                   	 
@@ -189,7 +183,7 @@
                             	});                     	             		                 		                 		
 						});
 
-                      //modal tipoas		             	    		    	                          
+                        //modal tipos		             	    		    	                          
                         $('#insert_form_tipo').on("submit", function(event){ 
                             $select = $('#idtipo');       
                             event.preventDefault();          	                 	                   	 
@@ -227,7 +221,7 @@
                  	         			           	                    
                 </script> 
                
-                
+                <!----------------------------------HTML FORMULÁRIOS MODAIS -------------------------------- -->
                 <!-- Modal Prioridade -->	
                 <div class="modal fade" id="add_data_Modal_prioridade" data-backdrop="static">
                   <div class="dialog"></div>
@@ -422,10 +416,19 @@
                   </div>
                   <!-- final modal projetos -->
                 </div>
-                
-                
+     
         <?php 
+    } //FINAL ($tela !='listar')
+    else
+    {
+        //------------DEPENDENCIAS DEVEXTREME-----------//
+        loadCSS('Lib/css/dx.spa','screen',true);
+        loadCSS('Lib/css/dx.common','screen',true);
+        loadCSS('Lib/css/dx.light','screen',true);
+        loadJS('Lib/js/jszip.min.js',true);
+        loadJS('Lib/js/dx.all.js',true);
     }
+    
     switch ($tela)     
     {                      
         case 'editar':                     
@@ -993,6 +996,190 @@
         case 'listar':
                 			       
             ?>
+            <style>
+        		.dx-datagrid-headers {
+        				color: #FFFFFF !important;
+        				background-color: #3C8DBC !important;
+        			}
+        								
+        		 <?php 
+        		   //#003666 
+                    require_once(dirname(dirname(__FILE__))."/funcoes.php");       
+                    $select = " SELECT distinct
+                                      coalesce(case
+                                                	when (tarefas.data_fim >0) then null
+                                                	else (select pe.cor from periodos_entrega pe where (DATEDIFF (CURRENT_DATE(),tarefas.data_prev_fim)) BETWEEN pe.inter_ini and 	pe.inter_fim)
+                                            end,'White') cor
+                                FROM  ";
+                    $tarefa = new tarefa();
+                    $tarefa->extras_select = " union select distinct coalesce(cor,'White') cor from status ";
+                    
+                    $tarefa->selecionaTudo($tarefa,$select);
+                    while ($res = $tarefa->retornaDados())
+                    {                                             
+                        echo " .cls".substr($res->cor,1,strlen($res->cor))."{  background-color:".$res->cor.";  } ";
+                    }   
+                    
+                
+                ?>
+            </style>
+            
+            <script type="text/javascript">
+        		   function bindGrid(data) {
+        		       $("#gridContainer").dxDataGrid({
+        		            dataSource: data,
+        		            headerFilter: { visible: true },
+        		            columnChooser: 
+        			            {
+            		             enabled : true,
+            		             mode: "select"
+        		             	},
+        		            stateStoring:{
+        						enabled : true,
+        						type: "localStorage",
+        						storageKey: "storages"
+        			            }, 	
+        			            keyExpr: "id",
+        			         pager: {
+        				         	showPageSizeSelector : true,
+        				         	allowedPageSizes: [5,10,20]
+        				         },
+        		            "export": { enabled: true, fileName: "Tarefas"},
+        		            columns: [
+        		            	{ dataField: "id", caption: "Código" },		                      
+                               'assunto',
+                               { dataField: "id_tipo", caption: "Cód. Tipo" },
+                               { dataField: "id_status", caption: "Cód. Status" },
+                               { dataField: "id_prioridade", caption: "Cód. Prioridade" },
+                               
+                               { dataField: "data_cad", caption: "Dt. Cadastro" },
+                               { dataField: "id_projeto", caption: "Cód. Projeto" },
+                               { dataField: "id_categoria", caption: "Cód. Categoria" },
+                               { dataField: "data_inicio", caption: "Dt. Inicio" },
+                               { dataField: "data_fim", caption: "Dt. Fim" },                       
+                               { dataField: "id_atribuido", caption: "Cód. Usr. Resp." },
+                               { dataField: "id_criador", caption: "Cód. Usr. Criador" },
+                               { dataField: "data_prev_fim", caption: "Dt. Prev. Fim" },
+                               { dataField: "atraso", caption: "Atraso(dias)" },                       
+                               'categoria',
+                               'projeto',
+                               'status',
+                               'cor',
+                               'cor_linha',
+                               { dataField: "usr_criador", caption: "Criador" },
+                               { dataField: "usr_criador", caption: "Responsável" },                       
+                               'tipo',    
+        		                {
+        		      			  dataField: "acoes",
+        		      			  width: 100,
+        		      			  dataType: "string",
+        		      				cellTemplate: function(container, options) {
+        		      		        var productName = options.value;
+        		      		        $("<a href=\'?m=tarefas&t=incluir&id=" + options.value + "' title='Novo'><img src='images/add.png' alt='Novo cadastro' /></a>  <a href=\'?m=tarefas&t=editar&id=" + options.value + "' title='Editar'><img src='images/edit.png' alt='Editar'/></a> <a href=\'?m=tarefas&t=excluir&id=" + options.value + "'><img src='images/delete.png' alt='Excluir' /></a>")		      		       
+        		      		        .appendTo(container);        		      		       
+        		      		      }
+        		      			},  		      			
+        		            ],		            	
+        		    		onCellPrepared: function (e) {
+        		                if (e.rowType == 'data') {
+        		                    if (e.column.dataField == 'status')  
+        		                    {     
+        		                    	var str = e.data.cor;		                    	      	
+        		                    	e.cellElement.addClass("cls"+str.substr(1, 10));  
+        		                      
+        		                    }
+        		    				else if (e.column.dataField == 'acoes')  
+        		                    {                  
+        		                      e.cellElement.addClass("clshite");  					
+        		                    }
+        		                }
+        		            },  
+        		    		onRowPrepared: function (info) {
+        		    					if (info.rowType == 'data' )
+        		    					{				    				
+        			    				  var str = '';
+        			    				  str = info.component.cellValue(info.rowIndex,"cor_linha");
+        			    				  info.rowElement.addClass("cls"+str.substr(1, 10));			    					  			                      		    						
+        		    					}
+        		    				},  
+        		            paging: {
+        		                pageSize: 10
+        		            },
+        		            sorting: {
+        		                mode: "multiple"
+        		            },
+        		            filterRow: {
+        		                visible: false
+        		            },
+        		            searchPanel: {
+        			            visible : true
+        		            },		            
+        		            showBorders : true,
+        		            showColumnLines : true,
+        		            showRowLines : true,
+        		            allowColumnReordering: true,
+        		            allowColumnResizing: true,
+        		            columnResizingMode: "widget",
+        		            groupPanel: {
+        		                visible: true
+        		            },
+        		            selection: {
+        		                mode: "single"
+        		            },
+        		            summary: {
+        		            	groupItems: [{
+        		                    column: "id",
+        		                    summaryType: "count",
+        		                    showInGroupFooter: true,
+        		                }, 
+        		                // ...
+        		                ]
+        		            }
+        		        });
+        		} 
+        		$(document).ready(function () {
+        		var hr = new XMLHttpRequest();
+        		hr.open("GET", "modulos/dados_tarefas.php", true);
+        		hr.setRequestHeader("Content-type", "application/json");
+        		hr.onreadystatechange = function() {
+        		    if (hr.readyState == 4 && hr.status == 200) {
+        		        var data = JSON.parse(hr.responseText);
+        		        bindGrid(data.tarefas);
+        		    }
+        		 }
+        		 hr.send();      
+        		});
+        		
+           </script>
+            <div class="content-wrapper">             
+                <!-- Content Header (Page header) -->
+    		    <section class="content-header">
+    		      <h1>
+    		        Demandas
+    		        <small>Listagem</small>
+    		      </h1>
+    		      <ol class="breadcrumb">
+    		        <li><a ><i class="fa fa-dashboard"></i> Demandas</a></li>
+    		        <li class="active">Listagem</li>
+    		      </ol>
+    		    </section>
+    		    
+    		     <!-- Main content -->
+        		<section class="content container-fluid">                
+                	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
+                	<div class="box">                              
+                    	<div class="box-body">
+                        	<div id="gridContainer"></div>
+            			</div><!-- /.box -->                    
+            		</div><!-- /.box-body -->
+            	</section> <!-- /.Main content -->           
+			</div> <!-- /.content-wrapper -->
+            <?php
+            break;  
+        
+    case 'listar2':
+    
+    ?>
             <div class="content-wrapper">             
                 <!-- Content Header (Page header) -->
     		    <section class="content-header">
@@ -1011,7 +1198,7 @@
                 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
                 	<div class="box">                              
                     	<div class="box-body">
-                        	<table id="gridfull" class="table table-bordered  table-sm">
+                        	<table id="gridfull" class="table table-bordered table-sm table-hover" data-show-toggle="true" data-show-columns="true" data-pagination="true" data-show-filter="true" data-filter-control="true">
                            		<thead>
                             		<tr>
                               			<th>Código</th>
@@ -1092,7 +1279,7 @@
 			</div> <!-- /.content-wrapper -->
             <?php
             break;  
-                              
+            
         case 'excluir':        
             $sessao = new sessao();
             if (isAdmin()==true)

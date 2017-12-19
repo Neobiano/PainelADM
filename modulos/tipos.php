@@ -317,59 +317,9 @@
                         }                                               
                     }
                 }
-                break;
-        case 'listar':
-                			       
-            ?>
-            <div class="content-wrapper">             
-                <!-- Content Header (Page header) -->
-    		    <section class="content-header">
-    		      <h1>
-    		        Tipos
-    		        <small>Listagem</small>
-    		      </h1>
-    		      <ol class="breadcrumb">
-    		        <li><a ><i class="fa fa-dashboard"></i> Tipos</a></li>
-    		        <li class="active">Listagem</li>
-    		      </ol>
-    		    </section>
-    		    
-    		     <!-- Main content -->
-        		<section class="content container-fluid">                
-                	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">		       
-                	<div class="box">                              
-                    	<div class="box-body">
-                        	<div id="gridContainer" >
-                           		<thead>
-                            		<tr>
-                              			<th>Código</th>
-                              			<th>Nome</th>                              			                 
-                              			<th>Ações</th>
-                            		</tr>
-                            	</thead>
-                            	<tbody>
-                                    <?php 
-                                    $tipo = new tipo();
-                                    $tipo->selecionaTudo($tipo);                       					                                              
-                                    while ($res = $tipo->retornaDados()):
-                                        echo '<tr>';
-                                        printf('<td>%s</td>',$res->id);
-                                        printf('<td>%s</td>',$res->nome);                                                               
-                                        printf('<td><a href="?m=tipos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tipos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tipos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
-                                        echo '</tr>';
-                                    endwhile;               
-                                    ?>
-                             	</tbody>
-                            	
-                        	</table>
-            			</div><!-- /.box -->                    
-            		</div><!-- /.box-body -->
-            	</section> <!-- /.Main content -->           
-			</div> <!-- /.content-wrapper -->
-            <?php
-            break;  
+                break;       
         
-        case 'listar2':
+        case 'listar':
             
             ?>
             <div class="content-wrapper">             

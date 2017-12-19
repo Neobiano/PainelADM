@@ -8,7 +8,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 	<head>
-		<meta charset="UTF-8" >		
+		<meta charset="UTF-8" >
+			
       	<title>PainelCERAT</title>		
 		<?php
 			loadCSS('bower_components/font-awesome/css/font-awesome.min','screen',true);
@@ -19,11 +20,8 @@
 			loadCSS('bower_components/bootstrap/dist/css/bootstrap.min','screen',true);
 			loadCSS('bower_components/datatables.net-bs/css/dataTables.bootstrap.min','screen',true);
 			loadCSS('dist/css/skins/_all-skins.min','screen',true);
-			loadCSS('plugins/iCheck/square/blue','screen',true);			
-			//loadCSS('bower_components/jquery-ui/themes/base/jquery-ui','screen',true);
-			
+			loadCSS('plugins/iCheck/square/blue','screen',true);						
 			loadCSS('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min','screen',true);
-			//loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic','screen',true);
 			loadCSS('style');			
 	        loadJS('geral');	        	      
 	        loadJS('bower_components/jquery/dist/jquery.min.js',true);		        
@@ -36,11 +34,16 @@
 		<div class="wrapper">
 			<header class="main-header">
 				 <!-- Logo -->
-			    <a href="painel.php" class="logo 	">
+			    <a href="painel.php" class="logo">
+			      
 			      <!-- mini logo for sidebar mini 50x50 pixels -->
 			      <span class="logo-mini"><b>P</b>CT</span>
-			      <!-- logo for regular state and mobile devices -->
-			      <span class="logo-lg"><b>Painel</b>CERAT</span>
+			      <!-- logo for regular state and mobile devices -->			     
+			      <span class="logo-lg">
+			      
+			      <b>Painel</b>CERAT
+			      <i class="fa fa-dashboard"></i> 
+			      </span>
 			    </a>
 			    
 			    <!-- Header Navbar -->
@@ -217,7 +220,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>          
-       	<li class="active"><a href="?m=tarefas&t=listar"><i class="fa fa-tasks"></i> <span>Demandas</span></a></li>                           
+       	<li class="active"><a href="?m=tarefas&t=listar2"><i class="fa fa-tasks"></i> <span>Demandas</span></a></li>                           
         <li class="treeview">
           <a href="#">
             <i class="fa fa-file-text""></i> <span>Cadastros</span>

@@ -43,37 +43,40 @@
 	<script>
     				  			  
 	  $(function () {			   
-				
-	    $('#gridfull').DataTable({
-	    	"iDisplayLength": 25,	
-	    	"columnDefs": [
-	    		
-	            
-	        ],
-
-	        fixedColumns: true,	   
-	    	"oLanguage": {
-	                    "sZeroRecords": "Nenhum dado econtrado para exibição",
-	                    "sInfo": "Exibindo _START_ à _END_ de _TOTAL_ de registros",
-	                    "sInfoEmpty": "Nenhum registro para ser exibido",
-	                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-	                    "slengthMenu":     "Show _MENU_ entries",
-	                    "sSearch": "Pesquisar",
-	                    "sLengthMenu" : "Exibir _MENU_ registros por Página",
-	                    "oPaginate": {
-      							  "sFirst":      "Primeiro",
-        						  "sLast":       "Último",
-        						  "sNext":       "Próximo",
-        						  "sPrevious":   "Anterior"
-    					},
-	                },
-	               
-	                "bPaginate": true,
-	                 
-	                "aaSorting": [[0, "asc"]] 
-	    })	    
-        	  
-	  })
+		  $('#gridfull').bootstrapTable({
+				resizable: true
+			});		
+			
+		/*  $('#gridfull').DataTable({
+		    	"iDisplayLength": 25,	
+		    	"columnDefs": [
+		    		
+		            
+		        ],
+		        resizable: true,
+		        fixedColumns: true,	   
+		    	"oLanguage": {
+		                    "sZeroRecords": "Nenhum dado econtrado para exibição",
+		                    "sInfo": "Exibindo _START_ à _END_ de _TOTAL_ de registros",
+		                    "sInfoEmpty": "Nenhum registro para ser exibido",
+		                    "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+		                    "slengthMenu":     "Show _MENU_ entries",
+		                    "sSearch": "Pesquisar",
+		                    "sLengthMenu" : "Exibir _MENU_ registros por Página",
+		                    "oPaginate": {
+	      							  "sFirst":      "Primeiro",
+	        						  "sLast":       "Último",
+	        						  "sNext":       "Próximo",
+	        						  "sPrevious":   "Anterior"
+	    					},
+		                },
+		               
+		                "bPaginate": true,
+		                 
+		                "aaSorting": [[0, "asc"]] 
+		    })	   */ 
+	        	  
+		  })
 	</script>
 </body>
 </html>
