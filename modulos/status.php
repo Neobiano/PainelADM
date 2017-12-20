@@ -129,7 +129,7 @@
         									<div class="form-group">
         										<div class="col-xs-2">
                       								<label>Código</label>
-                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Nome do status" value="<?php if($resbd) echo $resbd->id;?>">
+                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático" value="<?php if($resbd) echo $resbd->id;?>">
                       							</div>        									
         									
             									<div class="col-xs-10">

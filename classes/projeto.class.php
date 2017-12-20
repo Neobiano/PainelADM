@@ -14,7 +14,8 @@ class projeto extends Base
             $this->campos_valores = array(
                                            "id"=>null,
                                            "nome"=>null,
-                                           "descricao"=>null,                                         
+                                           "descricao"=>null,                                             
+                                           "padrao_abertura"=>null
                                           );
         }
         else

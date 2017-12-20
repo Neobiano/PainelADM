@@ -41,7 +41,8 @@
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $projeto = new projeto(array(
                             'nome'=>$_POST['nome'],
-                            'descricao'=>$_POST['descricao']
+                            'descricao'=>$_POST['descricao'],
+                            'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N'  
                         ));
                         
                         $projeto->valorpk = $id;
@@ -135,20 +136,41 @@
     							<!-- form start -->	
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-    									<div class="form-group">
-              								<label>Código</label>
-              								<input disabled name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->id;?>">
-    									</div>
-    									
-    									<div class="form-group">
-              								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->nome;?>">
-    									</div>
-                                        
-    									<div class="form-group">
-      										<label>Descrição</label>
-      										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
-        								</div>
+    									<div class="row">
+        									<div class="form-group">
+        										<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático" value="<?php if($resbd) echo $resbd->id;?>">
+                      							</div>        									
+        									
+            									<div class="col-xs-10">
+                      								<label>Nome</label>
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php if($resbd) echo $resbd->nome;?>">
+            									</div>                                        
+            								</div>
+        								</div> 
+    									<div class="row top-buffer">                                        
+        									<div class="form-group">
+        										<div class="col-xs-12">
+              										<label>Descrição</label>
+              										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
+              									</div>
+            								</div>
+            							</div>
+            							<div class="row top-buffer">                                        
+        									<div class="form-group">
+        										<div class="col-xs-4">
+            										<br>                      								
+                      								<input type="checkbox" name="padraoabertura"  <?php																			
+																			
+                																			if (strtoupper($resbd->padrao_abertura)=='S')
+                																				echo ' checked';
+                																		?> /><b> Padrão de Abertura</b> 
+                      								 
+                      							</div> 
+            								</div>
+            							</div>
+            							
     								</div>                                
                                   
     								<div class="box-footer">  
@@ -179,7 +201,8 @@
                 $projeto = new projeto(
                                         array(
                                         'nome'=>$_POST['nome'],
-                                        'descricao'=>$_POST['descricao']                                        
+                                        'descricao'=>$_POST['descricao'],
+                                        'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N' 
                                         )
                                     ); 
              
@@ -250,15 +273,36 @@
     							<!-- form start -->	
     							<form class="userform" role="form" method="post" action="">
     								<div class="box-body">
-    									<div class="form-group">
-              								<label>Nome</label>
-              								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php echo $_POST['nome']?>">
-    									</div>
-                                        
-    									<div class="form-group">
-      										<label>Descrição</label>
-      										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php echo $_POST['descricao']?></textarea>
-        								</div>
+    									<div class="row">
+        									<div class="form-group">
+        										<div class="col-xs-2">
+                      								<label>Código</label>
+                      								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático" >
+                      							</div>        									
+        									
+            									<div class="col-xs-10">
+                      								<label>Nome</label>
+                      								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" value="<?php echo $_POST['nome'];?>">
+            									</div>                                        
+            								</div>
+        								</div> 
+        								
+    									<div class="row top-buffer">                                        
+        									<div class="form-group">
+        										<div class="col-xs-12">
+              										<label>Descrição</label>
+              										<textarea name="descricao" class="form-control input-sm" rows="3" placeholder="Descrição do projeto"><?php echo $_POST['descricao'];?></textarea>
+              									</div>
+            								</div>
+            							</div>
+            							<div class="row top-buffer">                                        
+        									<div class="form-group">
+        										<div class="col-xs-4">
+            										<br>                      								
+                      								<input type="checkbox" name="padraoabertura"  <?php if ($_POST['padraoabertura']) echo ' checked';?> /><b> Padrão de Abertura</b>                       								 
+                      							</div> 
+            								</div>
+            							</div>                                            									
     								</div>                                
                                   
     								<div class="box-footer">  
@@ -357,6 +401,7 @@
                               			<th>Código</th>
                               			<th>Nome</th>
                               			<th>Descrição</th>
+                              			<th>Padrão Abertura</th>
                               			<th>Ações</th>                  
                             		</tr>
                             	</thead>
@@ -368,7 +413,8 @@
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
                                         printf('<td>%s</td>',$res->nome);
-                                        printf('<td>%s</td>',$res->descricao);                        
+                                        printf('<td>%s</td>',$res->descricao); 
+                                        printf('<td>%s</td>',(strtoupper($res->padrao_abertura=='S') ? 'Sim' : 'Não'));
                                         printf('<td><a href="?m=projetos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=projetos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=projetos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -379,8 +425,9 @@
                               			<th></th>
                               			<th></th>
                               			<th></th>
-                              			<th></th>         
-                            			</tr>
+                              			<th></th>
+                              			<th></th>           
+                            		</tr>
                             	</tfoot>
                         	</table>
             			</div><!-- /.box -->                    
@@ -453,20 +500,40 @@
         							<!-- form start -->	
         							<form class="userform" role="form" method="post" action="">
         								<div class="box-body">
-        									<div class="form-group">
-                  								<label>Código</label>
-                  								<input  name="id" type="text" class="form-control input-sm"  disabled value="<?php if($resbd) echo $resbd->id;?>">
-        									</div>
-                                            
-                                            <div class="form-group">
-                  								<label>Nome</label>
-                  								<input  name="nome" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->nome;?>">
-        									</div>
-        									
-        									<div class="form-group">
-          										<label>Descrição</label>
-          										<textarea name="descricao" class="form-control input-sm" rows="3" disabled><?php if($resbd) echo $resbd->descricao;?></textarea>
-            								</div>
+        									<div class="row">
+            									<div class="form-group">
+            										<div class="col-xs-2">
+                          								<label>Código</label>
+                          								<input disabled name="id" type="text" class="form-control input-sm" placeholder="Automático" disabled value="<?php if($resbd) echo $resbd->id;?>">
+                          							</div>        									
+            									
+                									<div class="col-xs-10">
+                          								<label>Nome</label>
+                          								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto" disabled value="<?php if($resbd) echo $resbd->nome;?>">
+                									</div>                                        
+                								</div>
+            								</div> 
+        									<div class="row top-buffer">                                        
+            									<div class="form-group">
+            										<div class="col-xs-12">
+                  										<label>Descrição</label>
+                  										<textarea name="descricao" class="form-control input-sm" rows="3" disabled placeholder="Descrição do projeto"><?php if($resbd) echo $resbd->descricao;?></textarea>
+                  									</div>
+                								</div>
+                							</div>
+                							<div class="row top-buffer">                                        
+            									<div class="form-group">
+            										<div class="col-xs-4">
+                										<br>                      								
+                          								<input disabled type="checkbox" name="padraoabertura"  <?php																			
+    																			
+                    																			if (strtoupper($resbd->padrao_abertura)=='S')
+                    																				echo ' checked';
+                    																		?> /><b> Padrão de Abertura</b> 
+                          								 
+                          							</div> 
+                								</div>
+                							</div>        									
         								</div>                                
                                       
         								<div class="box-footer">  

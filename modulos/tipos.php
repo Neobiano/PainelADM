@@ -170,7 +170,8 @@
               
                 $tipo = new tipo(
                                         array(
-                                        'nome'=>$_POST['nome']                                       
+                                        'nome'=>$_POST['nome'],
+                                         'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N' 
                                         )
                                     ); 
              

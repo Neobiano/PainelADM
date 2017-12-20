@@ -735,13 +735,14 @@
                 printMSG('Você não tem permissão para acessar essa página. <a href="#" onclick="history.back()">Voltar</a>','erro');
         break;      
             
-        case 'incluir':             
+        case 'incluir':  
+            //identificando o usuário logado
+            $sessao = new sessao();
+            $iduser = $sessao->getVar('iduser');
+            
             if (isset($_POST['cadastrar']))
             {    
-                //identificando o usuário logado
-                $sessao = new sessao();
-                $iduser = $sessao->getVar('iduser');
-                
+                               
                 $dataini =$_POST['dataini'];
                 $dataini = date("Y-m-d",strtotime(str_replace('/','-',$dataini)));
                 
@@ -808,11 +809,11 @@
     									 	<div class="form-group">
             									<div class="col-xs-2">
                       								<label>Código</label>
-                      								<input disabled name="assunto" type="text" class="form-control " placeholder="Código é Automático" >
+                      								<input disabled name="codigo" type="text" class="form-control " placeholder="Automático" >
             									</div>
             									<div class="col-xs-8">
                       								<label>Assunto</label>
-                      								<input autofocus name="assunto" type="text" class="form-control " placeholder="Assunto da tarefa" value="<?php echo $_POST['assunto']?>">
+                      								<input autofocus name="assunto" type="text" class="form-control"  value="<?php echo $_POST['assunto']?>">
             									</div>            									                                                         								
             									<div class="col-xs-2">
                       								<label>Tipo</label>
@@ -858,8 +859,10 @@
                                                             	$qprioridade->extras_select = " order by nome";
                                                             	$qprioridade->selecionaTudo($qprioridade);
                                                             	while ($res = $qprioridade->retornaDados())
-                                                            	{                                                        	    
-                                                            	    printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	{   if (strtoupper($res->padrao_abertura=='S'))
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                             	} 
                                                             ?>                                              
                                                         </select>
@@ -927,7 +930,10 @@
                                                         	   $qprojeto->selecionaTudo($qprojeto);
                                                         	   while ($res = $qprojeto->retornaDados())
                                                             	{                                                        	   
-                                                            	   printf('<option value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    if (strtoupper($res->padrao_abertura=='S'))
+                                                            	       printf('<option selected="selected" value="%s">%s</option>',$res->id,$res->nome);
+                                                            	    else
+                                                            	       printf('<option value="%s">%s</option>',$res->id,$res->nome);
                                                             	} 
                                                             ?>                                              
                                                         </select>
@@ -961,7 +967,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php  echo $_POST['dataini'];?>">
+                                                      <input name="dataini" type="text" class="form-control pull-right input-sm" id="datepicker1" value="<?php echo  date('d/m/Y');?>">
                                                     </div>
                                                                                                                                                 
             									</div>  
@@ -971,7 +977,7 @@
                                                       <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                       </div>
-                                                      <input name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php echo $_POST['dataprevfim'];;?>">
+                                                      <input name="dataprevfim" type="text" class="form-control pull-right input-sm" id="datepicker2" value="<?php echo date('d/m/Y');?>">
                                                     </div>
                                                                                                                                                 
             									</div>           									     									
