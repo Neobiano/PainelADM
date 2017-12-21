@@ -11,7 +11,8 @@ class prioridade extends Base
         if (sizeof($campos)<=0) 
         {
             $this->campos_valores = array(
-                                           "nome"=>null                                           
+                                        "nome"=>null,
+                                        "padrao_abertura"=>null
                                           );
         }
         else

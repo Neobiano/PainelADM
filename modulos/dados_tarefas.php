@@ -7,12 +7,12 @@
     $jsonData = '{ "tarefas" :[';
     $select = ' SELECT tarefas.*,
                                                 case
-                                                    when (tarefas.data_fim >0) then null
+                                                    when (st.fechado = "S") then 0
                                                     else DATEDIFF (CURRENT_DATE(),tarefas.data_prev_fim)
                                                 end atraso, c.nome categoria, p.nome prioridade, pj.nome projeto,
                                                 st.nome status, st.cor, tp.nome tipo, u1.nome usr_criador, u2.nome usr_atribuido,
                                                 case
-                                                    when (tarefas.data_fim >0) then null
+                                                   when (st.fechado = "S") then "#ffffff"
                                                     else (select pe.cor from periodos_entrega pe where (DATEDIFF (CURRENT_DATE(),tarefas.data_prev_fim)) BETWEEN pe.inter_ini and pe.inter_fim)
                                                 end cor_linha
                                                 FROM ';

@@ -40,7 +40,8 @@
                     {
                         // se for usuário do tipo admin, vai criar um objeto com todos os parametros para edição, permitindo a definição e novos admins                                     
                         $tipo = new tipo(array(
-                            'nome'=>$_POST['nome']
+                            'nome'=>$_POST['nome'],
+                            'padrao_abertura'=>($_POST['padraoabertura']=='on') ? 'S' : 'N' 
                         ));
                         
                         $tipo->valorpk = $id;
@@ -96,7 +97,7 @@
                                     {
                                         rules:
                                         {
-                                            nome:{required:true,minlength:5}
+                                            nome:{required:true,minlength:3}
                                                                                         
                                         }
                                     }
@@ -144,7 +145,19 @@
               								<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do tipo" value="<?php if($resbd) echo $resbd->nome;?>">
     									</div>
                                             									
-    								</div>                                
+    								</div>      
+    								
+    								<div class="form-group">																	
+              							<div class="col-xs-6">                    								                    								
+              								<input type="checkbox" name="padraoabertura"  <?php																			
+            														
+            																		if (strtoupper($resbd->padrao_abertura)=='S')
+            																			echo ' checked';
+            																	?> /><b> Padrão de Abertura</b> 
+              								 
+              							</div>
+              							<br>
+              						</div>                           
                                   
     								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
@@ -207,7 +220,7 @@
                                 {
                                     rules:
                                     {
-                                        nome:{required:true,minlength:5}                                        
+                                        nome:{required:true,minlength:3}                                        
                                     }
                                 }
                             )
@@ -249,7 +262,18 @@
     									</div>
                                             								
     								</div>                                
-                                  
+                                  	
+                                  	<div class="form-group">																	
+              							<div class="col-xs-6">                    								                    								
+              								<input type="checkbox" name="padraoabertura"  <?php																			
+                                                              								if ($_POST['padraoabertura'])
+                                                              								    echo ' checked';     
+                																?> /><b> Padrão de Abertura</b>
+              								 
+              							</div>
+              							<br>
+              						</div>      
+              							
     								<div class="box-footer">  
     									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
     									 <button type="submit" name="cadastrar" class="btn btn-info pull-right">Salvar dados</button>  									
@@ -345,7 +369,8 @@
                            		<thead>
                             		<tr>
                               			<th>Código</th>
-                              			<th>Nome</th>                              			                 
+                              			<th>Nome</th>    
+                              			<th>Padrão Abertura</th>                          			                 
                               			<th>Ações</th>
                             		</tr>
                             	</thead>
@@ -356,7 +381,8 @@
                                     while ($res = $tipo->retornaDados()):
                                         echo '<tr>';
                                         printf('<td>%s</td>',$res->id);
-                                        printf('<td>%s</td>',$res->nome);                                                               
+                                        printf('<td>%s</td>',$res->nome);  
+                                        printf('<td>%s</td>',(strtoupper($res->padrao_abertura=='S') ? 'Sim' : 'Não'));
                                         printf('<td><a href="?m=tipos&t=incluir" title="Novo"><img src="images/add.png" alt="Novo cadastro" /></a> <a href="?m=tipos&t=editar&id=%s" title="Editar"><img src="images/edit.png" alt="Editar" /></a><a href="?m=tipos&t=excluir&id=%s" title="Excluir"><img src="images/delete.png" alt="Excluir" /></a></td>',$res->id,$res->id);
                                         echo '</tr>';
                                     endwhile;               
@@ -364,6 +390,7 @@
                              	</tbody>
                             	<tfoot>
                             		<tr>
+                              			<th></th>
                               			<th></th>
                               			<th></th>
                               			<th></th>                              			        
@@ -449,7 +476,18 @@
                   								<label>Nome</label>
                   								<input  name="nome" type="text" class="form-control input-sm" disabled value="<?php if($resbd) echo $resbd->nome;?>">
         									</div>        									        									
-        								</div>                                
+        								</div> 
+        								
+        								<div class="col-xs-4">
+                								                    								
+                  								<input disabled type="checkbox" name="padraoabertura"  <?php																			
+                														
+                																		if (strtoupper($resbd->padrao_abertura)=='S')
+                																			echo ' checked';
+                																	?> /><b> Padrão de Abertura</b> 
+                  								 
+                  						</div> 
+                					    <br>                               
                                       
         								<div class="box-footer">  
         									 <button type="button" class="btn btn-default" onclick="location.href='?m=tipos&t=listar'" >Cancelar</button>
