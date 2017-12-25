@@ -3,7 +3,7 @@
     
     require_once(dirname(dirname(__FILE__))."/funcoes.php");
     //protegeArquivo(basename(__FILE__));
-    
+    $idtarefa = $_POST['idtarefa'];
     $jsonData = '{ "arquivos" :[';
      
     
@@ -11,7 +11,7 @@
                 arquivos.descricao, arquivos.nome_arquivo, arquivos.data_hora,
                 u.nome usuario from ';
     $qarquivo = new arquivo();
-    $qarquivo->extras_select = " inner join usuarios u on (u.id = arquivos.id_usuario) ";
+    $qarquivo->extras_select = " inner join usuarios u on (u.id = arquivos.id_usuario) where arquivos.id_tarefa= ".$idtarefa;
     
     $qarquivo->selecionaTudo($qarquivo,$select);
     while ($res = $qarquivo->retornaDados())        

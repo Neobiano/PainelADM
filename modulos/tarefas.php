@@ -18,15 +18,15 @@
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
         ?>
         	<script>  
-                	 function modalArquivo(){
-                   	  	//window.alert('aqui');
+                	 function modalArquivo(pidTarefa){                   	  	
                    	    event.preventDefault();  
                    	    $janela = $('#add_data_Modal_arquivo');                    	  
         
                        	$.ajax({  
                       		url:"modulos/dados_arquivos.php",                 			  
                       		method:'POST',                           		
-                      		dataType: 'json',					  
+                      		dataType: 'json',	
+                      		data: {idtarefa: pidTarefa},				  
                       		success:function(data){   
                           	var chtml; 	
 				                     			$janela.html('');           	    							                         								
@@ -56,8 +56,8 @@
                                                          '                        				<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> '+                                                                                         
                                                          '             				         </div> '+
                                                                      '                        <div class="table-responsive mailbox-messages"> '+
-                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped"> '+                                                                   
-                                                                     '								 <thead>'+
+                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped table-bordered table-hover"> '+                                                                   
+                                                                     '								 <thead class="thead-light">'+
                                                                      	'								 <tr>'+
                                                                      		'								 <td></td>'+
                                                                      		'								 <td>Arquivo</td>'+
@@ -74,8 +74,9 @@
                                                         	 	chtml +=  '<td><input type="checkbox"></td>'; 
                                                                 chtml +=  '<td class="mailbox-attachment"><a href="">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
                                                                 chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
-                                                                chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>';                         									                            									
-                                                                chtml +=  '<td class="mailbox-name">'+ val.data_hora +'</td>';
+                                                                chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>'; 
+                                                                                        									                            									
+                                                                chtml +=  '<td class="mailbox-date	">'+  (val.data_hora) +'</td>';
                                                                 chtml +=  '</tr>'; 	                  										   
                                								 });             
                                                                      
@@ -592,11 +593,16 @@
                                     
                     }//if (isset($_POST['editar'])) - final
                     
-                    
-                    //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição    
+                    //se não clicou no botão salvar, so vai carregar os registros do usuário em tela para edição
+                    $select = ' select tarefas.*,
+                                (select count(*) from arquivos a where a.id_tarefa = tarefas.id) qtde_arquivos
+                                from ';
                     $tarefabd = new tarefa();
-                    $tarefabd->extras_select = "WHERE id=$id";
-                    $tarefabd->selecionaTudo($tarefabd);
+                    $tarefabd->extras_select = "WHERE id=$id";                    
+                    $tarefabd->selecionaTudo($tarefabd,$select);                   
+                    
+                       
+                  
                     $resbd = $tarefabd->retornaDados();
                 }
                 else
@@ -810,8 +816,15 @@
             									</div>   
             									 
             									<div class="col-xs-0  right-buffer">   
-            										<a class="btn btn-app" data-toggle="modal"data-target="#add_data_Modal_arquivo"  onclick="modalArquivo()">
-                                                        <span class="badge bg-red"> 12 </span>
+            										<a class="btn btn-app" data-toggle="modal"data-target="#add_data_Modal_arquivo"  onclick="modalArquivo(<?php if($resbd) echo $resbd->id; else echo 0 ?>)" >
+            											<?php if($resbd){
+                            											    if ($resbd->qtde_arquivos == 0)
+                            											        echo  '<span class="badge bg-red">'.$resbd->qtde_arquivos.'</span>';
+                            											    else    
+                            											        echo  '<span class="badge bg-green">'.$resbd->qtde_arquivos.'</span>';
+            											       }    
+            											   ?>
+                                                       
                                         			    <i class="fa fa-envelope"></i>
                                                     </a>                                                                                                       
             									</div>
@@ -1109,6 +1122,7 @@
         case 'listar':
                 			       
             ?>
+            <!-- todo esse código é feito apenas para criar as classes CSS a serem utilizadas pela grid -->
             <style>
         		.dx-datagrid-headers {
         				color: #FFFFFF !important;
