@@ -28,9 +28,10 @@
                       		method:'POST',                           		
                       		dataType: 'json',					  
                       		success:function(data){   
+                          	var chtml; 	
 				                     			$janela.html('');           	    							                         								
-        	                         			$janela.append('  '+
-                                                         '  		<div class="modal-dialog modal-lg"> '+
+															
+				                     			chtml =  '  		<div class="modal-dialog modal-lg"> '+
                                                          '  			<div class="modal-content"> '+
                                                          '        		<form method="post" id="insert_form_arquivo">	'+
                                                          '        			<section class="content"> '+
@@ -52,18 +53,33 @@
                                                                          '                       <div class="btn-group"> '+
                                                                          '                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> '+                                      
                                                                          '                       </div> '+                                                   
-                                                         '                        				<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> '+
-                                                         '                        				<div class="pull-right"> 1-50/200 '+
-        		                                  	                        '                          <div class="btn-group"> '+
-             			                	                             '                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button> '+
-                          				    	                         '                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button> '+
-                                                 				        '                          </div> '+                                        
-                                                         '        				                </div> '+                                      
+                                                         '                        				<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> '+                                                                                         
                                                          '             				         </div> '+
                                                                      '                        <div class="table-responsive mailbox-messages"> '+
-                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped"> '+
-                                                                     '                             <tbody> '+                                                                                  
-                                                                     '                             </tbody> '+
+                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped"> '+                                                                   
+                                                                     '								 <thead>'+
+                                                                     	'								 <tr>'+
+                                                                     		'								 <td></td>'+
+                                                                     		'								 <td>Arquivo</td>'+
+                                                                     		'								 <td>Descrição</td>'+
+                                                                     		'								 <td>Usuário</td>'+
+                                                                     		'								 <td>Data & Hora</td>'+
+                                                                     		'							  <tr>'+
+                                                                     		'						 </thead>'+
+                                                                     		  '                      <tbody>';
+                                                                     		
+                                                         $.each(data.jarquivos, function (key, val) 
+    														{                                    							                              				                            	
+                                                        	 	chtml +=  '<tr>'; 
+                                                        	 	chtml +=  '<td><input type="checkbox"></td>'; 
+                                                                chtml +=  '<td class="mailbox-attachment"><a href="">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
+                                                                chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
+                                                                chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>';                         									                            									
+                                                                chtml +=  '<td class="mailbox-name">'+ val.data_hora +'</td>';
+                                                                chtml +=  '</tr>'; 	                  										   
+                               								 });             
+                                                                     
+                                                         chtml +=   '                             </tbody> '+
                                                                      '                          </table> '+                                   
                                                                      '                        </div> '+                                   
                                                          '                    </div> '+                                                                                                                                                       
@@ -76,29 +92,10 @@
                                                          '        	</div> '+ 	                            	                          	   		                                                  		                                                                                        
                                                          '        </form> '+                                                                                                         
                                                          '    </div> '+                                                          
-                                                         '  </div> '+
-                                                         ' ');
-        												//window.alert('merda');	
-                      								               				
-        							 				                										                 										                          								                	    
-                      								//clear the current content of the select                                                         								                           								 
-                      								// $.each(data.jarquivos, function (key, val) 
-                              					    // { 
-                      							//		$table.append('<tbody> <tr> <td><input type="checkbox"></td> <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td> <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td> <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...</td> <td class="mailbox-date">5 mins ago</td> </tr> </tbody>');
-                       													
-                       									/* $("#tabela_arquivo >tbody >tr:last").append
-                      									 (
-                    				                            $('<td>').append(val.nome_arquivo).append($('</td>'))
-                    				                         );*/
-                 				                            	
-                      									/* $table.append('<tr>'); 
-                      									 $table.append('<td><input type="checkbox"></td>'); 
-                      									 $table.append('<td class="mailbox-attachment"></td>');                         									 
-                      									 $table.append('<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>');
-                      									 $table.append('<td class="mailbox-name"><a href="">'+ val.nome_arquivo +'</a></td>');
-                       									 $table.append('<td class="mailbox-name">'+ val.usuario +'</td>');                         									                            									
-                          								 $table.append('</tr>'); 	*/                  										   
-                      								// })                         							                                                  	      
+                                                         '  </div> ';
+                                                         $janela.append(chtml);
+        												//window.alert('merda');	                      								               				
+        							 				                    							                                                  	      
                       							   },
                       		error: function() {
                       							window.alert('erro');                           							                          							
