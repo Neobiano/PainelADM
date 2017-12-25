@@ -173,6 +173,7 @@ form textarea{
 .top-buffer { margin-top:10px; }
 .botton-buffer { margin-bottom:10px; }
 .left-buffer { margin-left:10px; }
+.right-buffer { margin-right:1px; }
 
 .left-buffer-zero { margin-left:0px; }
 

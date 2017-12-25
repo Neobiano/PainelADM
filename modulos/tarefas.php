@@ -17,7 +17,97 @@
         protegeArquivo(basename(__FILE__));
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
         ?>
-        	<script>        		                
+        	<script>  
+                	 function modalArquivo(){
+                   	  	//window.alert('aqui');
+                   	    event.preventDefault();  
+                   	    $janela = $('#add_data_Modal_arquivo');                    	  
+        
+                       	$.ajax({  
+                      		url:"modulos/dados_arquivos.php",                 			  
+                      		method:'POST',                           		
+                      		dataType: 'json',					  
+                      		success:function(data){   
+				                     			$janela.html('');           	    							                         								
+        	                         			$janela.append('  '+
+                                                         '  		<div class="modal-dialog modal-lg"> '+
+                                                         '  			<div class="modal-content"> '+
+                                                         '        		<form method="post" id="insert_form_arquivo">	'+
+                                                         '        			<section class="content"> '+
+                                                         '              			<div class="row"> '+                                    
+                                                         '                			<div> '+                                 
+                                                         '                  				<div class="box box-primary"> '+
+                                                         '                    				<div class="box-header with-border"> '+
+                                                         '                      					<h3 class="box-title">Lista de Arquivos</h3> '+                        
+                                                         '                      					<div class="box-tools pull-right"> '+
+                                                                             '                        <div class="has-feedback"> '+
+                                                                             '                          <input type="text" class="form-control input-sm" placeholder="Procurar Mensagem"> '+
+                                                                             '                          <span class="glyphicon glyphicon-search form-control-feedback"></span> '+
+                                                                             '                        </div> '+
+                                      					'					                    </div> '+                                    
+                                                         '                                  </div> '+                                                                            
+                                                         '                    			   <div class="box-body no-padding"> '+
+                                                         '                                    <div class="mailbox-controls"> '+                                      
+                                                         '                                    	<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i> </button> '+
+                                                                         '                       <div class="btn-group"> '+
+                                                                         '                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> '+                                      
+                                                                         '                       </div> '+                                                   
+                                                         '                        				<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> '+
+                                                         '                        				<div class="pull-right"> 1-50/200 '+
+        		                                  	                        '                          <div class="btn-group"> '+
+             			                	                             '                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button> '+
+                          				    	                         '                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button> '+
+                                                 				        '                          </div> '+                                        
+                                                         '        				                </div> '+                                      
+                                                         '             				         </div> '+
+                                                                     '                        <div class="table-responsive mailbox-messages"> '+
+                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped"> '+
+                                                                     '                             <tbody> '+                                                                                  
+                                                                     '                             </tbody> '+
+                                                                     '                          </table> '+                                   
+                                                                     '                        </div> '+                                   
+                                                         '                    </div> '+                                                                                                                                                       
+                                                         '                  </div> '+
+                                                         '                </div> '+
+                                                         '              </div> '+
+                                                         '            </section> '+  
+                                                         '        	<div class="modal-footer"> '+    
+                                                         '        		<button type="button" data-dismiss="modal" name="voltar" id="voltar" class="btn btn-primary">Voltar</button> '+                                                          
+                                                         '        	</div> '+ 	                            	                          	   		                                                  		                                                                                        
+                                                         '        </form> '+                                                                                                         
+                                                         '    </div> '+                                                          
+                                                         '  </div> '+
+                                                         ' ');
+        												//window.alert('merda');	
+                      								               				
+        							 				                										                 										                          								                	    
+                      								//clear the current content of the select                                                         								                           								 
+                      								// $.each(data.jarquivos, function (key, val) 
+                              					    // { 
+                      							//		$table.append('<tbody> <tr> <td><input type="checkbox"></td> <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td> <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td> <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...</td> <td class="mailbox-date">5 mins ago</td> </tr> </tbody>');
+                       													
+                       									/* $("#tabela_arquivo >tbody >tr:last").append
+                      									 (
+                    				                            $('<td>').append(val.nome_arquivo).append($('</td>'))
+                    				                         );*/
+                 				                            	
+                      									/* $table.append('<tr>'); 
+                      									 $table.append('<td><input type="checkbox"></td>'); 
+                      									 $table.append('<td class="mailbox-attachment"></td>');                         									 
+                      									 $table.append('<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>');
+                      									 $table.append('<td class="mailbox-name"><a href="">'+ val.nome_arquivo +'</a></td>');
+                       									 $table.append('<td class="mailbox-name">'+ val.usuario +'</td>');                         									                            									
+                          								 $table.append('</tr>'); 	*/                  										   
+                      								// })                         							                                                  	      
+                      							   },
+                      		error: function() {
+                      							window.alert('erro');                           							                          							
+                      						  }
+                      
+                      						  
+                      	});                        	 
+                   	};      
+                   			                
          			$(document).ready(function()
                  	{ 						                       
          				//----------------------------------JAVASCRIPT CONTROLES - Data, Editor de Texto, Selects------------------ --//
@@ -41,51 +131,7 @@
                         	  $(this).find('[autofocus]').focus();
                         	});
 
-                        $('#add_data_Modal_arquivo').on('shown.bs.modal', function() {
-                      	  	window.alert('aqui');
-                      	    event.preventDefault();  
-                      	  	$table = $('#tabela_arquivo >tbody >tr:last'); 
-
-                          	$.ajax({  
-                         		url:"modulos/dados_arquivos.php",                 			  
-                         		//method:"POST",  
-                         		//data: $('#insert_form_prioridade').serialize(),                              	    
-                         		//dataType:'html',
-                         		dataType: 'json',					  
-                         		success:function(data){                              	    							
-                         								window.alert('sucesso');					
-    								 					//$('#insert_form_arquivo')[0].reset();  
-                         								 //$('#add_data_Modal_prioridade').modal('hide');                   										                 										 
-                         								                	     
-                         								//clear the current content of the select                                                         								                           								 
-                         								 $.each(data.jarquivos, function (key, val) {
-                         									 $table.append('<tr>'); 
-                         									 $table.append('<td><input type="checkbox"></td>'); 
-                         									 $table.append('<td class="mailbox-attachment"></td>');                         									 
-                         									 $table.append('<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>');
-                         									 $table.append('<td class="mailbox-name"><a href="">'+ val.nome_arquivo +'</a></td>');
-                          									 $table.append('<td class="mailbox-name">'+ val.usuario +'</td>');                         									                            									
-                             								 $table.append('</tr>'); 	                  										   
-                         								 })                         							                                                  	      
-                         							   },
-                         		error: function() {
-                         							window.alert('erro');                           							                          							
-                         						  }
-                         
-                         						  
-                         	});  
-
-                      	  /*<tbody>
-                              <tr>
-                                <td><input type="checkbox"></td>
-                                <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                                <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                                </td>
-                               
-                                <td class="mailbox-date">5 mins ago</td>
-                              </tr>  */
-                      	});
+                       
                       	
                  		//modal prioridade		             	    		    	                          
                         $('#insert_form_prioridade').on("submit", function(event){ 
@@ -463,98 +509,9 @@
                   <!-- final modal projetos -->
                 </div>
                 
-                
-                 <!-- Modal Emails - Lista de Arquivos -->                 	
+                                
                 <div class="modal fade" id="add_data_Modal_arquivo" data-backdrop="static">                
-                  <div class="modal-dialog modal-lg">
-                    <div class="modal-content">                                                                     
-                        <form method="post" id="insert_form_arquivo">	
-                        	<section class="content">
-                              <div class="row">       
-                                <!-- /.col -->
-                                <div >
-                                  <div class="box box-primary">
-                                    <div class="box-header with-border">
-                                      <h3 class="box-title">Lista de Arquivos</h3>                        
-                                      <div class="box-tools pull-right">
-                                        <div class="has-feedback">
-                                          <input type="text" class="form-control input-sm" placeholder="Procurar Mensagem">
-                                          <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                                        </div>
-                                      </div>
-                                      <!-- /.box-tools -->
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body no-padding">
-                                      <div class="mailbox-controls">
-                                        <!-- Check all button -->
-                                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                                        </button>
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                                        </div>
-                                        <!-- /.btn-group -->
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                                        <div class="pull-right">
-                                          1-50/200
-                                          <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                                          </div>
-                                          <!-- /.btn-group -->
-                                        </div>
-                                        <!-- /.pull-right -->
-                                      </div>
-                                      <div class="table-responsive mailbox-messages">
-                                        <table id="tabela_arquivo" class="table table-hover table-striped">
-                                          <tbody>                                                                                   
-                                          </tbody>
-                                        </table>
-                                        <!-- /.table -->
-                                      </div>
-                                      <!-- /.mail-box-messages -->
-                                    </div>
-                                    <!-- /.box-body -->
-                                    <div class="box-footer no-padding">
-                                      <div class="mailbox-controls">
-                                        <!-- Check all button -->
-                                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                                        </button>
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
-                                        </div>
-                                        <!-- /.btn-group -->
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                                        <div class="pull-right">
-                                          1-50/200
-                                          <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                                          </div>
-                                          <!-- /.btn-group -->
-                                        </div>
-                                        <!-- /.pull-right -->
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <!-- /. box -->
-                                </div>
-                                <!-- /.col -->
-                              </div>
-                              <!-- /.row -->
-                            </section>  
-                        	<div class="modal-footer">                        		                    		    
-                        		<button type="submit" name="atualizar" id="atualizar" class="btn btn-primary">Voltar</button>                                                           
-                        	</div>  	                            	                          	   		                                                  		                                                                                        
-                        </form>                                                                                                         
-                    </div>
-                    <!-- /.modal-content -->
-                  </div>
-                  <!-- final modal arquivos -->
+                  
                 </div>
      
         <?php 
@@ -816,7 +773,7 @@
                                                         </span>
                                                     </div>    
             									</div>  
-            									<div class="col-xs-3">
+            									<div class="col-xs-2">
                       								<label>Atribuido à</label>
                                                     <select name="atribuido" class="form-control select2 " style="width: 100%;">
                                                     	<option selected="selected" value="0"> </option>
@@ -854,12 +811,14 @@
                                                     </div>
                                                                                                                                                 
             									</div>   
-            									<div class="col-xs-0">   
-            										<a class="btn btn-app" data-toggle="modal" data-target="#add_data_Modal_arquivo" >
+            									 
+            									<div class="col-xs-0  right-buffer">   
+            										<a class="btn btn-app" data-toggle="modal"data-target="#add_data_Modal_arquivo"  onclick="modalArquivo()">
                                                         <span class="badge bg-red"> 12 </span>
                                         			    <i class="fa fa-envelope"></i>
                                                     </a>                                                                                                       
-            									</div>           									     									
+            									</div>
+                										           									     									
             							 	</div>            							 	   	
             							</div>	               							            							
     								</div> 	  	                               

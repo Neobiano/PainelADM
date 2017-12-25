@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/autoload.php');
 protegeArquivo(basename(__FILE__));
 
-class tarefa extends Base
+class arquivo extends Base
 {
     public function __construct($campos=array())
     {
