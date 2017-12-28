@@ -134,7 +134,43 @@
                    			                
          			$(document).ready(function()
                  	{ 			
-         				                	    			                       
+
+         				var filesUpload = document.getElementById("file"),
+         			    fileList = document.getElementById("file-list");
+
+         				function uploadFile (file) {
+         				    var 
+         				    	
+         				    	li = document.createElement('li'),
+         				        div = document.createElement("div"),            
+         				        reader,
+         				        xhr,
+         				        fileInfo;
+         				    
+         				    li.appendChild(div);
+
+         				    // Present file info and append it to the list of files class=\"neutral\"
+         				    fileInfo = "<div>Arquivo: <strong>" + file.name + "</strong> tamanho <strong>" + parseInt(file.size / 1024, 10) + "</strong> kb esta na lista.</div>";
+         				    div.innerHTML = fileInfo;
+
+         				    fileList.appendChild(div);
+         				}
+         				
+         				function traverseFiles (files) {
+         				    if (typeof files !== "undefined") {
+         				        for (var i=0, l=files.length; i<l; i++) {
+         				            uploadFile(files[i]);
+         				        }
+         				    }
+         				    else {
+         				        fileList.innerHTML = "<div class=\"neutral\">Seu navegador não suporte o envio de multiplos arquivos ao mesmo tempo. Use outro navegador ou envie um arquivo por vez. <div>";
+         				    }   
+         				}                	    			                       
+         				filesUpload.addEventListener("change", function () {
+         				    document.getElementById('file-list').innerHTML = "";
+         				    traverseFiles(this.files);
+         				}, false);
+         				
          				//----------------------------------JAVASCRIPT CONTROLES - Data, Editor de Texto, Selects------------------ --//
                         $('.js_date_time').datepicker({
                             format:"dd/mm/yyyy",
@@ -337,29 +373,39 @@
                  	});   
                  	         			           	                    
                 </script> 
-                 <!-- testes de modal -->
-                 <div class="modal fade" id="myModal">
-        			<div class="modal-dialog">
-        				<div class="modal-content">
-        					<div class="modal-header">
-        						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        							<h4 class="modal-title">Selelcione os arquivos para inclusão</h4>
-        					</div>
-        					<div class="container"></div>
-        					<div class="modal-body">
-        						<form enctype="multipart/form-data" action="upload.php" method="post">
-                                    <input type="file" name="file[]" multiple />                                    
-                                    <input type="button" id="upload" value="Upload File" />
-                                </form>
-
-        					</div>
-        					<div class="modal-footer">	
-        						<a href="#" data-dismiss="modal" class="btn">Close</a>
-        						<a href="#" class="btn btn-primary">Save changes</a>
-        					</div>
-        				</div>
-        			</div>
-        		</div>
+                     <!-- testes de modal -->
+                     <div class="modal fade" id="myModal">
+            			<div class="modal-dialog">
+            				<div class="modal-content">        					
+            					<div class="container"></div>
+            					<div class="modal-body">
+            						<form enctype="multipart/form-data" action="upload.php" method="post">
+                						<fieldset>
+                							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                							<legend>Selecionar</legend>
+                    						<div class="form-group">
+                    							
+                    							<div class="input-group input-file" name="Fichier1">
+        											<span class="input-group-btn">   
+        												<button class="btn btn-default btn-choose" type="button">Escolha</button>                                                                                 	
+                                                    </span>
+                                                    	<input type="file" name="file[]"  id="file" multiple class="form-control" placeholder='Selecione os arquivos...'  />
+                                                   
+                                                                                            
+                                            	</div>
+                                            	<div id="file-list"></div> 
+        									</div>
+                                        </fieldset>
+                                        	
+                                    	<fieldset>
+                                        	<input type="button" id="upload" value="Enviar Arquivos" class="btn btn-info pull-left" />
+                                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancelar</button>
+                                        </fieldset>
+                                      </form>       
+                                </div>                                                                                                                                                                                                                                      
+            				</div>        				
+            			</div>        			
+            		</div>
         		
         		
                 <!----------------------------------HTML FORMULÁRIOS MODAIS -------------------------------- -->
@@ -865,21 +911,27 @@
                                                     </div>
                                                                                                                                                 
             									</div>   
-            									 
-            									<div class="col-xs-0  right-buffer">   
-            										<a class="btn btn-app" data-toggle="modal"data-target="#add_data_Modal_arquivo"  onclick="modalArquivo(<?php if($resbd) echo $resbd->id; else echo 0 ?>)" >
-            											<?php if($resbd){
-                            											    if ($resbd->qtde_arquivos == 0)
-                            											        echo  '<span class="badge bg-red">'.$resbd->qtde_arquivos.'</span>';
-                            											    else    
-                            											        echo  '<span class="badge bg-green">'.$resbd->qtde_arquivos.'</span>';
-            											       }    
-            											   ?>
-                                                       
-                                        			    <i class="fa fa-envelope"></i>
-                                                    </a>  
-                                                    <a data-toggle="modal" href="#myModal" class="btn btn-primary">Launch modal</a>                                                                                                     
-            									</div>
+            									             									
+            									<div class="col-xs-0  right-buffer">  
+            									  <div class="btn-group"> 
+                                                      <button type="button" class="btn btn-success top-buffer20" href="#" data-toggle="modal"data-target="#add_data_Modal_arquivo"  onclick="modalArquivo(<?php if($resbd) echo $resbd->id; else echo 0 ?>)">
+                                                      <i> Arquivos  </i>
+                                                      <?php if($resbd){
+                                                    						if ($resbd->qtde_arquivos == 0)
+                                                    							echo  '<span class="badge bg-red">'.$resbd->qtde_arquivos.'</span>';
+                                                    						else    
+                                                    							echo  '<span class="badge bg-green">'.$resbd->qtde_arquivos.'</span>';
+                                                    		   }    
+                                                     ?>                                                                                                           	
+                                                      </button>
+                                                      <button aria-expanded="false" type="button" class="btn btn-success dropdown-toggle top-buffer20" data-toggle="dropdown">
+                                                          <span class="caret"></span>                                                         
+                                                      </button>
+                                                      <ul class="dropdown-menu" role="menu">                                                                                                              
+                                                         <li><a data-toggle="modal" href="#myModal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
+                                                      </ul>
+                                                  </div>
+                                                </div>
                 										           									     									
             							 	</div>            							 	   	
             							</div>	               							            							
