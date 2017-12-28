@@ -16,9 +16,32 @@
     {
         protegeArquivo(basename(__FILE__));
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
+        loadJS('http://malsup.github.com/jquery.form.js',true);  
         ?>
         	<script>  
-        			  
+               	                  	
+                    	$('body').on('click', '#upload', function(e){
+                            e.preventDefault();
+                            var formData = new FormData($(this).parents('form')[0]);
+            
+                            $.ajax({
+                                url: 'modulos/upload.php',
+                                type: 'POST',
+                                xhr: function() {
+                                    var myXhr = $.ajaxSettings.xhr();
+                                    return myXhr;
+                                },
+                                success: function (data) {
+                                    alert("Data Uploaded: "+data);
+                                },
+                                data: formData,
+                                cache: false,
+                                contentType: false,
+                                processData: false
+                            });
+                            return false;
+                    });	
+                         
                 	 function modalArquivo(pidTarefa){                   	  	
                    	    event.preventDefault();  
                    	    $janela = $('#add_data_Modal_arquivo');                    	  
@@ -92,7 +115,7 @@
                                                          '        	<div class="modal-footer"> '+    
                                                          '        		<button type="button" data-dismiss="modal" name="voltar" id="voltar" class="btn btn-primary">Voltar</button> '+
                                                         
-                                                         //'        		<button type="button" data-toggle="modal"data-target="#add_data_Modal_projeto" name="upload" id="upload" class="btn btn-primary">UPLOAD</button> '+                                                          
+
                                                          '        	</div> '+ 	                            	                          	   		                                                  		                                                                                        
                                                          '        </form> '+                                                                                                         
                                                          '    </div> '+                                                          
@@ -110,7 +133,8 @@
                    	};      
                    			                
          			$(document).ready(function()
-                 	{ 						                       
+                 	{ 			
+         				                	    			                       
          				//----------------------------------JAVASCRIPT CONTROLES - Data, Editor de Texto, Selects------------------ --//
                         $('.js_date_time').datepicker({
                             format:"dd/mm/yyyy",
@@ -312,51 +336,22 @@
 						});
                  	});   
                  	         			           	                    
-                </script> https://stackoverflow.com/questions/19295746/how-to-upload-multiple-files-using-php-jquery-and-ajax
-                https://stackoverflow.com/questions/19305821/multiple-modals-overlay
+                </script> 
                  <!-- testes de modal -->
                  <div class="modal fade" id="myModal">
         			<div class="modal-dialog">
         				<div class="modal-content">
         					<div class="modal-header">
         						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        							<h4 class="modal-title">Modal 1</h4>
+        							<h4 class="modal-title">Selelcione os arquivos para inclusão</h4>
         					</div>
         					<div class="container"></div>
-        					<div class="modal-body">Content for the dialog / modal goes here.
-        						<br>
-        						<br>
-        						<br>
-        						<p>more content</p>
-        						<br>
-        						<br>
-        						<br>	
-        						<a data-toggle="modal" href="#myModal2" class="btn btn-primary">Launch modal</a>
-        					</div>
-        					<div class="modal-footer">	
-        						<a href="#" data-dismiss="modal" class="btn">Close</a>
-        						<a href="#" class="btn btn-primary">Save changes</a>
-        					</div>
-        				</div>
-        			</div>
-        		</div>
-        		
-        		<div class="modal fade rotate" id="myModal2">
-        			<div class="modal-dialog">
-        				<div class="modal-content">
-        					<div class="modal-header">
-        						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        							<h4 class="modal-title">Modal 2</h4>
-        
-        					</div>
-        					<div class="container"></div>
-        					<div class="modal-body">Content for the dialog / modal goes here.
-        						<br>
-        						<br>
-        						<p>come content</p>
-        						<br>
-        						<br>
-        						<br>	<a data-toggle="modal" href="#myModal3" class="btn btn-primary">Launch modal</a>
+        					<div class="modal-body">
+        						<form enctype="multipart/form-data" action="upload.php" method="post">
+                                    <input type="file" name="file[]" multiple />                                    
+                                    <input type="button" id="upload" value="Upload File" />
+                                </form>
+
         					</div>
         					<div class="modal-footer">	
         						<a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -367,47 +362,6 @@
         		</div>
         		
         		
-        		<div class="modal fade" id="myModal3">
-        			<div class="modal-dialog">
-        				<div class="modal-content">
-        					<div class="modal-header">
-        						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        							<h4 class="modal-title">Modal 3</h4>
-        
-        					</div>
-        					<div class="container"></div>
-        					<div class="modal-body">Content for the dialog / modal goes here.
-        						<br>
-        						<br>
-        						<br>
-        						<br>
-        						<br>	<a data-toggle="modal" href="#myModal4" class="btn btn-primary">Launch modal</a>
-        
-        					</div>
-        					<div class="modal-footer">	
-        						<a href="#" data-dismiss="modal" class="btn">Close</a>
-        						<a href="#" class="btn btn-primary">Save changes</a>
-        					</div>
-        				</div>
-        			</div>
-        		</div>
-        		<div class="modal fade" id="myModal4">
-        			<div class="modal-dialog">
-        				<div class="modal-content">
-        					<div class="modal-header">
-        						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        							<h4 class="modal-title">Modal 4</h4>
-        
-        					</div>
-        					<div class="container"></div>
-        					<div class="modal-body">Content for the dialog / modal goes here.</div>
-        					<div class="modal-footer">	<a href="#" data-dismiss="modal" class="btn">Close</a>
-        			<a href="#" class="btn btn-primary">Save changes</a>
-        
-        					</div>
-        				</div>
-        			</div>
-        		</div>
                 <!----------------------------------HTML FORMULÁRIOS MODAIS -------------------------------- -->
                 <!-- Modal Prioridade -->	
                 <div class="modal fade" id="add_data_Modal_prioridade" data-backdrop="static">
