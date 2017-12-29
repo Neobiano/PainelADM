@@ -18,9 +18,9 @@
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
         loadJS('http://malsup.github.com/jquery.form.js',true);  
         ?>
-        	<script>  
-               	                  	
-                    	$('body').on('click', '#upload', function(e){
+        	<script>  	
+        		   //função que irá efetivamente enviar os arquivos ao servidor				      	  		    		               	
+                   $('body').on('click', '#upload', function(e){
                             e.preventDefault();
                             var formData = new FormData($(this).parents('form')[0]);
             
@@ -41,7 +41,15 @@
                             });
                             return false;
                     });	
-                         
+
+					 //função que irá 'limpar' o imput de arquivos antes de exibir (onclick do botao)
+                     function resetImput()
+                     {						
+                    	 $('#file').val('');                    	 
+                    	 $('#file-list').html("");
+                     };    
+
+                     //função utilizada para listar os arquivos (msg) vinculados a tarefa
                 	 function modalArquivo(pidTarefa){                   	  	
                    	    event.preventDefault();  
                    	    $janela = $('#add_data_Modal_arquivo');                    	  
@@ -189,6 +197,7 @@
                         //----------------------------------JAVASCRIPT FORMULÁRIOS MODAIS -------------------------------- --//
 						//faz com que seja possível atribuir autofocus para imputs de janelas modais 
                         $('.modal').on('shown.bs.modal', function() {
+                        	
                         	  $(this).find('[autofocus]').focus();
                         	});
 
@@ -374,23 +383,23 @@
                  	         			           	                    
                 </script> 
                      <!-- testes de modal -->
-                     <div class="modal fade" id="myModal">
+                     <div class="modal fade" id="add_file_Modal">
             			<div class="modal-dialog">
             				<div class="modal-content">        					
             					<div class="container"></div>
             					<div class="modal-body">
+            					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             						<form enctype="multipart/form-data" action="upload.php" method="post">
                 						<fieldset>
-                							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                							
                 							<legend>Selecionar</legend>
                     						<div class="form-group">
                     							
-                    							<div class="input-group input-file" name="Fichier1">
+                    							<div class="input-group input-file">
         											<span class="input-group-btn">   
         												<button class="btn btn-default btn-choose" type="button">Escolha</button>                                                                                 	
                                                     </span>
-                                                    	<input type="file" name="file[]"  id="file" multiple class="form-control" placeholder='Selecione os arquivos...'  />
-                                                   
+                                                    	<input type="file" name="file[]"  id="file" multiple class="form-control" placeholder='Selecione os arquivos...'  />                                                   
                                                                                             
                                             	</div>
                                             	<div id="file-list"></div> 
@@ -928,7 +937,7 @@
                                                           <span class="caret"></span>                                                         
                                                       </button>
                                                       <ul class="dropdown-menu" role="menu">                                                                                                              
-                                                         <li><a data-toggle="modal" href="#myModal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
+                                                         <li id="inserefile" onclick="resetImput();"><a data-toggle="modal" href="#add_file_Modal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
                                                       </ul>
                                                   </div>
                                                 </div>
