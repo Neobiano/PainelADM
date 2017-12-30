@@ -65,6 +65,7 @@
                           	var chtml; 	
 				                     			$janela.html('');           	    							                         								
 															
+
 				                     			chtml =  '  		<div class="modal-dialog modal-lg"> '+
                                                          '  			<div class="modal-content"> '+
                                                          '        		<form method="post" id="insert_form_arquivo">	'+
@@ -106,7 +107,7 @@
     														{                                    							                              				                            	
                                                         	 	chtml +=  '<tr>'; 
                                                         	 	chtml +=  '<td><input type="checkbox"></td>'; 
-                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/download.php?file=C:/wamp64/www/PainelADM/arquivos/'+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
+                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/download.php?file='+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
                                                                 chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
                                                                 chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>'; 
                                                                                         									                            									
@@ -131,7 +132,7 @@
                                                          '    </div> '+                                                          
                                                          '  </div> ';
                                                          $janela.append(chtml);
-        												//window.alert('merda');	                      								               				
+        												                   								               				
         							 				                    							                                                  	      
                       							   },
                       		error: function() {

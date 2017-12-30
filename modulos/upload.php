@@ -11,7 +11,7 @@
         $name     = $_FILES['file']['name'];//Atribui uma array com os nomes dos arquivos à variável
         $tmp_name = $_FILES['file']['tmp_name']; //Atribui uma array com os nomes temporários dos arquivos à variável
         
-        $allowedExts = array(".gif", ".jpeg", ".jpg", ".png", ".bmp");//Extensões permitidas
+        $allowedExts = array(".msg"/*".gif", ".jpeg", ".jpg", ".png", ".bmp"*/);//Extensões permitidas
                 
         $dir = "../arquivos/";
         $ext = strtolower(substr($name[$i],-4));
