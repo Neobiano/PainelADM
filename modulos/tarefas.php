@@ -43,10 +43,12 @@
                     });	
 
 					 //função que irá 'limpar' o imput de arquivos antes de exibir (onclick do botao)
-                     function resetImput()
-                     {						
+                     function initImput(codTarefa)
+                     {					
+                         	
                     	 $('#file').val('');                    	 
                     	 $('#file-list').html("");
+                    	 $('#codTarefa').val(codTarefa);
                      };    
 
                      //função utilizada para listar os arquivos (msg) vinculados a tarefa
@@ -104,7 +106,7 @@
     														{                                    							                              				                            	
                                                         	 	chtml +=  '<tr>'; 
                                                         	 	chtml +=  '<td><input type="checkbox"></td>'; 
-                                                                chtml +=  '<td class="mailbox-attachment"><a href="">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
+                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/download.php?file=C:/wamp64/www/PainelADM/arquivos/'+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
                                                                 chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
                                                                 chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>'; 
                                                                                         									                            									
@@ -394,7 +396,7 @@
                 							
                 							<legend>Selecionar</legend>
                     						<div class="form-group">
-                    							
+                    							<input type="hidden" name="codTarefa" id="codTarefa"  type="text" class="form-control" >
                     							<div class="input-group input-file">
         											<span class="input-group-btn">   
         												<button class="btn btn-default btn-choose" type="button">Escolha</button>                                                                                 	
@@ -479,7 +481,7 @@
                         				
                         					<div class="col-xs-10">
                         						<label>Nome</label>
-                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da categoria">
                         					</div>                                        
                         				</div>
                         			</div>                         			                                                              								
@@ -518,7 +520,7 @@
                         				
                         					<div class="col-xs-10">
                         						<label>Nome</label>
-                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do Status">
                         					</div>                                        
                         				</div>
                         			</div>                         			                                                              								
@@ -557,7 +559,7 @@
                         				
                         					<div class="col-xs-10">
                         						<label>Nome</label>
-                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do tipo">
                         					</div>                                        
                         				</div>
                         			</div>                         			                                                              								
@@ -596,7 +598,7 @@
                         				
                         					<div class="col-xs-10">
                         						<label>Nome</label>
-                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome da prioridade">
+                        						<input autofocus name="nome" type="text" class="form-control input-sm" placeholder="Nome do projeto">
                         					</div>                                        
                         				</div>
                         			</div>                         			                                                              								
@@ -937,7 +939,7 @@
                                                           <span class="caret"></span>                                                         
                                                       </button>
                                                       <ul class="dropdown-menu" role="menu">                                                                                                              
-                                                         <li id="inserefile" onclick="resetImput();"><a data-toggle="modal" href="#add_file_Modal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
+                                                         <li id="inserefile" onclick="initImput(<?php if($resbd) echo $resbd->id; else echo 0 ?>)"><a data-toggle="modal" href="#add_file_Modal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
                                                       </ul>
                                                   </div>
                                                 </div>
