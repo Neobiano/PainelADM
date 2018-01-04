@@ -25,7 +25,7 @@
                             var formData = new FormData($(this).parents('form')[0]);
             
                             $.ajax({
-                                url: 'modulos/upload.php',
+                                url: 'modulos/arquivos_upload.php',
                                 type: 'POST',
                                 xhr: function() {
                                     var myXhr = $.ajaxSettings.xhr();
@@ -42,6 +42,48 @@
                             return false;
                     });	
 
+                   function myFunction(val) {
+                	    //alert(val);
+                	};
+
+                	function deleteFile() {
+                		
+						   var id = [];
+					   
+						   $(':checkbox:checked').each(function(i)
+						   {
+							  id[i] = $(this).val();
+						   });
+					   
+						   if(id.length === 0) //tell you if the array is empty
+						   {
+							  alert("Selecione um arquivo para exclusão!");
+						   }
+						   else
+						   {	
+							   if(confirm("Deseja realmente excluir o(s) arquivo(s) selecionado(s)?"))
+							   {	
+    								$.ajax({
+        										 url:'modulos/arquivos_delete.php',
+        										 method:'POST',
+        										 data:{id:id},
+        										 success:function()
+        										 {        							
+            										 alert("Arquivo(s) excluido(s) com sucesso!");        						
+        											 $('#voltar').trigger('click');; 
+        										 },
+        										 error: function() {
+                           							window.alert('Atenção! Erro na exclusão do arquivo');                           							                          							
+                           						  }									
+        								});
+							   }
+							   else							   	
+								  return false;
+								  
+						   }							   
+						              	    
+                	};
+               		
 					 //função que irá 'limpar' o imput de arquivos antes de exibir (onclick do botao)
                      function initImput(codTarefa)
                      {					
@@ -51,13 +93,50 @@
                     	 $('#codTarefa').val(codTarefa);
                      };    
 
-                     //função utilizada para listar os arquivos (msg) vinculados a tarefa
+                   //função utilizada para listar os arquivos (msg) vinculados a tarefa
+                	 function qtdeArquivo(pidTarefa){                   	  	
+                   	    event.preventDefault();  
+                   	    $span = $('#qtdearquivos');                    	  
+        
+                       	$.ajax({  
+                      		url:"modulos/arquivos_dados.php",                 			  
+                      		method:'POST',                           		
+                      		dataType: 'json',	
+                      		data: {idtarefa: pidTarefa},				  
+                      		success:function(data){   
+                          	var  qtde; 	
+                          						$span.html('');                          						
+                          						qtde = 0;            	    							                         																											                     			                                                                     
+                                                $.each(data.jarquivos, function (key, val) 
+												{                                    							                              				                            															                                    				
+                                         	 		qtde = 	val.total_arquivos;   
+                                        	 		return false;                										   
+                   								 });             
+                   								 
+												 if (qtde == 0)	
+                       							   $span.removeClass('badge bg-blue').addClass('badge bg-red');
+												 else                               							
+												   $span.removeClass('badge bg-red').addClass('badge bg-blue');	                        							                                                   
+
+                                                 $span.text(qtde);
+        												                   								               				
+        							 				                    							                                                  	      
+                      							   },
+                      		error: function() {
+                      							window.alert('erro');                           							                          							
+                      						  }
+                      
+                      						  
+                      	});                        	 
+                   	}; 
+                   		
+	                 //função utilizada para listar os arquivos (msg) vinculados a tarefa
                 	 function modalArquivo(pidTarefa){                   	  	
                    	    event.preventDefault();  
                    	    $janela = $('#add_data_Modal_arquivo');                    	  
         
                        	$.ajax({  
-                      		url:"modulos/dados_arquivos.php",                 			  
+                      		url:"modulos/arquivos_dados.php",                 			  
                       		method:'POST',                           		
                       		dataType: 'json',	
                       		data: {idtarefa: pidTarefa},				  
@@ -84,14 +163,13 @@
                                                          '                                  </div> '+                                                                            
                                                          '                    			   <div class="box-body no-padding"> '+
                                                          '                                    <div class="mailbox-controls"> '+                                      
-                                                         '                                    	<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i> </button> '+
+                                                         '                                    	<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i> </button> '+ //selecionar todos
                                                                          '                       <div class="btn-group"> '+
-                                                                         '                          <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> '+                                      
-                                                                         '                       </div> '+                                                   
-                                                         '                        				<button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button> '+                                                                                         
+                                                                         '                          <button name="btn_delete" type="button" onclick="deleteFile()" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> '+//deletar                                   
+                                                                         '                       </div> '+                                                                                                                                            
                                                          '             				         </div> '+
                                                                      '                        <div class="table-responsive mailbox-messages"> '+
-                                                                     '                          <table id="tabela_arquivo" class="table table-hover table-striped table-bordered table-hover"> '+                                                                   
+                                                                     '                          <table id="gridfull" class="table table-hover table-striped table-bordered table-hover"> '+                                                                   
                                                                      '								 <thead class="thead-light">'+
                                                                      	'								 <tr>'+
                                                                      		'								 <td></td>'+
@@ -106,8 +184,8 @@
                                                          $.each(data.jarquivos, function (key, val) 
     														{                                    							                              				                            	
                                                         	 	chtml +=  '<tr>'; 
-                                                        	 	chtml +=  '<td><input type="checkbox"></td>'; 
-                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/download.php?file='+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
+                                                        	 	chtml +=  '<td><input type="checkbox" value="'+val.id+'" onchange="myFunction(this.value)"></td>'; 
+                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/arquivos_download.php?file='+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
                                                                 chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
                                                                 chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>'; 
                                                                                         									                            									
@@ -124,9 +202,7 @@
                                                          '              </div> '+
                                                          '            </section> '+  
                                                          '        	<div class="modal-footer"> '+    
-                                                         '        		<button type="button" data-dismiss="modal" name="voltar" id="voltar" class="btn btn-primary">Voltar</button> '+
-                                                        
-
+                                                         '        		<button type="button" data-dismiss="modal" name="voltar" id="voltar" onclick="qtdeArquivo('+pidTarefa+')" class="btn btn-primary">Voltar</button> '+                                                        
                                                          '        	</div> '+ 	                            	                          	   		                                                  		                                                                                        
                                                          '        </form> '+                                                                                                         
                                                          '    </div> '+                                                          
@@ -392,7 +468,7 @@
             					<div class="container"></div>
             					<div class="modal-body">
             					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            						<form enctype="multipart/form-data" action="upload.php" method="post">
+            						<form enctype="multipart/form-data" action="arquivos_upload.php" method="post">
                 						<fieldset>
                 							
                 							<legend>Selecionar</legend>
@@ -930,9 +1006,9 @@
                                                       <i> Arquivos  </i>
                                                       <?php if($resbd){
                                                     						if ($resbd->qtde_arquivos == 0)
-                                                    							echo  '<span class="badge bg-red">'.$resbd->qtde_arquivos.'</span>';
+                                                    							echo  '<span id="qtdearquivos" class="badge bg-red">'.$resbd->qtde_arquivos.'</span>';
                                                     						else    
-                                                    							echo  '<span class="badge bg-green">'.$resbd->qtde_arquivos.'</span>';
+                                                    							echo  '<span id="qtdearquivos" class="badge bg-blue">'.$resbd->qtde_arquivos.'</span>';
                                                     		   }    
                                                      ?>                                                                                                           	
                                                       </button>
@@ -1384,7 +1460,7 @@
         		} 
         		$(document).ready(function () {
         		var hr = new XMLHttpRequest();
-        		hr.open("GET", "modulos/dados_tarefas.php", true);
+        		hr.open("GET", "modulos/tarefas_dados.php", true);
         		hr.setRequestHeader("Content-type", "application/json");
         		hr.onreadystatechange = function() {
         		    if (hr.readyState == 4 && hr.status == 200) {

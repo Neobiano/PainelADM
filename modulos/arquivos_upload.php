@@ -11,26 +11,24 @@
         $name     = $_FILES['file']['name'];//Atribui uma array com os nomes dos arquivos à variável
         $tmp_name = $_FILES['file']['tmp_name']; //Atribui uma array com os nomes temporários dos arquivos à variável
         
-        $allowedExts = array(".msg"/*".gif", ".jpeg", ".jpg", ".png", ".bmp"*/);//Extensões permitidas
+        $allowedExts = array(".gif", ".jpeg", ".jpg", ".png", ".bmp");//Extensões permitidas
                 
         $dir = "../arquivos/";
         $ext = strtolower(substr($name[$i],-4));
        
-        $new_name = $codTarefa.'-'.date("Y.m.d-H.i.s") ."-". $i . $ext;
+        $arquivo = new arquivo(array(
+            'id_tarefa'=>$_POST['codTarefa'],
+            'id_usuario'=>$iduser,
+            'descricao'=>'Arquivo incluido',
+            'nome_arquivo'=>$new_name,
+            'data_hora'=>date("Y.m.d-H.i.s")
+        ));
+        $arquivo->inserir($arquivo);
+             
+        $new_name = $codTarefa.'-'.$arquivo->lastId.'-'.date("Y.m.d-H.i.s") ."-". $i . $ext;
       
-       if(move_uploaded_file($_FILES['file']['tmp_name'][$i], $dir.$new_name))
-       {
-           $arquivo = new arquivo(array(
-               'id_tarefa'=>$_POST['codTarefa'],
-               'id_usuario'=>$iduser,
-               'descricao'=>'Arquivo incluido',
-               'nome_arquivo'=>$new_name,
-               'data_hora'=>date("Y.m.d-H.i.s")              
-           ));
-           $arquivo->inserir($arquivo);
-           
+       if(move_uploaded_file($_FILES['file']['tmp_name'][$i], $dir.$new_name))                            
            echo "The file has been uploaded successfully <br />";
-       }
        else
            echo "There was an error uploading the file, please try again! <br />";
         
