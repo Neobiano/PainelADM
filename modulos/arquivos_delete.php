@@ -13,8 +13,9 @@
             $arquivo->deletar($arquivo);
             
             //apagando o arquivo do diretório
-            $dir = "../arquivos/";
-            $file = glob( $dir."*-".$id."-*");
+            $dir = "C:/wamp64/www/PainelADM/arquivos/";
+            $file = glob( $dir."*.dat");
+            //echo $file;
             unlink($file);                                   
         
      }

@@ -430,11 +430,11 @@
                     	<section class="content-header">
                     		<h1>
                     			Usuários
-                    			<small>Editar</small>
+                    			<small>Incluir</small>
                     		</h1>
                     		<ol class="breadcrumb">
                     			<li><a ><i class="fa fa-dashboard"></i> Usuários</a></li>
-                    			<li class="active">Editar</li>
+                    			<li class="active">Incluir</li>
                     		</ol>
                     	</section> 
                     

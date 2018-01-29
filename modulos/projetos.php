@@ -114,11 +114,11 @@
                 <section class="content-header">
                 	<h1>
                 		Projetos
-                		<small>Incluir</small>
+                		<small>Editar</small>
                   	</h1>
                   	<ol class="breadcrumb">
                 		<li><a ><i class="fa fa-dashboard"></i> Projetos</a></li>
-                		<li class="active">Incluir</li>
+                		<li class="active">Editar</li>
                   	</ol>
                 </section> 
     

@@ -22,8 +22,7 @@
         		   //função que irá efetivamente enviar os arquivos ao servidor				      	  		    		               	
                    $('body').on('click', '#upload', function(e){
                             e.preventDefault();
-                            var formData = new FormData($(this).parents('form')[0]);
-            
+                            var formData = new FormData($(this).parents('form')[0]);                                                    
                             $.ajax({
                                 url: 'modulos/arquivos_upload.php',
                                 type: 'POST',
@@ -32,16 +31,18 @@
                                     return myXhr;
                                 },
                                 success: function (data) {
-                                    alert("Data Uploaded: "+data);
+                                    alert("Arquivo enviado: "+data);
+                                    $('#insert_voltar').trigger('click');
                                 },
                                 data: formData,
                                 cache: false,
                                 contentType: false,
                                 processData: false
-                            });
+                            });                            
                             return false;
-                    });	
-
+                             
+                    });	                 
+                   
                    function myFunction(val) {
                 	    //alert(val);
                 	};
@@ -55,7 +56,7 @@
 							  id[i] = $(this).val();
 						   });
 					   
-						   if(id.length === 0) //tell you if the array is empty
+						   if(id.length === 0) //se não houver checkbox selecionado
 						   {
 							  alert("Selecione um arquivo para exclusão!");
 						   }
@@ -69,8 +70,8 @@
         										 data:{id:id},
         										 success:function()
         										 {        							
-            										 alert("Arquivo(s) excluido(s) com sucesso!");        						
-        											 $('#voltar').trigger('click');; 
+            										 alert("Arquivo(s) excluído(s) com sucesso!");        						
+        											 $('#list_voltar').trigger('click'); 
         										 },
         										 error: function() {
                            							window.alert('Atenção! Erro na exclusão do arquivo');                           							                          							
@@ -89,20 +90,22 @@
                      {					
                          	
                     	 $('#file').val('');                    	 
-                    	 $('#file-list').html("");
-                    	 $('#codTarefa').val(codTarefa);
+                    	 $('#file-list').html("");                    	 
+                    	 $("#codTarefa2").val(codTarefa);
                      };    
 
                    //função utilizada para listar os arquivos (msg) vinculados a tarefa
-                	 function qtdeArquivo(pidTarefa){                   	  	
+                	 function qtdeArquivo(Tipo){                   	  	
                    	    event.preventDefault();  
-                   	    $span = $('#qtdearquivos');                    	  
-        
+                   	    $span = $('#qtdearquivos');
+                   	    codTarefa = $("#formEditar").find('input[name="codTarefa"]').val(); //get the value..                   	  
+                    
+                   	    	
                        	$.ajax({  
                       		url:"modulos/arquivos_dados.php",                 			  
                       		method:'POST',                           		
                       		dataType: 'json',	
-                      		data: {idtarefa: pidTarefa},				  
+                      		data: {idtarefa: codTarefa},				  
                       		success:function(data){   
                           	var  qtde; 	
                           						$span.html('');                          						
@@ -147,8 +150,8 @@
 
 				                     			chtml =  '  		<div class="modal-dialog modal-lg"> '+
                                                          '  			<div class="modal-content"> '+
-                                                         '        		<form method="post" id="insert_form_arquivo">	'+
-                                                         '        			<section class="content"> '+
+                                                         '        		<form method="post" id="list_form_arquivo">	'+
+                                                         '        			<section class="content"> '+                                                         
                                                          '              			<div class="row"> '+                                    
                                                          '                			<div> '+                                 
                                                          '                  				<div class="box box-primary"> '+
@@ -162,8 +165,7 @@
                                       					'					                    </div> '+                                    
                                                          '                                  </div> '+                                                                            
                                                          '                    			   <div class="box-body no-padding"> '+
-                                                         '                                    <div class="mailbox-controls"> '+                                      
-                                                         '                                    	<button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i> </button> '+ //selecionar todos
+                                                         '                                    <div class="mailbox-controls"> '+                                                                                               
                                                                          '                       <div class="btn-group"> '+
                                                                          '                          <button name="btn_delete" type="button" onclick="deleteFile()" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button> '+//deletar                                   
                                                                          '                       </div> '+                                                                                                                                            
@@ -202,7 +204,7 @@
                                                          '              </div> '+
                                                          '            </section> '+  
                                                          '        	<div class="modal-footer"> '+    
-                                                         '        		<button type="button" data-dismiss="modal" name="voltar" id="voltar" onclick="qtdeArquivo('+pidTarefa+')" class="btn btn-primary">Voltar</button> '+                                                        
+                                                         '        		<button type="button" data-dismiss="modal" name="list_voltar" id="list_voltar" onclick="qtdeArquivo('+pidTarefa+')" class="btn btn-primary">Voltar</button> '+                                                        
                                                          '        	</div> '+ 	                            	                          	   		                                                  		                                                                                        
                                                          '        </form> '+                                                                                                         
                                                          '    </div> '+                                                          
@@ -462,18 +464,17 @@
                  	         			           	                    
                 </script> 
                      <!-- testes de modal -->
-                     <div class="modal fade" id="add_file_Modal">
+                     <div class="modal fade" id="insert_form_arquivo">
             			<div class="modal-dialog">
             				<div class="modal-content">        					
             					<div class="container"></div>
             					<div class="modal-body">
             					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             						<form enctype="multipart/form-data" action="arquivos_upload.php" method="post">
-                						<fieldset>
-                							
+                						<fieldset>                						
                 							<legend>Selecionar</legend>
-                    						<div class="form-group">
-                    							<input type="hidden" name="codTarefa" id="codTarefa"  type="text" class="form-control" >
+                    						<div class="form-group">      
+                    						    <input type="hidden"  id="codTarefa2" name="codTarefa2"  class="form-control" >              							
                     							<div class="input-group input-file">
         											<span class="input-group-btn">   
         												<button class="btn btn-default btn-choose" type="button">Escolha</button>                                                                                 	
@@ -487,7 +488,7 @@
                                         	
                                     	<fieldset>
                                         	<input type="button" id="upload" value="Enviar Arquivos" class="btn btn-info pull-left" />
-                                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-primary pull-right" onclick="qtdeArquivo(1)"  name="insert_voltar" id="insert_voltar" data-dismiss="modal">Voltar</button>
                                         </fieldset>
                                       </form>       
                                 </div>                                                                                                                                                                                                                                      
@@ -812,13 +813,13 @@
                 		               
     			<section class="content">      				    	           
     						<div class="box box-primary">    								
-    							<form class="userform" role="form" method="post" action="">
+    							<form id="formEditar" class="userform" role="form" method="post" action="">
     								<div class="box-body">
     									<div class="row">
     									 	<div class="form-group">
             									<div class="col-xs-2">
                       								<label>Código</label>
-                      								<input disabled name="assunto" type="text" class="form-control" placeholder="Código é Automático" value="<?php if($resbd) echo $resbd->id;?>">
+                      								<input disabled name="codTarefa" type="text" class="form-control" placeholder="Código é Automático" value="<?php if($resbd) echo $resbd->id;?>">
             									</div>
             									<div class="col-xs-8">
                       								<label>Assunto</label>
@@ -1016,7 +1017,7 @@
                                                           <span class="caret"></span>                                                         
                                                       </button>
                                                       <ul class="dropdown-menu" role="menu">                                                                                                              
-                                                         <li id="inserefile" onclick="initImput(<?php if($resbd) echo $resbd->id; else echo 0 ?>)"><a data-toggle="modal" href="#add_file_Modal"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
+                                                         <li id="inserefile" onclick="initImput(<?php if($resbd) echo $resbd->id; else echo 0 ?>)"><a data-toggle="modal" href="#insert_form_arquivo"><i class="fa fa-file-o fa-fw"></i> Inserir</a></li>                                                                                                                                                                                                                           
                                                       </ul>
                                                   </div>
                                                 </div>
