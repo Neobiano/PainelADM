@@ -12,11 +12,22 @@
             $arquivo->valorpk =$id;   
             $arquivo->deletar($arquivo);
             
-            //apagando o arquivo do diretório
-            $dir = "C:/wamp64/www/PainelADM/arquivos/";
+            $item = "*-$id-*";           
+            $dir = ARQUIVOSPATH.'/';
+            $mask = $dir.$item;
+            foreach (glob($mask) as $filename) 
+            {
+                unlink($filename);
+            }
+            /*
+            array_map('unlink', glob($mask));
+           
+            //$dir = "C:/wamp64/www/PainelADM/arquivos/";
+            
+            
             $file = glob( $dir."*.dat");
             //echo $file;
-            unlink($file);                                   
+            unlink($file);*/                                   
         
      }
     }  
