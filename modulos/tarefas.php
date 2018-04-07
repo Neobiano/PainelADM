@@ -21,7 +21,7 @@
         	<script>  	
         		   //função que irá efetivamente enviar os arquivos ao servidor				      	  		    		               	
                    $('body').on('click', '#upload', function(e){
-                            e.preventDefault();
+                            //e.preventDefault();
                             var formData = new FormData($(this).parents('form')[0]);                                                    
                             $.ajax({
                                 url: 'modulos/arquivos_upload.php',
@@ -96,7 +96,7 @@
 
                    //função utilizada para listar os arquivos (msg) vinculados a tarefa
                 	 function qtdeArquivo(Tipo){                   	  	
-                   	    event.preventDefault();  
+                   	    //event.preventDefault();  
                    	    $span = $('#qtdearquivos');
                    	    codTarefa = $("#formEditar").find('input[name="codTarefa"]').val(); //get the value..                   	  
                     
@@ -135,7 +135,7 @@
                    		
 	                 //função utilizada para listar os arquivos (msg) vinculados a tarefa
                 	 function modalArquivo(pidTarefa){                   	  	
-                   	    event.preventDefault();  
+                   	   // event.preventDefault();  
                    	    $janela = $('#add_data_Modal_arquivo');                    	  
         
                        	$.ajax({  
@@ -185,9 +185,10 @@
                                                                      		
                                                          $.each(data.jarquivos, function (key, val) 
     														{                                    							                              				                            	
-                                                        	 	chtml +=  '<tr>'; 
+	          													$valor = val.nome_arquivo+'<>'+val.referencia;
+    		                                                	chtml +=  '<tr>'; 
                                                         	 	chtml +=  '<td><input type="checkbox" value="'+val.id+'" onchange="myFunction(this.value)"></td>'; 
-                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/arquivos_download.php?file='+ val.nome_arquivo +'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
+                                                                chtml +=  '<td class="mailbox-attachment"><a href="modulos/arquivos_download.php?file='+$valor+'">'+ val.nome_arquivo +'</a></td>';                         									                                                                                                                              
                                                                 chtml +=  '<td class="mailbox-name">'+ val.descricao +'</td>';
                                                                 chtml +=  '<td class="mailbox-name">'+ val.usuario +'</td>'; 
                                                                                         									                            									
@@ -287,7 +288,7 @@
                  		//modal prioridade		             	    		    	                          
                         $('#insert_form_prioridade').on("submit", function(event){ 
                             $select = $('#idprioridade');       
-                            event.preventDefault();          	                 	                   	 
+                            //event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/prioridades.php",                 			  
                             		method:"POST",  
@@ -322,7 +323,7 @@
                         //modal categoria		             	    		    	                          
                         $('#insert_form_categoria').on("submit", function(event){ 
                             $select = $('#idcategoria');       
-                            event.preventDefault();          	                 	                   	 
+                            //event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/categorias.php",                 			  
                             		method:"POST",  
@@ -358,7 +359,7 @@
                         $('#insert_form_status').on("submit", function(event){ 
                             console.log('1');
                             $select = $('#idstatus');       
-                            event.preventDefault();          	                 	                   	 
+                            //event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/status.php",                 			  
                             		method:"POST",  
@@ -394,7 +395,7 @@
                         //modal projetos		             	    		    	                          
                         $('#insert_form_projeto').on("submit", function(event){ 
                             $select = $('#idprojeto');       
-                            event.preventDefault();          	                 	                   	 
+                            //event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/projetos.php",                 			  
                             		method:"POST",  
@@ -429,7 +430,7 @@
                         //modal tipos		             	    		    	                          
                         $('#insert_form_tipo').on("submit", function(event){ 
                             $select = $('#idtipo');       
-                            event.preventDefault();          	                 	                   	 
+                            //event.preventDefault();          	                 	                   	 
                             $.ajax({  
                             		url:"modulos/tipos.php",                 			  
                             		method:"POST",  

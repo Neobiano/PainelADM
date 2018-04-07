@@ -15,7 +15,8 @@ class arquivo extends Base
                                             "id_usuario"=>null,
                                             "descricao"=>null,
                                             "nome_arquivo"=>null,
-                                            "data_hora "=>null                                        
+                                            "data_hora "=>null,
+                                            "referencia"=>null
                                          );
         }
         else

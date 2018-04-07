@@ -6,7 +6,7 @@
     $jsonData = '{ "arquivos" :[';
      
     
-    $select = ' select arquivos.id, arquivos.id_tarefa, arquivos.id_usuario,
+    $select = ' select arquivos.id, arquivos.referencia, arquivos.id_tarefa, arquivos.id_usuario,
                 arquivos.descricao, arquivos.nome_arquivo, arquivos.data_hora,
                 u.nome usuario,
                 (select count(*) from arquivos a2 where a2.id_tarefa = arquivos.id_tarefa) total_arquivos                  
@@ -21,6 +21,7 @@
         $row["id"] = $res->id;
         $row["descricao"] = $res->descricao;
         $row["nome_arquivo"] = $res->nome_arquivo;
+        $row["referencia"] = $res->referencia;
         $row["id_tarefa"] = $res->id_tarefa;
         $row["id_usuario"] = $res->id_usuario;
         $row["usuario"] = $res->usuario;

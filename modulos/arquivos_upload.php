@@ -14,7 +14,9 @@
         $allowedExts = array(".gif", ".jpeg", ".jpg", ".png", ".bmp");//Extensões permitidas
                 
         $dir = "../arquivos/";
-        $ext = strtolower(substr($name[$i],-4));
+        $pos = strpos($name[$i],".");
+        $ext = strtolower(substr($name[$i],$pos));
+        //strtolower(substr($name[$i],-4));
         
         
         $arquivo = new arquivo(array(
@@ -24,9 +26,19 @@
             'nome_arquivo'=>$_FILES['file']['name'][$i],
             'data_hora'=>date("Y.m.d-H.i.s")
         ));
-        $arquivo->inserir($arquivo);             
+        $arquivo->inserir($arquivo);  
+        $ult_id = $arquivo->lastId;
         
-       $new_name = $codTarefa.'-'.$arquivo->lastId.'-'.date("Y.m.d-H.i.s") ."-". $i . $ext;
+        $new_name = $codTarefa.'-'.$ult_id.'-'.date("Y.m.d-H.i.s") ."-". $i . $ext;
+        $arquivo = new arquivo(array(            
+            'referencia'=> $new_name
+        ));
+        
+        $arquivo->valorpk = $ult_id;
+        $arquivo->extras_select = "WHERE id=$ult_id";
+        $arquivo->selecionaTudo($arquivo);
+        $arquivo->atualizar($arquivo);
+        
        
        if(move_uploaded_file($_FILES['file']['tmp_name'][$i], $dir.$new_name))                            
            echo "Arquivo enviado com sucesso!";
