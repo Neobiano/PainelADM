@@ -42,7 +42,7 @@
 	<!-- page script -->
 	<script>
     				  			  
-	  $(function () {			   
+	/*  $(function () {			   
 		 
 			
 		  $('#gridfull').DataTable({
@@ -74,7 +74,7 @@
 		                "aaSorting": [[0, "asc"]] 
 		    })	   
 	        	  
-		  })
+		  }) */
 	</script>
 </body>
 </html>

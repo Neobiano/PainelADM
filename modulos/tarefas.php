@@ -16,7 +16,8 @@
     {
         protegeArquivo(basename(__FILE__));
         loadJS('bower_components/ckeditor/ckeditor.js',true);       
-        loadJS('http://malsup.github.com/jquery.form.js',true);  
+        //loadJS('http://malsup.github.com/jquery.form.js',true);  
+        loadJS('js/jquery.form.js',true);
         ?>
         	<script>  	
         		   //função que irá efetivamente enviar os arquivos ao servidor				      	  		    		               	
